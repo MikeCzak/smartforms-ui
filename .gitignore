@@ -1,0 +1,19 @@
+.DS_Store
+*.bak
+
+Thumbs.db
+
+# IDE settings
+.vscode/
+.idea/
+
+# npm logs
+npm-debug.log*
+
+# package-lock.json or yarn.lock
+package-lock.json
+yarn.lock
+
+# environment variables (if you store any in the root folder)
+.env
+

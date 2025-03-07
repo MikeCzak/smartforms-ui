@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  frontend:
+    build:
+      context: ./frontend
+    image: index.docker.io/mikeczak/czakhub:latest
+    ports:
+      - "80:8000"
+    environment:
+      - NODE_ENV=production
+    # depends_on:
+    #   - backend
+    networks:
+      - app-network
+
+  # backend:
+  #   build:
+  #     context: ./backend
+  #   image: git-iit.fh-joanneum.at:5050/g98p45/bachelor_thesis/main:latest-backend
+  #   environment:
+  #     - NODE_ENV=production
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - app-network
+  #   ports:
+  #     - "3000:3000"
+
+  # db:
+  #   image: mongo:latest
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=admin
+  #     - MONGO_INITDB_ROOT_PASSWORD=example
+  #   volumes:
+  #     - mongo-data:/data/db
+  #   networks:
+  #     - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+# volumes:
+#   mongo-data:
