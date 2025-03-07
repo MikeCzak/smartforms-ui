@@ -1,0 +1,58 @@
+version: "3.8"
+services:
+  frontend:
+    image: mikeczak/czakhub:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=production
+    # depends_on:
+    #   - backend
+    networks:
+      - app-network
+
+  nginx:
+    image: mikeczak/smartui-nginx:latest
+    container_name: smart_ui_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    env_file: .env
+    depends_on:
+      # - backend
+      - frontend
+      # - database
+    networks:
+      - app-network
+    volumes:
+      - /home/deployer/ssl:/etc/nginx/ssl:ro
+
+  # backend:
+  #   build:
+  #     context: ./backend
+  #   image: git-iit.fh-joanneum.at:5050/g98p45/bachelor_thesis/main:latest-backend
+  #   environment:
+  #     - NODE_ENV=production
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - app-network
+  #   ports:
+  #     - "3000:3000"
+
+  # db:
+  #   image: mongo:latest
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=admin
+  #     - MONGO_INITDB_ROOT_PASSWORD=example
+  #   volumes:
+  #     - mongo-data:/data/db
+  #   networks:
+  #     - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+# volumes:
+#   mongo-data:
