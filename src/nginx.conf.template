@@ -4,38 +4,37 @@ server {
     server_name smart-ui.mikeczak.com;
 
     location / {
-        proxy_pass http://frontend:8000;
-        # return 301 https://$host$request_uri;
+        return 301 https://$host$request_uri;
     }
 }
 
-# server {
-#    listen 443 ssl;
-#    server_name smart-ui.mikeczak.com;
-#
-#    ssl_certificate /etc/nginx/ssl/mikeczak.com_ssl_certificate.cer;
-#    ssl_certificate_key /etc/nginx/ssl/_.mikeczak.com_private_key.key;
+ server {
+    listen 443 ssl;
+    server_name smart-ui.mikeczak.com;
 
-#    location /api/ {
-#        proxy_redirect off;
-#        proxy_set_header X-Forwarded-Proto https;
-#        proxy_set_header Host $http_host;
-#        proxy_set_header X-Forwarded-Host $http_host;
-#        proxy_set_header X-Real-IP $remote_addr;
-#        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-#
-#        proxy_pass http://backend:3099/api/;
-#    }
-#
-#    location / {
-#        proxy_set_header X-Forwarded-Proto https;
-#        proxy_set_header Host $http_host;
-#        proxy_set_header X-Forwarded-Host $http_host;
-#        proxy_set_header X-Real-IP $remote_addr;
-#        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-#
-#        proxy_pass http://frontend:8000;
-#    }
-#}
+    ssl_certificate /etc/nginx/ssl/mikeczak.com_ssl_certificate.cer;
+    ssl_certificate_key /etc/nginx/ssl/_.mikeczak.com_private_key.key;
+
+    location /api/ {
+        proxy_redirect off;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        proxy_pass http://backend:3099/api/;
+    }
+
+    location / {
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        proxy_pass http://frontend:8000;
+    }
+}
 
 

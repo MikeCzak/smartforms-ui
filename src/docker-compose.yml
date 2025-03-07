@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3"
 services:
   frontend:
     image: mikeczak/czakhub:latest
@@ -8,8 +8,6 @@ services:
       - NODE_ENV=production
     # depends_on:
     #   - backend
-    networks:
-      - app-network
 
   nginx:
     image: mikeczak/smartui-nginx:latest
@@ -17,15 +15,12 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    env_file: .env
     depends_on:
       # - backend
       - frontend
       # - database
-    networks:
-      - app-network
     volumes:
-      - ssl-data:/etc/nginx/ssl:ro
+      - ssl_data:/etc/nginx/ssl/:ro
 
   # backend:
   #   build:
@@ -50,9 +45,7 @@ services:
   #   networks:
   #     - app-network
 
-networks:
-  app-network:
-    driver: bridge
-
 volumes:
-  ssl-data:
+  ssl_data:
+    external:
+      name: ssl_data
