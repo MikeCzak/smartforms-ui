@@ -25,7 +25,7 @@ services:
     networks:
       - app-network
     volumes:
-      - /home/deployer/ssl:/etc/nginx/ssl:ro
+      - ssl-data:/etc/nginx/ssl:ro
 
   # backend:
   #   build:
@@ -53,3 +53,6 @@ services:
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  ssl-data:
