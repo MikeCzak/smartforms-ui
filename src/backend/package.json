@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@types/mongodb": "^4.0.7",
+    "dotenv": "^16.4.7",
     "express": "^4.17.1",
     "mongoose": "^8.11.0"
   },
