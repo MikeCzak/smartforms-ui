@@ -2,6 +2,9 @@ default:
   image: docker:24.0.5
   services:
     - docker:24.0.5-dind
+  before_script:
+    - ls -l
+    - pwd
 
 stages:
   - build
@@ -14,19 +17,18 @@ build:
   script:
     - docker build -t smartui-frontend:latest -t smartui-frontend:$CI_COMMIT_SHORT_SHA ./src/frontend
     - docker build -t smartui-nginx:latest ./src
-    # - docker build -t $TAG_COMMIT-backend -t $TAG_LATEST-backend ./src/backend
-    # - docker build -t $TAG_COMMIT-db -t $TAG_LATEST-db ./database
+    - docker build -t smartui-backend:latest -t smartui-backend:$CI_COMMIT_SHORT_SHA ./src/backend
     - echo "$DOCKER_TOKEN" | docker login -u mikeczak --password-stdin
     - docker tag smartui-frontend:latest mikeczak/czakhub:latest
     - docker tag smartui-frontend:$CI_COMMIT_SHORT_SHA mikeczak/czakhub:$CI_COMMIT_SHORT_SHA
+    - docker tag smartui-backend:latest mikeczak/smartui-backend:latest
+    - docker tag smartui-backend:$CI_COMMIT_SHORT_SHA mikeczak/smartui-backend:$CI_COMMIT_SHORT_SHA
     - docker tag smartui-nginx:latest mikeczak/smartui-nginx:latest
     - docker push mikeczak/czakhub:latest
     - docker push mikeczak/czakhub:$CI_COMMIT_SHORT_SHA
+    - docker push mikeczak/smartui-backend:latest
+    - docker push mikeczak/smartui-backend:$CI_COMMIT_SHORT_SHA
     - docker push mikeczak/smartui-nginx:latest
-    # - docker push $TAG_COMMIT-backend
-    # - docker push $TAG_LATEST-backend
-    # - docker push $TAG_COMMIT-db
-    # - docker push $TAG_LATEST-db
 
 deploy:
   stage: deploy
@@ -35,8 +37,8 @@ deploy:
   script:
     - chmod 600 $ID_PRIVATE_KEY
     - apk update && apk add openssh-client
+    - scp -i $ID_PRIVATE_KEY -o StrictHostKeyChecking=no src/docker-compose.yml $SERVER_USER@$SERVER_IP/docker-compose.yml
     - ssh -i $ID_PRIVATE_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "echo $DOCKER_TOKEN | docker login -u mikeczak --password-stdin && docker compose -f /home/$SERVER_USER/docker-compose.yml pull && docker compose -f /home/$SERVER_USER/docker-compose.yml down && docker compose -f /home/$SERVER_USER/docker-compose.yml up -d --remove-orphans --force-recreate"
   environment:
     name: production
     url: https://smart-ui.mikeczak.com
-    

@@ -1,13 +1,13 @@
 version: "3"
 services:
   frontend:
+    build:
+      context: ./frontend
     image: mikeczak/czakhub:latest
     ports:
       - "8000:8000"
     environment:
       - NODE_ENV=production
-    # depends_on:
-    #   - backend
 
   nginx:
     image: mikeczak/smartui-nginx:latest
@@ -16,36 +16,28 @@ services:
       - "80:80"
       - "443:443"
     depends_on:
-      # - backend
+      - backend
       - frontend
-      # - database
     volumes:
       - ssl_data:/etc/nginx/ssl/:ro
 
-  # backend:
-  #   build:
-  #     context: ./backend
-  #   image: git-iit.fh-joanneum.at:5050/g98p45/bachelor_thesis/main:latest-backend
-  #   environment:
-  #     - NODE_ENV=production
-  #   depends_on:
-  #     - db
-  #   networks:
-  #     - app-network
-  #   ports:
-  #     - "3000:3000"
-
-  # db:
-  #   image: mongo:latest
-  #   environment:
-  #     - MONGO_INITDB_ROOT_USERNAME=admin
-  #     - MONGO_INITDB_ROOT_PASSWORD=example
-  #   volumes:
-  #     - mongo-data:/data/db
-  #   networks:
-  #     - app-network
+  backend:
+    build:
+      context: ./backend
+    image: mikeczak/smartui-backend:latest
+    container_name: smart_ui_backend
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "3000:3000"
+    volumes:
+      - form_data:/app/src/data/:rw
+      - ./.env:/app/src/backend/.env:ro
 
 volumes:
   ssl_data:
     external:
       name: ssl_data
+  form_data:
+    external:
+      name: form_data
