@@ -1,0 +1,296 @@
+{
+  "formTitle": "User Registration & Preferences",
+  "sections": [
+    {
+      "title": "Personal Information",
+      "fields": [
+        {
+          "name": "first_name",
+          "type": "text",
+          "label": "First Name",
+          "required": true,
+          "minLength": 2,
+          "maxLength": 50
+        },
+        {
+          "name": "last_name",
+          "type": "text",
+          "label": "Last Name",
+          "required": true,
+          "minLength": 2,
+          "maxLength": 50
+        },
+        {
+          "name": "dob",
+          "type": "date",
+          "label": "Date of Birth",
+          "required": true
+        },
+        {
+          "name": "gender",
+          "type": "choice",
+          "label": "Gender",
+          "options": ["Male", "Female", "Other"],
+          "required": true,
+          "selectionType": "radio"
+        },
+        {
+          "name": "phone",
+          "type": "tel",
+          "label": "Phone Number",
+          "pattern": "^\\+?[1-9]\\d{1,14}$",
+          "required": true
+        },
+        {
+          "name": "email",
+          "type": "email",
+          "label": "Email",
+          "required": true
+        }
+      ]
+    },
+    {
+      "title": "Address Details",
+      "fields": [
+        {
+          "name": "street",
+          "type": "text",
+          "label": "Street Address",
+          "required": true
+        },
+        {
+          "name": "city",
+          "type": "text",
+          "label": "City",
+          "required": true
+        },
+        {
+          "name": "country",
+          "type": "choice",
+          "label": "Country",
+          "options": ["USA", "Canada", "Germany", "UK", "France"],
+          "required": true,
+          "selectionType": "select"
+        },
+        {
+          "name": "zipcode",
+          "type": "text",
+          "label": "ZIP Code",
+          "required": true,
+          "patternByCountry": {
+            "USA": "^[0-9]{5}(-[0-9]{4})?$",
+            "Canada": "^[A-Za-z]\\d[A-Za-z] ?\\d[A-Za-z]\\d$",
+            "Germany": "^[0-9]{5}$",
+            "UK": "^[A-Z]{1,2}[0-9R][0-9A-Z]?[ ]?[0-9][A-Z]{2}$",
+            "France": "^[0-9]{5}$"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Account Information",
+      "fields": [
+        {
+          "name": "username",
+          "type": "text",
+          "label": "Username",
+          "required": true,
+          "minLength": 5,
+          "maxLength": 20
+        },
+        {
+          "name": "password",
+          "type": "password",
+          "label": "Password",
+          "required": true,
+          "minLength": 8,
+          "maxLength": 100,
+          "pattern": "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{8,}$"
+        }
+      ]
+    },
+    {
+      "title": "Preferences",
+      "fields": [
+        {
+          "name": "newsletter",
+          "type": "choice",
+          "label": "Subscribe to newsletter",
+          "options": ["Yes", "No"],
+          "required": true,
+          "selectionType": "radio"
+        },
+        {
+          "name": "topics",
+          "type": "choice",
+          "label": "Interested Topics",
+          "options": ["Technology", "Sports", "Music", "Movies", "Science"],
+          "required": false,
+          "selectionType": "checkboxGroup"
+        }
+      ]
+    },
+    {
+      "title": "Payment Information",
+      "fields": [
+        {
+          "name": "payment_method",
+          "type": "choice",
+          "label": "Payment Method",
+          "options": ["Credit Card", "PayPal", "Bank Transfer"],
+          "required": true,
+          "selectionType": "radio"
+        },
+        {
+          "name": "iban",
+          "type": "text",
+          "label": "IBAN",
+          "pattern": "^[A-Z]{2}\\d{2}[A-Z0-9]{1,30}$",
+          "required": true,
+          "dependsOn": {
+            "field": "payment_method",
+            "value": "Bank Transfer"
+          }
+        },
+        {
+          "name": "credit_card_number",
+          "type": "text",
+          "label": "Credit Card Number",
+          "pattern": "^[0-9]{16}$",
+          "required": true,
+          "dependsOn": {
+            "field": "payment_method",
+            "value": "Credit Card"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Emergency Contact (Nested Subform)",
+      "fields": [
+        {
+          "name": "emergency_contact",
+          "type": "form",
+          "label": "Emergency Contact Information",
+          "subform": {
+            "fields": [
+              {
+                "name": "contact_name",
+                "type": "text",
+                "label": "Contact Name",
+                "required": true
+              },
+              {
+                "name": "contact_phone",
+                "type": "tel",
+                "label": "Contact Phone",
+                "required": true,
+                "pattern": "^\\+?[1-9]\\d{1,14}$"
+              },
+              {
+                "name": "contact_relation",
+                "type": "text",
+                "label": "Relation",
+                "required": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Employment History (Repeatable Subform)",
+      "fields": [
+        {
+          "name": "previous_employer",
+          "type": "form",
+          "label": "Previous Employer Information",
+          "repeatable": true,
+          "subform": {
+            "fields": [
+              {
+                "name": "company_name",
+                "type": "text",
+                "label": "Company Name",
+                "required": true
+              },
+              {
+                "name": "job_title",
+                "type": "text",
+                "label": "Job Title",
+                "required": true
+              },
+              {
+                "name": "employment_years",
+                "type": "number",
+                "label": "Years Worked",
+                "min": 0,
+                "max": 50,
+                "required": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Additional Information",
+      "fields": [
+        {
+          "name": "ssn",
+          "type": "text",
+          "label": "Social Security Number",
+          "pattern": "^(?!000|666)[0-9]{3}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$",
+          "required": true
+        },
+        {
+          "name": "is_student",
+          "type": "choice",
+          "label": "Are you a student?",
+          "options": ["Yes", "No"],
+          "required": true,
+          "selectionType": "radio"
+        },
+        {
+          "name": "university",
+          "type": "text",
+          "label": "University Name",
+          "required": true,
+          "dependsOn": {
+            "field": "is_student",
+            "value": "Yes"
+          }
+        },
+        {
+          "name": "graduation_year",
+          "type": "number",
+          "label": "Expected Graduation Year",
+          "min": 2024,
+          "max": 2035,
+          "required": true,
+          "dependsOn": {
+            "field": "is_student",
+            "value": "Yes"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Terms & Conditions",
+      "fields": [
+        {
+          "name": "agree_terms",
+          "type": "choice",
+          "label": "I agree to the Terms and Conditions",
+          "options": ["Yes"],
+          "required": true,
+          "selectionType": "checkbox"
+        }
+      ]
+    }
+  ],
+  "pagination": {
+    "enabled": true,
+    "fieldsPerPage": 5
+  }
+}
