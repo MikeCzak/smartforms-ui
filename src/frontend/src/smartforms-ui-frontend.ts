@@ -17,7 +17,7 @@ export class SmartformsUiFrontend extends LitElement {
       font-size: calc(10px + 2vmin);
       color: #1a2b42;
       max-width: 960px;
-      margin: 0 auto; 
+      margin: 0 auto;
       text-align: center;
       background-color: var(--smartforms-ui-frontend-background-color);
     }
@@ -55,7 +55,7 @@ export class SmartformsUiFrontend extends LitElement {
       <main>
         <div class="logo"><img alt="open-wc logo" src=${logo} /></div>
         <h1>${this.header}</h1>
-        <h1>   without security risks adsf    </h1>
+        <h1>without security risks adsf</h1>
         <p>Edit <code>src/SmartformsUiFrontend.ts</code> and save to reload.</p>
         <a
           class="app-link"

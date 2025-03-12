@@ -16,12 +16,18 @@ interface Story<T> {
 }
 
 interface ArgTypes {
-  header?: string;
+  header: string;
   backgroundColor?: string;
 }
 
-const Template: Story<ArgTypes> = ({ header, backgroundColor = 'white' }: ArgTypes) => html`
-  <smartforms-ui-frontend style="--smartforms-ui-frontend-background-color: ${backgroundColor}" .header=${header}></smartforms-ui-frontend>
+const Template: Story<ArgTypes> = ({
+  header,
+  backgroundColor = 'white',
+}: ArgTypes) => html`
+  <smartforms-ui-frontend
+    style="--smartforms-ui-frontend-background-color: ${backgroundColor}"
+    .header=${header}
+  ></smartforms-ui-frontend>
 `;
 
 export const App = Template.bind({});

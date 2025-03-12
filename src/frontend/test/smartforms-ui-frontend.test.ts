@@ -7,7 +7,9 @@ import '../src/smartforms-ui-frontend.js';
 describe('SmartformsUiFrontend', () => {
   let element: SmartformsUiFrontend;
   beforeEach(async () => {
-    element = await fixture(html`<smartforms-ui-frontend></smartforms-ui-frontend>`);
+    element = await fixture(
+      html`<smartforms-ui-frontend></smartforms-ui-frontend>`,
+    );
   });
 
   it('renders a h1', () => {
