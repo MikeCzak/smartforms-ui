@@ -35,7 +35,6 @@ export class SmartformsUiFrontend extends LitElement {
 
       & img {
         width: calc(30px + 3vmin);
-
       }
     }
 
