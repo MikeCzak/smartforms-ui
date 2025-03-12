@@ -15,6 +15,10 @@ app.get('/api/formdata/:name', (req, res, next) => {
   FormController.getForm(req, res, next);
 });
 
+app.post('/api/form/new', (req, res, next) => {
+  //TODO: implement this
+})
+
 
 
 
