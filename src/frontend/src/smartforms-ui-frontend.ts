@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import '@components/greeting.js';
+import './components/greeting.js';
 
 const logo = new URL('../../assets/logo.png', import.meta.url).href;
 
