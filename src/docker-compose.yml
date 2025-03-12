@@ -1,9 +1,9 @@
-version: "3"
 services:
   frontend:
     build:
       context: ./frontend
     image: mikeczak/czakhub:latest
+    container_name: smart_ui_frontend
     ports:
       - "8000:8000"
     environment:
@@ -11,6 +11,9 @@ services:
 
   nginx:
     image: mikeczak/smartui-nginx:latest
+    build:
+      context: .
+      dockerfile: ./local/Dockerfile
     container_name: smart_ui_nginx
     ports:
       - "80:80"
