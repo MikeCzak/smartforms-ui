@@ -1,11 +1,14 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
+import '@components/greeting.js';
 
 const logo = new URL('../../assets/logo.png', import.meta.url).href;
 
 @customElement('smartforms-ui-frontend')
 export class SmartformsUiFrontend extends LitElement {
-  @property({ type: String }) header = 'SmartForms UI';
+  @property({ type: String }) header: string = 'SmartForms UI';
+
+  @property({ type: Boolean }) greetingRead: boolean = false;
 
   static styles = css`
     :host {
@@ -14,7 +17,7 @@ export class SmartformsUiFrontend extends LitElement {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: calc(10px + 2vmin);
+      font-size: calc(6px + 2vmin);
       color: #010913;
       max-width: 960px;
       margin: 0 auto;
@@ -31,19 +34,20 @@ export class SmartformsUiFrontend extends LitElement {
       animation: app-logo-spin .5s ease-in-out;
 
       & img {
-        width: 100px;
+        width: calc(30px + 3vmin);
+
       }
     }
 
     @keyframes app-logo-spin {
       0% {
-        transform: scaleX(1);
+        transform: rotate3d(0, 1, 0, 0deg)
       }
       50% {
-        transform: scaleX(-1);
+        transform: rotate3d(0, 1, 0, 180deg)
       }
       100% {
-        transform: scaleX(1);
+        transform: rotate3d(0, 1, 0, 360deg)
       }
     }
 
@@ -62,18 +66,17 @@ export class SmartformsUiFrontend extends LitElement {
       <main>
         <div class="logo"><img alt="open-wc logo" src=${logo} /></div>
         <h1>${this.header}</h1>
-
+        <form-greeting @submit=${this.handleGreetingSubmit}></form-greeting>
       </main>
 
       <p class="app-footer">
-        🚽 Made with love by
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://github.com/open-wc"
-          >open-wc</a
-        >.
+
       </p>
     `;
+  }
+
+  private handleGreetingSubmit(e: SubmitEvent): void {
+    e.preventDefault();
+    this.greetingRead = true;
   }
 }
