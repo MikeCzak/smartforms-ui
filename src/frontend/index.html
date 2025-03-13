@@ -8,22 +8,20 @@
     />
     <meta name="Description" content="Put your description here." />
     <base href="/" />
-    <link rel="stylesheet" href="assets/css/dark.css">
-    <link rel="stylesheet" href="assets/css/light.css">
-
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        background: linear-gradient(130deg, #dae4ec, hsl(205, 45%, 25%));
-      }
-    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap">
+    <link rel="stylesheet" href="assets/style/light.css" id="theme-light">
+    <link rel="stylesheet" href="assets/style/dark.css" id="theme-dark">
+    <link rel="stylesheet" href="assets/style/typography.css">
+    <link rel="stylesheet" href="assets/style/colors.css">
+    <link rel="stylesheet" href="assets/style/index.css">
+    <link rel="stylesheet" href="node_modules/material-icons/iconfont/material-icons.css">
     <title>SmartForms UI</title>
   </head>
 
-  <body class="light">
+  <body>
+    <div class="header">
+      <theme-toggle></theme-toggle>
+    </div>
     <smartforms-ui-frontend></smartforms-ui-frontend>
     <script
       type="module"
