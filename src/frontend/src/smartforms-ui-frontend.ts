@@ -1,8 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import './components/greeting.js';
-
-const logo = new URL('../../assets/logo.png', import.meta.url).href;
+import './components/theme-toggle.js'
 
 @customElement('smartforms-ui-frontend')
 export class SmartformsUiFrontend extends LitElement {
@@ -12,31 +11,18 @@ export class SmartformsUiFrontend extends LitElement {
 
   static styles = css`
     :host {
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: calc(6px + 2vmin);
-      color: #010913;
+      width: 100%;
       max-width: 960px;
-      margin: 0 auto;
+      margin: 32px auto;
       text-align: center;
-
-    }
-
-    main {
       flex-grow: 1;
     }
 
-    .logo {
-      margin-top: 36px;
-      animation: app-logo-spin .5s ease-in-out;
 
-      & img {
-        width: calc(30px + 3vmin);
-      }
-    }
 
     @keyframes app-logo-spin {
       0% {
@@ -63,14 +49,8 @@ export class SmartformsUiFrontend extends LitElement {
   render() {
     return html`
       <main>
-        <div class="logo"><img alt="open-wc logo" src=${logo} /></div>
-        <h1>${this.header}</h1>
         <form-greeting @submit=${this.handleGreetingSubmit}></form-greeting>
       </main>
-
-      <p class="app-footer">
-
-      </p>
     `;
   }
 

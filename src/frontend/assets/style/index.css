@@ -1,7 +1,9 @@
 html,
 body {
+  display: grid;
+  grid-template-rows: auto 1fr; /* Header auto-sizes, main fills rest */
+  min-height: 100vh;
   margin: 0;
-  padding: 0;
   color: var(--md-sys-color-on-surface);
 }
 
@@ -13,9 +15,40 @@ body.dark {
   background: linear-gradient(130deg, hsl(204, 47%, 17%), hsl(200, 56%, 5%));
 }
 
-.header {
+header {
   display: flex;
-  justify-content: end;
-  width: 100%;
+  justify-content: start;
+  align-items: center;
+  width: auto;
+  padding: 0 20px;
+  gap: calc(5px + 1vw);
   background-color: var(--md-sys-color-surface);
+  & h1 {
+    font-size: calc(20px + 1vmin);
+  }
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  padding: 10px;
+  gap: calc(5px + 1vw);
+  background-color: var(--md-sys-color-surface-dim);
+  & h1 {
+    font-size: calc(20px + 1vmin);
+  }
+}
+
+.logo {
+  animation: app-logo-spin .5s ease-in-out;
+
+  & img {
+    width: calc(20px + 1vmin);
+  }
+}
+
+theme-toggle {
+  margin-left: auto;
 }

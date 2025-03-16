@@ -17,3 +17,6 @@ yarn.lock
 # environment variables (if you store any in the root folder)
 .env
 
+config.toml
+config.toml.tar.gz
+resolv.conf
