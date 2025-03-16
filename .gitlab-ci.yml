@@ -1,13 +1,13 @@
-default:
-  image: docker:24.0.5
-  services:
-    - docker:24.0.5-dind
-  before_script:
-    - ls -l
-    - pwd
-    - echo $DOCKER_HOST
-    - unset DOCKER_HOST
-    - echo $DOCKER_HOST
+# default:
+#   image: docker:24.0.5
+#   services:
+#     - docker:24.0.5-dind
+#   before_script:
+#     - ls -l
+#     - pwd
+#     - echo $DOCKER_HOST
+#     - unset DOCKER_HOST
+#     - echo $DOCKER_HOST
 
 stages:
   - build
@@ -17,7 +17,7 @@ build:
   stage: build
   tags:
     - deployment
-  image: docker:24.0.5-dind
+  image: docker:cli
   script:
     - docker build -t smartui-frontend:latest -t smartui-frontend:$CI_COMMIT_SHORT_SHA ./src/frontend
     - docker build -t smartui-nginx:latest ./src
