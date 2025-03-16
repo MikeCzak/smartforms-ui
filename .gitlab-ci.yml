@@ -1,13 +1,13 @@
-# default:
-#   image: docker:24.0.5
-#   services:
-#     - docker:24.0.5-dind
-#   before_script:
-#     - ls -l
-#     - pwd
-#     - echo $DOCKER_HOST
-#     - unset DOCKER_HOST
-#     - echo $DOCKER_HOST
+default:
+  # image: docker:24.0.5
+  # services:
+  #   - docker:24.0.5-dind
+  before_script:
+    - ls -l
+    - pwd
+    - echo $DOCKER_HOST
+    - unset DOCKER_HOST
+    - echo $DOCKER_HOST
 
 stages:
   - build
