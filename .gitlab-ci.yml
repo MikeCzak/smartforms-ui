@@ -5,6 +5,7 @@ default:
   before_script:
     - ls -l
     - pwd
+    - unset DOCKER_HOST
 
 stages:
   - build
