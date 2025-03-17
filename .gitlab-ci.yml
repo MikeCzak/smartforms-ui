@@ -1,14 +1,3 @@
-default:
-  # image: docker:24.0.5
-  # services:
-  #   - docker:24.0.5-dind
-  before_script:
-    - ls -l
-    - pwd
-    - echo $DOCKER_HOST
-    - unset DOCKER_HOST
-    - echo $DOCKER_HOST
-
 stages:
   - build
   - deploy
@@ -19,17 +8,12 @@ build:
     - deployment
   image: docker:cli
   script:
-    - docker build -t smartui-frontend:latest -t smartui-frontend:$CI_COMMIT_SHORT_SHA ./src/frontend
-    - docker build -t smartui-nginx:latest ./src
-    - docker build -t smartui-backend:latest -t smartui-backend:$CI_COMMIT_SHORT_SHA ./src/backend
+    - docker build -t docker.io/mikeczak/smartui-frontend:latest -t docker.io/mikeczak/smartui-frontend:$CI_COMMIT_SHORT_SHA ./src/frontend
+    - docker build -t docker.io/mikeczak/smartui-nginx:latest ./src
+    - docker build -t docker.io/mikeczak/smartui-backend:latest -t docker.io/mikeczak/smartui-backend:$CI_COMMIT_SHORT_SHA ./src/backend
     - echo "$DOCKER_TOKEN" | docker login -u mikeczak --password-stdin
-    - docker tag smartui-frontend:latest mikeczak/czakhub:latest
-    - docker tag smartui-frontend:$CI_COMMIT_SHORT_SHA mikeczak/czakhub:$CI_COMMIT_SHORT_SHA
-    - docker tag smartui-backend:latest mikeczak/smartui-backend:latest
-    - docker tag smartui-backend:$CI_COMMIT_SHORT_SHA mikeczak/smartui-backend:$CI_COMMIT_SHORT_SHA
-    - docker tag smartui-nginx:latest mikeczak/smartui-nginx:latest
-    - docker push mikeczak/czakhub:latest
-    - docker push mikeczak/czakhub:$CI_COMMIT_SHORT_SHA
+    - docker push mikeczak/smartui-frontend:latest
+    - docker push mikeczak/smartui-frontend:$CI_COMMIT_SHORT_SHA
     - docker push mikeczak/smartui-backend:latest
     - docker push mikeczak/smartui-backend:$CI_COMMIT_SHORT_SHA
     - docker push mikeczak/smartui-nginx:latest
