@@ -8,7 +8,9 @@ build:
     - deployment
   image: docker:cli
   script:
-    - docker build -t docker.io/mikeczak/smartui-frontend:latest -t docker.io/mikeczak/smartui-frontend:$CI_COMMIT_SHORT_SHA --build-arg ARCH=amd64 ./src/frontend
+    - docker buildx create --use
+    - docker buildx build --platform linux/amd64 --push -t docker.io/mikeczak/smartui-frontend:latest -t docker.io/mikeczak/smartui-frontend:$CI_COMMIT_SHORT_SHA --build-arg ARCH=amd64 ./src/frontend
+    # - docker build -t docker.io/mikeczak/smartui-frontend:latest -t docker.io/mikeczak/smartui-frontend:$CI_COMMIT_SHORT_SHA --build-arg ARCH=amd64 ./src/frontend
     # - docker build -t docker.io/mikeczak/smartui-nginx:latest ./src
     # - docker build -t docker.io/mikeczak/smartui-backend:latest -t docker.io/mikeczak/smartui-backend:$CI_COMMIT_SHORT_SHA ./src/backend
     - echo "$DOCKER_TOKEN" | docker login -u mikeczak --password-stdin
