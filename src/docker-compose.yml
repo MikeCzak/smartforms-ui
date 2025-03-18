@@ -2,6 +2,9 @@ services:
   frontend:
     build:
       context: ./frontend
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64"
     image: mikeczak/smartui-frontend:latest
     container_name: smart_ui_frontend
     ports:
@@ -14,6 +17,9 @@ services:
     build:
       context: .
       dockerfile: ./local/Dockerfile
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64"
     container_name: smart_ui_nginx
     ports:
       - "80:80"
@@ -27,6 +33,9 @@ services:
   backend:
     build:
       context: ./backend
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64"
     image: mikeczak/smartui-backend:latest
     container_name: smart_ui_backend
     environment:
