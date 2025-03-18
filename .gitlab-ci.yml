@@ -9,14 +9,17 @@ build:
   image: docker:cli
   script:
     - docker build -t docker.io/mikeczak/smartui-frontend:latest -t docker.io/mikeczak/smartui-frontend:$CI_COMMIT_SHORT_SHA ./src/frontend
-    - docker build -t docker.io/mikeczak/smartui-nginx:latest ./src
-    - docker build -t docker.io/mikeczak/smartui-backend:latest -t docker.io/mikeczak/smartui-backend:$CI_COMMIT_SHORT_SHA ./src/backend
+    # - docker build -t docker.io/mikeczak/smartui-nginx:latest ./src
+    # - docker build -t docker.io/mikeczak/smartui-backend:latest -t docker.io/mikeczak/smartui-backend:$CI_COMMIT_SHORT_SHA ./src/backend
     - echo "$DOCKER_TOKEN" | docker login -u mikeczak --password-stdin
+    - docker manifest create mikeczak/smartui-frontend:v1 mikeczak/smartui-frontend-linux:v1
+    - docker manifest annotate mikeczak/smartui-frontend:v1 mikeczak/smartui-frontend-linux  --arch amd64 --os linux
+    - docker manifest push mikeczak/smartui-frontend:v1
     - docker push mikeczak/smartui-frontend:latest
-    - docker push mikeczak/smartui-frontend:$CI_COMMIT_SHORT_SHA
-    - docker push mikeczak/smartui-backend:latest
-    - docker push mikeczak/smartui-backend:$CI_COMMIT_SHORT_SHA
-    - docker push mikeczak/smartui-nginx:latest
+    # - docker push mikeczak/smartui-frontend:$CI_COMMIT_SHORT_SHA
+    # - docker push mikeczak/smartui-backend:latest
+    # - docker push mikeczak/smartui-backend:$CI_COMMIT_SHORT_SHA
+    # - docker push mikeczak/smartui-nginx:latest
 
 deploy:
   stage: deploy
