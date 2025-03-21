@@ -31,7 +31,8 @@ export class Greeting extends LitElement {
     }
 
     h2 {
-      font-size: var(--md-sys-typescale-title-large);
+      font-size: var(--md-sys-typescale-display-medium);
+      color: var(--md-sys-color-secondary);
     }
 
     p, li {
