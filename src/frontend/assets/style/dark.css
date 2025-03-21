@@ -52,4 +52,5 @@
   --md-extended-color-custom-color-on-color: rgb(0 49 93);
   --md-extended-color-custom-color-color-container: rgb(32 72 118);
   --md-extended-color-custom-color-on-color-container: rgb(211 227 255);
+  --required: hsl(33, 75%, 42%);
 }
