@@ -22,20 +22,6 @@ export class SmartformsUiFrontend extends LitElement {
       flex-grow: 1;
     }
 
-
-
-    @keyframes app-logo-spin {
-      0% {
-        transform: rotate3d(0, 1, 0, 0deg)
-      }
-      50% {
-        transform: rotate3d(0, 1, 0, 180deg)
-      }
-      100% {
-        transform: rotate3d(0, 1, 0, 360deg)
-      }
-    }
-
     .app-footer {
       font-size: calc(12px + 0.5vmin);
       align-items: center;

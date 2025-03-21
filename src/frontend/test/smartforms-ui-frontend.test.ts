@@ -12,10 +12,9 @@ describe('SmartformsUiFrontend', () => {
     );
   });
 
-  it('renders a h1', () => {
-    const h1 = element.shadowRoot!.querySelector('h1')!;
-    expect(h1).to.exist;
-    expect(h1.textContent).to.equal('My app');
+  it('renders main', () => {
+    const main = element.shadowRoot!.querySelector('main')!;
+    expect(main).to.exist;
   });
 
   it('passes the a11y audit', async () => {
