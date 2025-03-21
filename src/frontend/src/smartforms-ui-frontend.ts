@@ -1,12 +1,18 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import './components/greeting.js';
-import './components/theme-toggle.js'
+import './components/theme-toggle.js';
+import '@material/web/progress/circular-progress.js'
+
+const APIROOT = `${document.location.protocol}//${document.location.hostname}${document.location.hostname==='localhost' ? ':3000' : ''}`
+
 
 @customElement('smartforms-ui-frontend')
 export class SmartformsUiFrontend extends LitElement {
 
   @property({ type: Boolean, attribute: false }) _greetingRead: boolean = JSON.parse(sessionStorage.greetingRead || 'false');
+
+  @property({type: Object}) private _rawForm: JSON | undefined;
 
   static styles = css`
     :host {
@@ -28,7 +34,31 @@ export class SmartformsUiFrontend extends LitElement {
           <form-greeting @submit=${this.handleGreetingSubmit}></form-greeting>
         </main>
       ` :
-      html`empty`;
+     (this._rawForm && html`
+
+        <md-circular-progress indeterminate></md-circular-progress>
+      `) || 'error fetching data';
+  }
+
+  connectedCallback(): void {
+    // eslint-disable-next-line wc/guard-super-call
+    super.connectedCallback();
+    this.loadFormData();
+  }
+
+  private async loadFormData() {
+    try {
+      const response = await fetch(`${APIROOT}/api/formdata/registration`);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const json = await response.json();
+      console.log(json);
+      this._rawForm = json;
+    } catch (error: any) {
+      console.error(error.message);
+    }
   }
 
   private handleGreetingSubmit(e: SubmitEvent): void {
