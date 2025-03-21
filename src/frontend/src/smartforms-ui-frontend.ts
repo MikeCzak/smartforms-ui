@@ -5,9 +5,8 @@ import './components/theme-toggle.js'
 
 @customElement('smartforms-ui-frontend')
 export class SmartformsUiFrontend extends LitElement {
-  @property({ type: String }) header: string = 'SmartForms UI';
 
-  @property({ type: Boolean }) greetingRead: boolean = false;
+  @property({ type: Boolean, attribute: false }) _greetingRead: boolean = JSON.parse(sessionStorage.greetingRead || 'false');
 
   static styles = css`
     :host {
@@ -33,15 +32,17 @@ export class SmartformsUiFrontend extends LitElement {
   `;
 
   render() {
-    return html`
-      <main>
-        <form-greeting @submit=${this.handleGreetingSubmit}></form-greeting>
-      </main>
-    `;
+      return !this._greetingRead ? html`
+        <main>
+          <form-greeting @submit=${this.handleGreetingSubmit}></form-greeting>
+        </main>
+      ` :
+      html`empty`;
   }
 
   private handleGreetingSubmit(e: SubmitEvent): void {
     e.preventDefault();
-    this.greetingRead = true;
+    this._greetingRead = true;
+    sessionStorage.greetingRead = JSON.stringify(this._greetingRead);
   }
 }
