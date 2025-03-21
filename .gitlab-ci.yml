@@ -26,7 +26,7 @@ deploy:
     - chmod 600 $ID_PRIVATE_KEY
     - apk update && apk add openssh-client
     - scp -i $ID_PRIVATE_KEY -o StrictHostKeyChecking=no src/docker-compose.yml $SERVER_USER@$SERVER_IP:~/docker-compose.yml
-    - ssh -i $ID_PRIVATE_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "echo $DOCKER_TOKEN | docker login -u mikeczak --password-stdin && docker compose -f /home/$SERVER_USER/docker-compose.yml pull && docker compose -f /home/$SERVER_USER/docker-compose.yml down && docker compose -f /home/$SERVER_USER/docker-compose.yml up -d --remove-orphans --force-recreate"
+    - ssh -i $ID_PRIVATE_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "echo $DOCKER_TOKEN | docker login -u mikeczak --password-stdin && docker compose -f /home/$SERVER_USER/docker-compose.yml down && docker rm mikeczak/smartui-backend mikeczak/smartui-frontend mikeczak/smartui-nginx && docker image prune -f && docker compose -f /home/$SERVER_USER/docker-compose.yml pull --policy always && docker compose -f /home/$SERVER_USER/docker-compose.yml up -d --remove-orphans --force-recreate"
   environment:
     name: production
     url: https://smart-ui.mikeczak.com
