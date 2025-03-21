@@ -2,7 +2,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '@material/web/iconbutton/icon-button.js';
 import { IconButton } from '@material/web/iconbutton/internal/icon-button.js';
-import './MdIcon.js';
+import './md-icon.js';
 
 @customElement('theme-toggle')
 export default class ThemeToggle extends LitElement {
