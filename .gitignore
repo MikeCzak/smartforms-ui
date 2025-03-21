@@ -20,3 +20,4 @@ yarn.lock
 config.toml
 config.toml.tar.gz
 resolv.conf
+cmd
