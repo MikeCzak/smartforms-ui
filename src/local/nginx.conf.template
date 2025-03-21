@@ -1,7 +1,7 @@
 
 server {
     listen 80;
-    server_name localhost;
+    server_name smart-ui.mikeczak.com;
 
     location /api/ {
         proxy_redirect off;
