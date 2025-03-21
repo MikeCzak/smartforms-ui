@@ -2,54 +2,45 @@ services:
   frontend:
     build:
       context: ./frontend
-      platforms:
-        - "linux/amd64"
     image: mikeczak/smartui-frontend:latest
-    platform: "linux/amd64"
     container_name: smart_ui_frontend
     ports:
-      - "8000:8000"
+      - "8000:80"
     environment:
       - NODE_ENV=production
 
-#   nginx:
-#     image: mikeczak/smartui-nginx:latest
-#     platform: "linux/amd64"
-#     build:
-#       context: .
-#       dockerfile: ./local/Dockerfile
-#       platforms:
-#         - "linux/amd64"
-#     container_name: smart_ui_nginx
-#     ports:
-#       - "80:80"
-#       - "443:443"
-#     depends_on:
-#       - backend
-#       - frontend
-#     volumes:
-#       - ssl_data:/etc/nginx/ssl/:ro
+  nginx:
+    image: mikeczak/smartui-nginx:latest
+    build:
+      context: .
+      dockerfile: ./local/Dockerfile
+    container_name: smart_ui_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+      - frontend
+    volumes:
+      - ssl_data:/etc/nginx/ssl/:ro
 
-#   backend:
-#     build:
-#       context: ./backend
-#       platforms:
-#         - "linux/amd64"
-#     image: mikeczak/smartui-backend:latest
-#     platform: "linux/amd64"
-#     container_name: smart_ui_backend
-#     environment:
-#       - NODE_ENV=production
-#     ports:
-#       - "3000:3000"
-#     volumes:
-#       - form_data:/app/src/data/:rw
-#       - ./.env:/app/src/backend/.env:ro
+  backend:
+    build:
+      context: ./backend
+    image: mikeczak/smartui-backend:latest
+    container_name: smart_ui_backend
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "3000:3000"
+    volumes:
+      - form_data:/app/src/data/:rw
+      - ./.env:/app/src/backend/.env:ro
 
-# volumes:
-#   ssl_data:
-#     external:
-#       name: ssl_data
-#   form_data:
-#     external:
-#       name: form_data
+volumes:
+  ssl_data:
+    external:
+      name: ssl_data
+  form_data:
+    external:
+      name: form_data
