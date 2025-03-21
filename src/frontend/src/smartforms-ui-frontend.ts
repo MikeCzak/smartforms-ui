@@ -20,15 +20,6 @@ export class SmartformsUiFrontend extends LitElement {
       text-align: center;
       flex-grow: 1;
     }
-
-    .app-footer {
-      font-size: calc(12px + 0.5vmin);
-      align-items: center;
-    }
-
-    .app-footer a {
-      margin-left: 5px;
-    }
   `;
 
   render() {
