@@ -55,7 +55,7 @@ export class Greeting extends LitElement {
     label:has([required]) {
       position: relative;
       background-color: var(--md-sys-color-surface-container-low);
-      padding: 8px;
+      padding-bottom: 8px;
     }
 
     label:has([required]):before {
@@ -66,7 +66,7 @@ export class Greeting extends LitElement {
       left: 0;
       height: calc(100% + 4px);
       width: 100%;
-      background: linear-gradient(90deg, var(--required) 0%, transparent 50%);
+      background: linear-gradient(90deg, var(--required) 0%, transparent max(150px, 60%));
     }
 
     label:has([required]):after {
