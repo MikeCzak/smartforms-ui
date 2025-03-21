@@ -4,8 +4,6 @@ services:
       context: ./frontend
     image: mikeczak/smartui-frontend:latest
     container_name: smart_ui_frontend
-    ports:
-      - "80:80"
     environment:
       - NODE_ENV=production
 
