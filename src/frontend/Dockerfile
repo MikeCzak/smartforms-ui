@@ -1,10 +1,8 @@
-FROM node:18-alpine AS base
+FROM node:18-alpine AS build
 WORKDIR /app
 
 COPY . .
 RUN npm install && npm run build
 
-FROM base AS release
-COPY --from=base /app/dist /app/dist
-COPY --from=base /app/package.json /app/package.json
-CMD npm run start:build
+FROM nginx:latest AS release
+COPY --from=build /app/dist /usr/share/nginx/html
