@@ -8,7 +8,7 @@ services:
     platform: "linux/amd64"
     container_name: smart_ui_frontend
     ports:
-      - "8000:8000"
+      - "8000:80"
     environment:
       - NODE_ENV=production
 
