@@ -6,6 +6,7 @@ dist/
 
 # Logs
 *.log
+/log/
 
 # Environment variables
 .env

@@ -3,6 +3,7 @@ import express from 'express';
 import FormController from './controller/FormController';
 import { Request, Response, NextFunction } from 'express';
 import FileNotFoundError from './util/FileNotFoundError';
+import Logger from './util/Logger';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -24,6 +25,7 @@ app.post('/api/form/new', (req, res, next) => {
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
+  Logger.log(err.message);
   if (err instanceof FileNotFoundError) {
     return res.status(404).json({ error: "Requested file not found."});
   }
