@@ -2,17 +2,19 @@ import { html, css, HTMLTemplateResult } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import '@material/web/progress/circular-progress.js';
 import AbstractBaseForm from './AbstractBaseForm.js';
+import AbstractFormElementFactory from '../form-element/AbstractFormElementFactory.js';
+import SmartFormElementFactory from '../form-element/SmartFormElementFactory.js';
 
 @customElement('smart-form')
 export default class SmartForm extends AbstractBaseForm {
 
-  public formName: string = "smart form";
+  @property({type: String}) public formName: string = "smart form";
 
-  render() {
-    return html`
-      <md-circular-progress indeterminate></md-circular-progress>
-      <div>smart form: ${JSON.stringify(this.formData)}</div>
-    `;
+  protected _formElementFactory: AbstractFormElementFactory;
+
+  constructor() {
+    super();
+    this._formElementFactory = new SmartFormElementFactory();
   }
 
   connectedCallback(): void {

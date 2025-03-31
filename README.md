@@ -72,5 +72,6 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 > ### Helpers
 > - generate unique id from label for html id
 > - visitor for "fields exist that depend on this field" for toggle decision
+> - invalidIterator for post-submit navigation
 
 <span style="font-size: 6px; font-style:italic">don't judge me on the warning sign - sometimes my inner monk needs to know how certain things are done</span>
