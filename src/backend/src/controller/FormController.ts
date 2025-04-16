@@ -25,7 +25,6 @@ export default class FormController {
     } catch (error) {
       next(error);
     }
-
   }
 
   public static async newForm(form: string): Promise<void> {

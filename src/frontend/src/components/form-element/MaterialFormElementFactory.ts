@@ -1,57 +1,77 @@
 import AbstractFormElementFactory from './AbstractFormElementFactory.js';
+import AbstractSection from './base-class/AbstractSection.js';
 import IFormElement from './IFormElement.js';
+import MaterialChoice from './material/MaterialChoice.js';
+import MaterialDate from './material/MaterialDate.js';
+import MaterialEmail from './material/MaterialEmail.js';
+import MaterialHidden from './material/MaterialHidden.js';
+import MaterialNumber from './material/MaterialNumber.js';
+import MaterialPassword from './material/MaterialPassword.js';
+import MaterialRange from './material/MaterialRange.js';
 import MaterialSection from './material/MaterialSection.js';
+import MaterialSubmit from './material/MaterialSubmit.js';
+import MaterialTel from './material/MaterialTel.js';
+import MaterialTextarea from './material/MaterialTextarea.js';
 import MaterialTextfield from './material/MaterialTextfield.js';
 
 export default class MaterialFormElementFactory extends AbstractFormElementFactory {
-  createSection(id: string, label: string, isRequired: boolean, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    const section = new MaterialSection(this.getUniqueIdFromId(id), label, isRequired, dependsOn);
-
+  createSection(name: string, label: string, info: string, dependsOn: IFormElement|undefined = undefined): AbstractSection {
+    const section = new MaterialSection(this.getUniqueIdFromName(name), label, info, dependsOn);
     return section;
   }
 
-  createTextfield(id: string, label: string, isRequired: boolean, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    const textfield = new MaterialTextfield(this.getUniqueIdFromId(id), label, isRequired, dependsOn);
+  createTextfield(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
+    const textfield = new MaterialTextfield(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
     return textfield;
   }
 
-  createTextarea(id: string, label: string, isRequired: boolean, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    throw new Error('Method not implemented.');
+  createTextarea(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
+    const textarea = new MaterialTextarea(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
+    return textarea;
   }
 
-  createChoice(id: string, label: string, isRequired: boolean, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    throw new Error('Method not implemented.');
+  createChoice(name: string, label: string, info: string, options: string[], choiceType: "single"|"multiple", isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
+    const choice = new MaterialChoice(this.getUniqueIdFromName(name), name, label, info, options, choiceType, isRequired, constraints, dependsOn);
+    return choice;
   }
 
-  createDate(id: string, label: string, isRequired: boolean, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    throw new Error('Method not implemented.');
+  createDate(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
+    const date = new MaterialDate(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
+    return date;
   }
 
-  createNumber(id: string, label: string, isRequired: boolean, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    throw new Error('Method not implemented.');
+  createNumber(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
+    const number = new MaterialNumber(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
+    return number;
   }
 
-  createPassword(id: string, label: string, isRequired: boolean, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    throw new Error('Method not implemented.');
+  createPassword(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
+    const password = new MaterialPassword(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
+    return password;
   }
 
-  createRange(id: string, label: string, isRequired: boolean, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    throw new Error('Method not implemented.');
+  createRange(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
+    const range = new MaterialRange(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
+    return range;
   }
 
-  createHidden(id: string, label: string, isRequired: boolean, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    throw new Error('Method not implemented.');
+  createHidden(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
+    const hidden = new MaterialHidden(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
+    return hidden;
   }
 
-  createEmail(id: string, label: string, isRequired: boolean, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    throw new Error('Method not implemented.');
+  createEmail(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
+    const email = new MaterialEmail(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
+    return email;
   }
 
-  createTel(id: string, label: string, isRequired: boolean, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    throw new Error('Method not implemented.');
+  createTel(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
+    const tel = new MaterialTel(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
+    return tel;
   }
 
-  createSubmit(id: string, label: string, isRequired: boolean, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    throw new Error('Method not implemented.');
+  createSubmit(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
+    const submit = new MaterialSubmit(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
+    return submit;
   }
 }

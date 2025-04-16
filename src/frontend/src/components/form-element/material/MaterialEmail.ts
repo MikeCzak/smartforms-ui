@@ -6,7 +6,10 @@ import AbstractEmail from "../base-class/AbstractEmail.js";
 export default class MaterialEmail extends AbstractEmail {
 
   render(): HTMLTemplateResult {
-    throw new Error("Method not implemented.");
+    return html`
+      <md-filled-text-field type=email ?required=${this._required} label="${this.label}">
+      </md-filled-text-field>
+    `;
   }
 
 }

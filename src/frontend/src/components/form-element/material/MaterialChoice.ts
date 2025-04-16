@@ -6,7 +6,7 @@ import AbstractChoice from "../base-class/AbstractChoice.js";
 export default class MaterialChoice extends AbstractChoice {
 
   render(): HTMLTemplateResult {
-    throw new Error("Method not implemented.");
+    return html``
   }
 
 }

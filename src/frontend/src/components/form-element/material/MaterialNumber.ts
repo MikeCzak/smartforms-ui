@@ -6,7 +6,10 @@ import AbstractNumber from "../base-class/AbstractNumber.js";
 export default class MaterialNumber extends AbstractNumber {
 
   render(): HTMLTemplateResult {
-    throw new Error("Method not implemented.");
+    return html`
+      <md-filled-text-field type=number ?required=${this._required} label="${this.label}">
+      </md-filled-text-field>
+    `;
   }
 
 }

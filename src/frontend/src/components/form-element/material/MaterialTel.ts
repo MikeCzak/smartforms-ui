@@ -6,7 +6,8 @@ import AbstractTel from "../base-class/AbstractTel.js";
 export default class MaterialTel extends AbstractTel {
 
   render(): HTMLTemplateResult {
-    throw new Error("Method not implemented.");
+    return html`<md-filled-text-field type=tel ?required=${this._required} label="${this.label}">
+    </md-filled-text-field>`
   }
 
 }

@@ -1,43 +1,62 @@
+import AbstractSection from './base-class/AbstractSection.js';
 import IFormElement from './IFormElement.js';
 import IFormElementFactory from './IFormElementFactory.js';
 
-export default abstract class AbstractFormElementFactory
-  implements IFormElementFactory
+export default abstract class AbstractFormElementFactory implements IFormElementFactory
 {
   protected _idMap: { [key: string]: number } = {};
 
-  protected getUniqueIdFromId(id: string): string {
-    if (this._idMap[id] === undefined) {
-      this._idMap[id] = 1;
+  protected getUniqueIdFromName(name: string): string {
+    if (this._idMap[name] === undefined) {
+      this._idMap[name] = 1;
     } else {
-      this._idMap[id] += 1;
+      this._idMap[name] += 1;
     }
 
-    return `${id}_${this._idMap[id]}`;
+    return `${name}_${this._idMap[name]}`;
   }
 
-  abstract createSection(id: string, label: string, isRequired: boolean, dependsOn?: IFormElement|undefined): IFormElement
+  public factoryMap: { [key: string]: (element: any) => IFormElement | never } = {
+        text: (element) => this.createTextfield(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
+        textarea: (element) => this.createTextarea(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
+        choice: (element) => {
+          if (!element.options || !Array.isArray(element.options)) {
+            throw new Error(`Invalid or missing options for choice element: ${JSON.stringify(element)}`);
+          }
+          return this.createChoice(element.name, element.label, element.info, element.choiceType, element.required, element.constraints, element.dependsOn);
+        },
+        date: (element) => this.createDate(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
+        number: (element) => this.createNumber(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
+        password: (element) => this.createPassword(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
+        range: (element) => this.createRange(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
+        hidden: (element) => this.createHidden(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
+        email: (element) => this.createEmail(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
+        tel: (element) => this.createTel(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
+        submit: (element) => this.createSubmit(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
+      };
 
-  abstract createTextfield(id: string, label: string, isRequired: boolean, dependsOn?: IFormElement|undefined): IFormElement
+  abstract createSection(name: string, label: string, info: string, dependsOn?: IFormElement|undefined): AbstractSection
 
-  abstract createTextarea(id: string, label: string, isRequired: boolean, dependsOn?: IFormElement|undefined): IFormElement
+  abstract createTextfield(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
 
-  abstract createChoice(id: string, label: string, isRequired: boolean, dependsOn?: IFormElement|undefined): IFormElement
+  abstract createTextarea(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
 
-  abstract createDate(id: string, label: string, isRequired: boolean, dependsOn?: IFormElement|undefined): IFormElement
+  abstract createChoice(name: string, label: string, info: string, options: string[], choiceType: "single"|"multiple", isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
 
-  abstract createNumber(id: string, label: string, isRequired: boolean, dependsOn?: IFormElement|undefined): IFormElement
+  abstract createDate(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
 
-  abstract createPassword(id: string, label: string, isRequired: boolean, dependsOn?: IFormElement|undefined): IFormElement
+  abstract createNumber(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
 
-  abstract createRange(id: string, label: string, isRequired: boolean, dependsOn?: IFormElement|undefined): IFormElement
+  abstract createPassword(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
 
-  abstract createHidden(id: string, label: string, isRequired: boolean, dependsOn?: IFormElement|undefined): IFormElement
+  abstract createRange(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
 
-  abstract createEmail(id: string, label: string, isRequired: boolean, dependsOn?: IFormElement|undefined): IFormElement
+  abstract createHidden(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
 
-  abstract createTel(id: string, label: string, isRequired: boolean, dependsOn?: IFormElement|undefined): IFormElement
+  abstract createEmail(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
 
-  abstract createSubmit(id: string, label: string, isRequired: boolean, dependsOn?: IFormElement|undefined): IFormElement
+  abstract createTel(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
+
+  abstract createSubmit(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
 
 }

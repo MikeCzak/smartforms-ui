@@ -3,6 +3,7 @@
   "sections": [
     {
       "title": "Personal Information",
+      "info": "Please provide personal information here",
       "fields": [
         {
           "name": "first_name",
@@ -32,7 +33,7 @@
           "label": "Gender",
           "options": ["Male", "Female", "Other"],
           "required": true,
-          "selectionType": "single"
+          "choiceType": "single"
         },
         {
           "name": "phone",
@@ -70,7 +71,7 @@
           "label": "Country",
           "options": ["USA", "Canada", "Germany", "UK", "France"],
           "required": true,
-          "selectionType": "multiple"
+          "choiceType": "multiple"
         },
         {
           "name": "zipcode",
@@ -118,7 +119,7 @@
           "label": "Subscribe to newsletter",
           "options": ["Yes", "No"],
           "required": true,
-          "selectionType": "single"
+          "choiceType": "single"
         },
         {
           "name": "topics",
@@ -126,7 +127,7 @@
           "label": "Interested Topics",
           "options": ["Technology", "Sports", "Music", "Movies", "Science"],
           "required": false,
-          "selectionType": "multiple"
+          "choiceType": "multiple"
         }
       ]
     },
@@ -139,7 +140,7 @@
           "label": "Payment Method",
           "options": ["Credit Card", "PayPal", "Bank Transfer"],
           "required": true,
-          "selectionType": "single"
+          "choiceType": "single"
         },
         {
           "name": "iban",
@@ -249,7 +250,7 @@
           "label": "Are you a student?",
           "options": ["Yes", "No"],
           "required": true,
-          "selectionType": "single"
+          "choiceType": "single"
         },
         {
           "name": "university",
@@ -284,7 +285,7 @@
           "label": "I agree to the Terms and Conditions",
           "options": ["Yes"],
           "required": true,
-          "selectionType": "single"
+          "choiceType": "single"
         }
       ]
     }

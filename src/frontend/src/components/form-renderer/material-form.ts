@@ -7,7 +7,7 @@ import AbstractFormElementFactory from '../form-element/AbstractFormElementFacto
 @customElement('material-form')
 export default class MaterialForm extends AbstractBaseForm {
 
-  @property({type: String}) public formName: string = "material form";
+  @property({type: String}) public formType: string = "material form";
 
   protected _formElementFactory: AbstractFormElementFactory;
 

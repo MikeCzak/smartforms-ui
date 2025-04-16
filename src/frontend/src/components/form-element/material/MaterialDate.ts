@@ -6,7 +6,9 @@ import AbstractDate from "../base-class/AbstractDate.js";
 export default class MaterialDate extends AbstractDate {
 
   render(): HTMLTemplateResult {
-    throw new Error("Method not implemented.");
+    return html`
+      <md-filled-text-field type=date label="${this.label}"></md-filled-text-field>
+      `
   }
 
 }

@@ -1,11 +1,14 @@
 import { HTMLTemplateResult } from "lit";
+import AbstractSection from "./base-class/AbstractSection.js";
 
 export default interface IFormElement {
   readonly id: string;
+  readonly name: string;
   readonly label: string;
+  readonly info: string;
   isRequired(): Boolean;
-  addDependingField(...elements: IFormElement[]): IFormElement
+  addDependingField(element: IFormElement|AbstractSection): IFormElement
+  addDependingFields(...elements: IFormElement[]): IFormElement
   validate(): Boolean;
   render(): HTMLTemplateResult
-  // getHTMLResult(): HTMLElement;  // TODO: delete if render() from inherited lit is enough
 }

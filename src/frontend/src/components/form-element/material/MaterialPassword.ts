@@ -6,7 +6,10 @@ import AbstractPassword from "../base-class/AbstractPassword.js";
 export default class MaterialPassword extends AbstractPassword {
 
   render(): HTMLTemplateResult {
-    throw new Error("Method not implemented.");
+    return html`
+      <md-filled-text-field type=password ?required=${this._required} label="${this.label}">
+      </md-filled-text-field>
+    `;
   }
 
 }
