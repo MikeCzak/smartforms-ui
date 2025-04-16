@@ -2,7 +2,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '@material/web/iconbutton/icon-button.js';
 import { IconButton } from '@material/web/iconbutton/internal/icon-button.js';
-import './md-icon.js';
+import './my-icon.js';
 
 @customElement('theme-toggle')
 export default class ThemeToggle extends LitElement {
@@ -13,7 +13,7 @@ export default class ThemeToggle extends LitElement {
   render() {
       return html`
         <md-icon-button ?selected=${this.mode === 'dark'} @change=${this.handleChange} toggle id="theme-toggle">
-          <md-icon icon="${this.mode}_mode"></md-icon>
+          <my-icon icon="${this.mode}_mode"></my-icon>
         </md-icon-button>
       `;
     }

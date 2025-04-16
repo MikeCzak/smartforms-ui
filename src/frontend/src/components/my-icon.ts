@@ -1,8 +1,8 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 
-@customElement('md-icon')
-export default class MdIcon extends LitElement {
+@customElement('my-icon')
+export default class MyIcon extends LitElement {
   @property({ type: String }) icon: string = '';
 
   static styles = css`

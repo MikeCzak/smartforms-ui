@@ -1,6 +1,5 @@
-import { html, css, HTMLTemplateResult } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import '@material/web/progress/circular-progress.js';
+import '@material/web/all.js';
 import AbstractBaseForm from './AbstractBaseForm.js';
 import MaterialFormElementFactory from '../form-element/MaterialFormElementFactory.js';
 import AbstractFormElementFactory from '../form-element/AbstractFormElementFactory.js';

@@ -1,8 +1,11 @@
+import { HTMLTemplateResult, html, css } from "lit";
+import { customElement } from "lit/decorators.js";
 import AbstractHidden from "../base-class/AbstractHidden.js";
 
+@customElement('material-hidden')
 export default class MaterialHidden extends AbstractHidden {
 
-  getHTMLResult(): HTMLElement {
+  render(): HTMLTemplateResult {
     throw new Error("Method not implemented.");
   }
 

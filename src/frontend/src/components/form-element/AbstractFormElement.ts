@@ -1,6 +1,8 @@
+import { HTMLTemplateResult, LitElement } from 'lit';
 import IFormElement from './IFormElement.js';
+import { property } from 'lit/decorators.js';
 
-export default abstract class AbstractFormElement implements IFormElement {
+export default abstract class AbstractFormElement extends LitElement implements IFormElement {
 
   protected _id: string;
 
@@ -10,9 +12,10 @@ export default abstract class AbstractFormElement implements IFormElement {
 
   protected _dependingFields: Array<IFormElement> = [];
 
-  protected _required: boolean;
+  @property({type: Boolean}) protected _required: boolean;
 
   constructor(id: string, label: string, isRequired: boolean, dependsOn: IFormElement|undefined = undefined) {
+    super();
     this._id = id;
     this._label = label;
     this._dependsOn = dependsOn;
@@ -46,5 +49,5 @@ export default abstract class AbstractFormElement implements IFormElement {
 
   abstract validate(): boolean
 
-  abstract getHTMLResult(): HTMLElement
+  abstract render(): HTMLTemplateResult
 }

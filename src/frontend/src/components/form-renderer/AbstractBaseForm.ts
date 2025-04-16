@@ -19,7 +19,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
 
   protected parseData(data: Object): void {
     // TODO implement parser class instead of this:
-    this._formElements.push(this._formElementFactory.createTextfield("name", "Name", false));
+    this._formElements.push(this._formElementFactory.createTextfield("name", "Name", true));
 
 
   }
@@ -42,7 +42,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
     ${this._formElements.length > 0 ?
       html`
         <div>
-          ${this._formElements.map(el => el.getHTMLResult())}
+          ${this._formElements.map(el => el.render())}
         </div>`
       : html`
         <md-circular-progress indeterminate></md-circular-progress>`

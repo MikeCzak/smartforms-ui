@@ -1,3 +1,4 @@
+import {HTMLTemplateResult, html} from 'lit';
 import AbstractFormElement from "../AbstractFormElement.js";
 import IFormElement from "../IFormElement.js";
 
@@ -7,13 +8,13 @@ export default abstract class AbstractSection extends AbstractFormElement {
 
   private _numChildren: number = 0;
 
-  public addChild(element: IFormElement): IFormElement {
+  public addElement(element: IFormElement): IFormElement {
     this._numChildren = this._children.push(element);
 
     return this;
   }
 
-  public removeChild(element: IFormElement): IFormElement {
+  public removeElement(element: IFormElement): IFormElement {
     this._children = this._children.filter(child => child !== element);
     this._numChildren = this._children.length;
 
@@ -24,13 +25,11 @@ export default abstract class AbstractSection extends AbstractFormElement {
     throw new Error('Method not implemented.');
   }
 
-  public getHTMLResult(): HTMLElement {
-    const container = document.createElement('div');
-
-    this._children.forEach(child => {
-      container.appendChild(child.getHTMLResult());
-    });
-
-    return container;
+  public render(): HTMLTemplateResult {
+    return html`
+    <div>
+      ${this._children.map(child => child.render())}
+    </div>
+    `;
   }
 }
