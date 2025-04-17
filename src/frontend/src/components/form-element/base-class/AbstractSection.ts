@@ -52,11 +52,29 @@ export default abstract class AbstractSection extends LitElement {
     throw new Error('Method not implemented.');
   }
 
+
+  static styles = css`
+  md-checkbox, md-radio {
+    margin-bottom: 10px;
+  }
+  :host {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  `;
+
   public render(): HTMLTemplateResult {
     return html`
     <h2>${this._label}</h2>
     ${this.info && html`<p>${this.info}</p>`}
-    <div>
+    <div class="section">
       ${this._children.map(child => child.render())}
     </div>
     `;
