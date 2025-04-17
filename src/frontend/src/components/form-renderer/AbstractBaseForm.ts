@@ -76,7 +76,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
         <div>
           ${this._formSections.map(el => el)}
         </div>
-        <material-section>asdf</material-section>`
+        <material-section></material-section>`
 
       : html`<md-circular-progress indeterminate></md-circular-progress>`
     }
