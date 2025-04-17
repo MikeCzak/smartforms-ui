@@ -52,16 +52,10 @@ export default abstract class AbstractSection extends LitElement {
     throw new Error('Method not implemented.');
   }
 
-  static styles = css`
-    :host {
-
-    }
-  `;
-
   public render(): HTMLTemplateResult {
     return html`
     <h2>${this._label}</h2>
-    <p>${this.info}</p>
+    ${this.info && html`<p>${this.info}</p>`}
     <div>
       ${this._children.map(child => child.render())}
     </div>
