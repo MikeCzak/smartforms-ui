@@ -9,10 +9,12 @@ body {
 
 body.light {
   background: linear-gradient(130deg, #dae4ec, hsl(205, 45%, 25%));
+  background-attachment: fixed;
 }
 
 body.dark {
   background: linear-gradient(130deg, hsl(204, 47%, 17%), hsl(200, 56%, 5%));
+  background-attachment: fixed;
 }
 
 header {
