@@ -20,7 +20,7 @@ private selectChoiceType() {
       return this.dropdown();
     case "multiple": return this.checkbox();
 
-    default: throw new Error(`Invalid choice type on Choice ${JSON.stringify(this)}`);
+    default: throw new Error(`Invalid choice type on Choice ${this.label}: ${this.choiceType}`);
   }
 }
 

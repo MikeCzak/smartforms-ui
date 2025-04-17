@@ -1,11 +1,41 @@
-/* eslint-disable lines-between-class-members */
 import AbstractSection from './base-class/AbstractSection.js';
+import IBaseFormElementParams from './IBaseFormElementParams.js';
+import IChoiceElementParams from './IChoiceElementParams.js';
 import IFormElement from './IFormElement.js';
-import IFormElementFactory from './IFormElementFactory.js';
 
-export default abstract class AbstractFormElementFactory implements IFormElementFactory
+type Constructor<T> = new (...args: any[]) => T;
+
+export default abstract class AbstractFormElementFactory
 {
   protected _idMap: { [key: string]: number } = {};
+
+  public factoryMap: { [key: string]: (params: IBaseFormElementParams) => IFormElement | never } = {
+        text: (params) => this.createTextfield(params),
+        textarea: (params) => this.createTextarea(params),
+        choice: (params) => {
+          const choiceParams = params as IChoiceElementParams;
+          if (!choiceParams.options || !Array.isArray(choiceParams.options)) {
+            throw new Error(`Invalid or missing options for choice element: ${JSON.stringify(params)}`);
+          }
+          return this.createChoice(params as IChoiceElementParams);
+        },
+        date: (params) => this.createDate(params),
+        number: (params) => this.createNumber(params),
+        password: (params) => this.createPassword(params),
+        range: (params) => this.createRange(params),
+        hidden: (params) => this.createHidden(params),
+        email: (params) => this.createEmail(params),
+        tel: (params) => this.createTel(params),
+        submit: (params) => this.createSubmit(params),
+      };
+
+  protected createElement<T extends IFormElement>(
+    ElementClass: Constructor<T>,
+    params: IBaseFormElementParams,
+  ): T {
+    params.id = this.getUniqueIdFromName(params.name);
+    return new ElementClass(params);
+  }
 
   protected getUniqueIdFromName(name: string): string {
     if (this._idMap[name] === undefined) {
@@ -17,35 +47,16 @@ export default abstract class AbstractFormElementFactory implements IFormElement
     return `${name}_${this._idMap[name]}`;
   }
 
-  public factoryMap: { [key: string]: (element: any) => IFormElement | never } = {
-        text: (element) => this.createTextfield(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
-        textarea: (element) => this.createTextarea(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
-        choice: (element) => {
-          if (!element.options || !Array.isArray(element.options)) {
-            throw new Error(`Invalid or missing options for choice element: ${JSON.stringify(element)}`);
-          }
-          return this.createChoice(element.name, element.label, element.info, element.options, element.choiceType, element.required, element.constraints, element.dependsOn);
-        },
-        date: (element) => this.createDate(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
-        number: (element) => this.createNumber(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
-        password: (element) => this.createPassword(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
-        range: (element) => this.createRange(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
-        hidden: (element) => this.createHidden(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
-        email: (element) => this.createEmail(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
-        tel: (element) => this.createTel(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
-        submit: (element) => this.createSubmit(element.name, element.label, element.info, element.required, element.constraints, element.dependsOn),
-      };
-
   abstract createSection(name: string, label: string, info: string, dependsOn?: IFormElement|undefined): AbstractSection
-  abstract createTextfield(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
-  abstract createTextarea(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
-  abstract createChoice(name: string, label: string, info: string, options: string[], choiceType: "single"|"multiple", isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
-  abstract createDate(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
-  abstract createNumber(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
-  abstract createPassword(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
-  abstract createRange(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
-  abstract createHidden(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
-  abstract createEmail(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
-  abstract createTel(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
-  abstract createSubmit(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn?: IFormElement|undefined): IFormElement
+  abstract createTextfield(params: IBaseFormElementParams): IFormElement
+  abstract createTextarea(params: IBaseFormElementParams): IFormElement
+  abstract createChoice(params: IChoiceElementParams): IFormElement
+  abstract createDate(params: IBaseFormElementParams): IFormElement
+  abstract createNumber(params: IBaseFormElementParams): IFormElement
+  abstract createPassword(params: IBaseFormElementParams): IFormElement
+  abstract createRange(params: IBaseFormElementParams): IFormElement
+  abstract createHidden(params: IBaseFormElementParams): IFormElement
+  abstract createEmail(params: IBaseFormElementParams): IFormElement
+  abstract createTel(params: IBaseFormElementParams): IFormElement
+  abstract createSubmit(params: IBaseFormElementParams): IFormElement
 }

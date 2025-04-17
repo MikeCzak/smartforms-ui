@@ -2,42 +2,29 @@ import { HTMLTemplateResult, LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 import IFormElement from './IFormElement.js';
 import AbstractSection from './base-class/AbstractSection.js';
+import IBaseFormElementParams from './IBaseFormElementParams.js';
 
 export default abstract class AbstractFormElement extends LitElement implements IFormElement {
 
   private _id: string;
-
   private _name: string;
-
   private _label: string;
-
-  private _info: string;
-
-  private _constraints:  {[key: string]: any}|undefined;
-
-  private _dependsOn: IFormElement|undefined;
-
+  private _info?: string;
+  private _constraints?:  {[key: string]: any};
+  private _dependsOn?: IFormElement;
   private _dependingFields: Array<IFormElement|AbstractSection> = [];
 
   @property({type: Boolean}) protected _required: boolean;
 
-  constructor(
-    id: string,
-    name: string,
-    label: string,
-    info: string,
-    isRequired: boolean = true,
-    constraints: {[key: string]: any}|undefined = undefined,
-    dependsOn: IFormElement|undefined = undefined
-  ) {
+  constructor(params: IBaseFormElementParams) {
     super();
-    this._id = id;
-    this._name = name;
-    this._label = label;
-    this._info = info;
-    this._required = isRequired;
-    this._dependsOn = dependsOn;
-    this._constraints = constraints;
+    this._id = params.id;
+    this._name = params.name;
+    this._label = params.label;
+    this._info = params.info;
+    this._required = params.required ?? true;
+    this._dependsOn = params.dependsOn;
+    this._constraints = params.constraints;
   }
 
   public get id(): string {
@@ -52,7 +39,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
     return this._label;
   }
 
-  public get info(): string {
+  public get info(): string | undefined {
     return this._info;
   }
 

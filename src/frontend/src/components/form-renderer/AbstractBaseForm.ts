@@ -29,6 +29,9 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
       if (element.type !== "form" && (!element.label || !element.name || element.required === undefined || !element.type)) {
         throw new Error(`Missing required keys for element: ${JSON.stringify(element)}`);
       }
+      if (element.type === "form" && !element.subform) {
+        throw new Error(`Missing key "subform" for nested form: ${JSON.stringify(element)}`);
+      }
       const factoryMethod = this._formElementFactory.factoryMap[element.type];
       if (!factoryMethod) {
         throw new Error(`No factory method found for element type: ${element.type}`);
@@ -76,8 +79,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
         <div>
           ${this._formSections.map(el => el)}
         </div>
-        <material-section></material-section>`
-
+        `
       : html`<md-circular-progress indeterminate></md-circular-progress>`
     }
     ${this.formType}`;

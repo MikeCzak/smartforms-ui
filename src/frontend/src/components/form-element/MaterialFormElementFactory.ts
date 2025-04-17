@@ -1,4 +1,6 @@
 import AbstractFormElementFactory from './AbstractFormElementFactory.js';
+import IBaseFormElementParams from './IBaseFormElementParams.js';
+import IChoiceElementParams from './IChoiceElementParams.js';
 import AbstractSection from './base-class/AbstractSection.js';
 import IFormElement from './IFormElement.js';
 import MaterialChoice from './material/MaterialChoice.js';
@@ -15,63 +17,19 @@ import MaterialTextarea from './material/MaterialTextarea.js';
 import MaterialTextfield from './material/MaterialTextfield.js';
 
 export default class MaterialFormElementFactory extends AbstractFormElementFactory {
-  createSection(name: string, label: string, info: string, dependsOn: IFormElement|undefined = undefined): AbstractSection {
-    const section = new MaterialSection(this.getUniqueIdFromName(name), label, info, dependsOn);
-    return section;
+  createSection(name: string, label: string, info: string, dependsOn: IFormElement | undefined = undefined): AbstractSection {
+    return new MaterialSection(this.getUniqueIdFromName(name), label, info, dependsOn);
   }
 
-  createTextfield(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    const textfield = new MaterialTextfield(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
-    return textfield;
-  }
-
-  createTextarea(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    const textarea = new MaterialTextarea(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
-    return textarea;
-  }
-
-  createChoice(name: string, label: string, info: string, options: string[], choiceType: "single"|"multiple", isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    const choice = new MaterialChoice(this.getUniqueIdFromName(name), name, label, info, options, choiceType, isRequired, constraints, dependsOn);
-    return choice;
-  }
-
-  createDate(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    const date = new MaterialDate(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
-    return date;
-  }
-
-  createNumber(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    const number = new MaterialNumber(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
-    return number;
-  }
-
-  createPassword(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    const password = new MaterialPassword(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
-    return password;
-  }
-
-  createRange(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    const range = new MaterialRange(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
-    return range;
-  }
-
-  createHidden(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    const hidden = new MaterialHidden(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
-    return hidden;
-  }
-
-  createEmail(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    const email = new MaterialEmail(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
-    return email;
-  }
-
-  createTel(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    const tel = new MaterialTel(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
-    return tel;
-  }
-
-  createSubmit(name: string, label: string, info: string, isRequired: boolean, constraints: {[key: string]: any}, dependsOn: IFormElement|undefined = undefined): IFormElement {
-    const submit = new MaterialSubmit(this.getUniqueIdFromName(name), name, label, info, isRequired, constraints, dependsOn);
-    return submit;
-  }
+  createTextfield(params: IBaseFormElementParams): IFormElement { return this.createElement(MaterialTextfield, params); }
+  createTextarea(params: IBaseFormElementParams): IFormElement { return this.createElement(MaterialTextarea, params); }
+  createChoice(params: IChoiceElementParams): IFormElement { return this.createElement(MaterialChoice, params); }
+  createDate(params: IBaseFormElementParams): IFormElement { return this.createElement(MaterialDate, params); }
+  createNumber(params: IBaseFormElementParams): IFormElement { return this.createElement(MaterialNumber, params); }
+  createPassword(params: IBaseFormElementParams): IFormElement { return this.createElement(MaterialPassword, params); }
+  createRange(params: IBaseFormElementParams): IFormElement { return this.createElement(MaterialRange, params); }
+  createHidden(params: IBaseFormElementParams): IFormElement { return this.createElement(MaterialHidden, params); }
+  createEmail(params: IBaseFormElementParams): IFormElement { return this.createElement(MaterialEmail, params); }
+  createTel(params: IBaseFormElementParams): IFormElement { return this.createElement(MaterialTel, params); }
+  createSubmit(params: IBaseFormElementParams): IFormElement { return this.createElement(MaterialSubmit, params); }
 }

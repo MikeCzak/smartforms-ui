@@ -1,6 +1,7 @@
 import { property } from "lit/decorators.js";
 import AbstractFormElement from "../AbstractFormElement.js";
 import IFormElement from "../IFormElement.js";
+import IBaseFormElementParams from "../IBaseFormElementParams.js";
 
 export default abstract class AbstractNumber extends AbstractFormElement {
 
@@ -8,17 +9,10 @@ export default abstract class AbstractNumber extends AbstractFormElement {
 
   @property({type: Number, attribute: true}) protected max: number|undefined = undefined;
 
-   constructor(
-    id: string,
-    name: string,
-    label: string,
-    info: string,
-    isRequired: boolean = true,
-    constraints: {[key: string]: any}|undefined = undefined,
-    dependsOn: IFormElement|undefined = undefined
-    ) {
-      super(id, name, label, info, isRequired, constraints, dependsOn);
-      if(constraints !== undefined) {
+   constructor(params: IBaseFormElementParams) {
+      super(params);
+      const { constraints } = params;
+      if(constraints) {
         this.min = constraints.min;
         this.max = constraints.max;
       }

@@ -1,6 +1,6 @@
 import { html, HTMLTemplateResult } from "lit";
 import AbstractFormElement from "../AbstractFormElement.js";
-import IFormElement from "../IFormElement.js";
+import IChoiceElementParams from "../IChoiceElementParams.js";
 
 export default abstract class AbstractChoice extends AbstractFormElement {
 
@@ -8,20 +8,10 @@ export default abstract class AbstractChoice extends AbstractFormElement {
 
   private _choiceType: "single"|"multiple";
 
-  constructor(
-    id: string,
-    name: string,
-    label: string,
-    info: string,
-    options: Array<string>,
-    choiceType: "single"|"multiple",
-    isRequired: boolean = true,
-    constraints: {[key: string]: any}|undefined = undefined,
-    dependsOn: IFormElement|undefined = undefined,
-  ) {
-    super(id, name, label, info, isRequired, constraints, dependsOn);
-    this._options = options;
-    this._choiceType = choiceType;
+  constructor(params: IChoiceElementParams) {
+    super(params);
+    this._options = params.options;
+    this._choiceType = params.choiceType;
   }
 
   get options() {
