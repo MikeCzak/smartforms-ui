@@ -51,6 +51,7 @@ export class SmartformsUiFrontend extends LitElement {
     }
     #personal-info {
       margin: auto 16px 132px auto;
+      max-width: 90vw;
     }
 
   `;

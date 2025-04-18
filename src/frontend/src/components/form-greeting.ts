@@ -41,7 +41,7 @@ export default class FormGreeting extends LitElement {
     }
 
     p:last-of-type {
-      margin-bottom: 100px;
+      margin-bottom: 40px;
     }
 
     ul {
@@ -84,18 +84,17 @@ export default class FormGreeting extends LitElement {
           Thank you in advance for participating in my study - you're helping me a bunch! <br>
           You will be presented a form that has been designed for test purposes, meaning its contents and
           requirements do not necessarily reflect a real-world situation, but cover all the aspects I need to test.
-          You will be provided dummy data for fields regarding personal information so that you don't have to enter any real data.
-          <span style="color: var(--required); font-weight: bold">You can access that dummy data anytime by clicking on the floating button in the bottom-right corner.</span>
+          You will be provided dummy data for fields regarding sensitive information (like account number) so that you don't have to enter any real data.
+          <span style="color: var(--required); font-weight: bold">You can access that dummy data anytime by clicking on the floating button in the bottom-right corner. Try it now!</span>
+          <br>You can use your real name, birthday, etc. but don't have to - I guarantee that your input is solely used for the empirical evaluation of the form filling process and
+          none of it will be in any way made public or given to third parties.
           <br><br>Please try to
         </p>
 
           <ul>
-            <li>fill out the form as if it was a real one:
-              <ul>
-              <li>Be impatient!</li>
-              <li>Put yourself in a "C'mon man, I just wanna quickly sign up and get on with life!" mindset!</li>
-              <li>Be mad at me for stealing your precious time with a f***ing web form!</li>
-              </ul>
+            <li>fill out the form as if it was a real one: Be impatient!
+              Put yourself in a "C'mon man, I just wanna quickly sign up and get on with life!" mindset!
+              Be mad at me for stealing your precious time with a f***ing web form!
             </li>
             <li>Avoid validation errors due to wrong data formats,</li>
             <li>fill all required fields (marked like the one below), filling all fields would be appreciated but isn't necessary, and</li>
@@ -105,7 +104,7 @@ export default class FormGreeting extends LitElement {
           There is no time limit, but the completion time will be part of the measurements.
         <p>
           When you're ready, please tick the checkbox below and then click the "Get started!" button.
-          Thanks again - you rock!
+          Thanks again - you rock! <span style="font-size:30px">&#x1F918;</span>
         </p>
         <label for="agreed">
           <md-checkbox id="agreed" aria-required="true" required @change=${this.handleCheck}></md-checkbox>
