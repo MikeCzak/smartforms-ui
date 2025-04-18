@@ -68,7 +68,6 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 > - erroneous form navigation
 > - provided personal data
 >
-> &nbsp;
 > ### Helpers
 > - ~~generate unique id from label for html id~~
 > - visitor for "fields exist that depend on this field" for toggle decision (maybe array is enough since dependsOn is in the interface)
