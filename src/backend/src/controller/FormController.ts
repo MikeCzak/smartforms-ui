@@ -5,6 +5,7 @@ import { NextFunction } from 'express-serve-static-core';
 import * as fs from 'fs';
 import * as path from 'path';
 import 'crypto';
+import Logger from '../util/Logger';
 
 interface FormParams {
   name: string;
@@ -27,13 +28,18 @@ export default class FormController {
     }
   }
 
-  public static async newForm(form: string): Promise<void> {
-    // const timestamp = new Date().toISOString()
-    const uuid = crypto.randomUUID()
-    const filePath = path.join(__dirname, '../../data', `${uuid}.json`);
-    fs.writeFile(filePath, form, 'utf-8', (err) => {
+  public static async newForm(formData: string, formType: string): Promise<void> {
+    const timestamp = new Date().toISOString();
+    const uuid = crypto.randomUUID();
+    const filePath = path.join(__dirname, '../../data', `${formType}_${timestamp}_${uuid}.json`);
+    const dataToSave = {
+      formType,
+      timestamp,
+      formData: formData,
+    };
+    fs.writeFile(filePath, JSON.stringify(dataToSave, null, 2), 'utf-8', (err) => {
       if (err) throw err;
-      console.log('The file has been saved!');
+      Logger.log(`The file ${filePath} has been saved!`);
     });
   }
 }

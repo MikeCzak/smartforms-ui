@@ -34,4 +34,24 @@ export default class ApiClient {
       return null;
     }
   }
+
+  public static async saveForm(jsonData: {[key: string]: any}, formType: string) {
+    try {
+      const response = await fetch(`${this.API_ROOT}/form/new/${formType}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jsonData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to submit form: ${response.statusText}`);
+      }
+
+      console.log('Form submitted successfully!');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  }
 }

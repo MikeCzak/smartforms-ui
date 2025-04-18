@@ -8,6 +8,8 @@ import Logger from './util/Logger';
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
   res.send("Hello from the backend!");
 });
@@ -22,8 +24,8 @@ app.get('/api/formtype/', (req, res, next) => {
   res.send("material");
 });
 
-app.post('/api/form/new', (req, res, next) => {
-  //TODO: implement this
+app.post('/api/form/new/:formType', (req, res, next) => {
+  FormController.newForm(req.body, req.params.formType)
 })
 
 

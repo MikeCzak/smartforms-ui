@@ -96,15 +96,10 @@ updated(changedProperties: Map<string, any>) {
   if (changedProperties.has('value')) {
     this.internals_.setFormValue(this.value);
   }
-  if (changedProperties.has('required')) {
-    this.internals_.ariaRequired = this.required ? 'true' : 'false'; // Reflect required state for accessibility
-
-    // Update validity state for required fields
-    if (this.required && !this.value) {
-      this.internals_.setValidity({ valueMissing: true }, 'This field is required.');
-    } else {
-      this.internals_.setValidity({}, ''); // Clear validity state
-    }
+  if (this.required && !this.value) {
+    this.internals_.setValidity({ valueMissing: true }, 'This field is required.');
+  } else {
+    this.internals_.setValidity({}, ''); // Clear validity state
   }
 }
 
@@ -120,10 +115,16 @@ public setCustomValidity(message: string): void {
   this.internals_.setValidity(message ? { customError: true } : {}, message);
 }
 
-protected handleInput(event: InputEvent) {
-  const input = event.target as HTMLInputElement;
-  this.value = input.value;
-  console.log(this.internals_.validity)
+protected handleInput(event: InputEvent): void {
+  const mdField = event.target as HTMLElement;
+  const input = mdField.shadowRoot?.querySelector('input') as HTMLInputElement;
+
+  if (input) {
+    this.value = input.value; // Synchronize the value
+    this.internals_.setFormValue(this.value); // Update the ElementInternals form value
+  } else {
+    console.error('Internal input element not found!');
+  }
 }
 
   abstract validate(): boolean

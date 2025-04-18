@@ -6,7 +6,7 @@ import FileNotFoundError from "./FileNotFoundError";
 export default class RawFormLoader implements IFormloader {
 
   public async getForm(name: string): Promise<JSON> {
-    console.log("DEBUG: dirname: " + __dirname + ", filename: " + __filename)
+    // console.log("DEBUG: dirname: " + __dirname + ", filename: " + __filename)
     const filePath = path.join(__dirname, '../../formTemplate/' + name +'.json');
     try {
       const fileContents = await fs.promises.readFile(filePath, 'utf-8');

@@ -7,6 +7,7 @@ import AbstractFormElementFactory from '../form-element/AbstractFormElementFacto
 import AbstractSection from '../form-element/base-class/AbstractSection.js';
 import '../form-element/material/MaterialSection.js';
 import { isDev } from '../../smartforms-ui-frontend.js';
+import ApiClient from '../../util/ApiClient.js';
 
 export default abstract class AbstractBaseForm extends LitElement implements IForm {
 
@@ -108,14 +109,19 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
     this.parseData(this.formData);
   }
 
-  private submitForm(event: SubmitEvent) {
-    // event.preventDefault();
+  private async submitForm(event: SubmitEvent): Promise<void> {
+    event.preventDefault(); // Prevent default form submission
+
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
-    console.log(formData);
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+
+    // Convert FormData to JSON
+    const jsonData: { [key: string]: any } = {};
+    formData.forEach((value, key) => {
+      jsonData[key] = value;
+    });
+
+    ApiClient.saveForm(jsonData, this.formType)
   }
 
   private getElementByName(name: string): IFormElement {

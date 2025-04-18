@@ -41,7 +41,7 @@ export default abstract class AbstractChoice extends AbstractFormElement {
     return html`${this.options.map((option, index) => html`
       <div class="choice">
         <label for=${this.getOptionId(index)}>
-          <md-radio ?required=${this.isRequired()} id=${this.getOptionId(index)} .name=${this.getOptionId(index)} @input=${this.handleInput}></md-radio>
+          <md-radio ?required=${this.isRequired()} id=${this.getOptionId(index)} .name=${this.id} .value=${option} @input=${this.handleInput}></md-radio>
           ${option}
         </label>
       </div>
@@ -52,7 +52,7 @@ export default abstract class AbstractChoice extends AbstractFormElement {
     return html`${this.options.map((option, index) => html`
       <div class="choice">
         <label for=${this.getOptionId(index)}>
-          <md-checkbox ?required=${this.isRequired()} id=${this.getOptionId(index)} .name=${this.getOptionId(index)} @input=${this.handleInput}></md-checkbox>
+          <md-checkbox ?required=${this.isRequired()} id=${this.getOptionId(index)} .name=${this.id} .value=${option} @input=${this.handleInput}></md-checkbox>
           ${option}
         </label>
       </div>
