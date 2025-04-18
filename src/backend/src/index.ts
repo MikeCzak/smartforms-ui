@@ -4,10 +4,12 @@ import FormController from './controller/FormController';
 import { Request, Response, NextFunction } from 'express';
 import FileNotFoundError from './util/FileNotFoundError';
 import Logger from './util/Logger';
+const cors = require('cors');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+app.use(cors())
 app.use(express.json());
 
 app.get('/', (req, res) => {
