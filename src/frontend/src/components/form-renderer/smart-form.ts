@@ -8,7 +8,7 @@ import SmartFormElementFactory from '../form-element/SmartFormElementFactory.js'
 @customElement('smart-form')
 export default class SmartForm extends AbstractBaseForm {
 
-  @property({type: String}) public formType: string = "smart form";
+  @property({type: String}) public formType: string = "smart_form";
 
   protected _formElementFactory: AbstractFormElementFactory;
 

@@ -86,9 +86,10 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
     ${this._formSections.length > 0 ?
       html`
         <h1>${this.formTitle}</h1>
-        <div>
+        <form @submit=${this.submitForm} id=${this.formType} method="post">
           ${this._formSections.map(el => el)}
-        </div>
+          <button type="submit">Submit</button>
+        </form>
         `
       : html`<md-circular-progress indeterminate></md-circular-progress>`
     }
@@ -99,6 +100,13 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
     // eslint-disable-next-line wc/guard-super-call
     super.connectedCallback();
     this.parseData(this.formData);
+  }
+
+  private submitForm(event: SubmitEvent) {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    console.log(formData.get("first_name_1"));
   }
 
   private getElementByName(name: string): IFormElement {

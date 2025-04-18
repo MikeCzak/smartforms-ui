@@ -7,8 +7,9 @@ export default class MaterialTextfield extends AbstractTextfield {
 
   public render(): HTMLTemplateResult {
     return html`
-      <md-filled-text-field ?required=${this._required} label="${this.label}">
-      </md-filled-text-field>
+    <input type="text" name=${this.id} ?required=${this._required} label=${this.label}>
+      <!-- <md-filled-text-field name=${this.id} ?required=${this._required} label=${this.label}>
+      </md-filled-text-field> -->
     `;
   }
 }

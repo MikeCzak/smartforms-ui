@@ -7,7 +7,7 @@ export default class MaterialPassword extends AbstractPassword {
 
   render(): HTMLTemplateResult {
     return html`
-      <md-filled-text-field type=password ?required=${this._required} label="${this.label}">
+      <md-filled-text-field name=${this.id} type=password ?required=${this._required} label="${this.label}">
       </md-filled-text-field>
     `;
   }

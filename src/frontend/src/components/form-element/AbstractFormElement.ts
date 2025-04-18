@@ -7,13 +7,17 @@ import { InputType } from './InputType.js';
 
 export default abstract class AbstractFormElement extends LitElement implements IFormElement {
 
+  static formAssociated = true;
+
+  @property({attribute: true}) public name: string;
+
   private _id: string;
-  private _name: string;
   private _label: string;
   private _info?: string;
   private _constraints?:  {[key: string]: any};
   private _dependsOn?: IFormElement;
   private _dependingFields: Array<IFormElement|AbstractSection> = [];
+  public internals_;
 
   protected abstract inputType: InputType;
 
@@ -22,20 +26,17 @@ export default abstract class AbstractFormElement extends LitElement implements 
   constructor(params: IBaseFormElementParams) {
     super();
     this._id = params.id;
-    this._name = params.name;
+    this.name = params.name;
     this._label = params.label;
     this._info = params.info;
     this._required = params.required ?? true;
     this._dependsOn = params.dependsOn;
     this._constraints = params.constraints;
+    this.internals_ = this.attachInternals();
   }
 
   public get id(): string {
     return this._id;
-  }
-
-  public get name(): string {
-    return this._name;
   }
 
   public get label(): string {
