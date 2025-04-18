@@ -10,6 +10,8 @@ import {EASING} from '@material/web/internal/motion/animation.js';
 import { FormType } from './FormType.js';
 import ApiClient from './util/ApiClient.js';
 
+export const isDev = document.location.hostname==='localhost';
+
 @customElement('smartforms-ui-frontend')
 export class SmartformsUiFrontend extends LitElement {
 

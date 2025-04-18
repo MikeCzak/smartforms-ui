@@ -1,11 +1,12 @@
-import { LitElement, html, css, HTMLTemplateResult } from 'lit';
+import { LitElement, html, css, HTMLTemplateResult, CSSResultGroup } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import '@material/web/progress/circular-progress.js';
+import '@material/web/all.js';
 import IForm from './IForm.js';
 import IFormElement from '../form-element/IFormElement.js';
 import AbstractFormElementFactory from '../form-element/AbstractFormElementFactory.js';
 import AbstractSection from '../form-element/base-class/AbstractSection.js';
 import '../form-element/material/MaterialSection.js';
+import { isDev } from '../../smartforms-ui-frontend.js';
 
 export default abstract class AbstractBaseForm extends LitElement implements IForm {
 
@@ -71,6 +72,15 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
     }
   }
 
+  static styles = css`
+    .debug--formType {
+      position: fixed;
+      bottom: 2px;
+      left: 2px;
+      background: red;
+    }
+  `
+
   render() {
     return html`
     ${this._formSections.length > 0 ?
@@ -82,7 +92,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
         `
       : html`<md-circular-progress indeterminate></md-circular-progress>`
     }
-    ${this.formType}`;
+    ${isDev ? html`<div class="debug--formType">${this.formType}</div>` : ''}`;
   }
 
   connectedCallback(): void {
