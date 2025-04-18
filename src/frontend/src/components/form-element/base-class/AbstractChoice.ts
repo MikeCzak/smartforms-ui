@@ -1,12 +1,15 @@
 import { html, HTMLTemplateResult } from "lit";
 import AbstractFormElement from "../AbstractFormElement.js";
 import IChoiceElementParams from "../IChoiceElementParams.js";
+import { InputType } from "../InputType.js";
 
 export default abstract class AbstractChoice extends AbstractFormElement {
 
   private _options: Array<string>;
 
   private _choiceType: "single"|"multiple";
+
+  protected inputType: InputType = "text";
 
   constructor(params: IChoiceElementParams) {
     super(params);
@@ -15,6 +18,10 @@ export default abstract class AbstractChoice extends AbstractFormElement {
   }
 
   get options() {
+    if(this._options.length > 5)
+      {
+        this._options.sort()
+      }
     return this._options;
   }
 

@@ -3,6 +3,7 @@ import { property } from 'lit/decorators.js';
 import IFormElement from './IFormElement.js';
 import AbstractSection from './base-class/AbstractSection.js';
 import IBaseFormElementParams from './IBaseFormElementParams.js';
+import { InputType } from './InputType.js';
 
 export default abstract class AbstractFormElement extends LitElement implements IFormElement {
 
@@ -13,6 +14,8 @@ export default abstract class AbstractFormElement extends LitElement implements 
   private _constraints?:  {[key: string]: any};
   private _dependsOn?: IFormElement;
   private _dependingFields: Array<IFormElement|AbstractSection> = [];
+
+  protected abstract inputType: InputType;
 
   @property({type: Boolean}) protected _required: boolean;
 
