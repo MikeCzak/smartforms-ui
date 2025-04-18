@@ -1,8 +1,9 @@
 import { HTMLTemplateResult } from "lit";
 import AbstractSection from "./base-class/AbstractSection.js";
 
-export default interface IFormElement {
+export default interface IFormElement extends HTMLElement {
   readonly id: string;
+  value: any;
   readonly name: string;
   readonly label: string;
   readonly info?: string;

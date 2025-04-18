@@ -80,7 +80,7 @@ export class SmartformsUiFrontend extends LitElement {
               <my-icon icon="close"></my-icon>
             </md-icon-button>
           </span>
-          <form id="form" slot="content" method="dialog">
+          <form id="dialog-form" slot="content" method="dialog">
             Your Birthday: 20.10.2000
           </form>
         </md-dialog>
@@ -103,7 +103,6 @@ export class SmartformsUiFrontend extends LitElement {
       const open = dialog.getOpenAnimation();
       open.dialog = [[[{'transform': 'translateX(150px)'}, {'transform': 'translateX(0)'}], {duration: 500, easing: EASING.EMPHASIZED}]]
       const close = dialog.getCloseAnimation();
-      console.log(JSON.stringify(close));
       close.dialog = [[[{"transform":"translateX(0)"},{"transform":"translateX(150px)"}],{"duration":150,"easing":"cubic-bezier(.3,0,.8,.15)"}]]
     }
 

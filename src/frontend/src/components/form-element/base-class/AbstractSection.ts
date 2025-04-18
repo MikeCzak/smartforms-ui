@@ -37,7 +37,7 @@ export default abstract class AbstractSection extends LitElement {
 
   public addElement(element: IFormElement): AbstractSection {
     this._numChildren = this._children.push(element);
-
+    this.appendChild(element as unknown as HTMLElement);
     return this;
   }
 
@@ -54,9 +54,6 @@ export default abstract class AbstractSection extends LitElement {
 
 
   static styles = css`
-  md-checkbox, md-radio {
-    margin-bottom: 10px;
-  }
   :host {
     display: flex;
     flex-direction: column;
@@ -75,7 +72,7 @@ export default abstract class AbstractSection extends LitElement {
     <h2>${this._label}</h2>
     ${this.info && html`<p>${this.info}</p>`}
     <div class="section">
-      ${this._children.map(child => child.render())}
+      <slot></slot>
     </div>
     `;
   }

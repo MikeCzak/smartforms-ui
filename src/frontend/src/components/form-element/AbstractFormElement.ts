@@ -1,5 +1,5 @@
-import { HTMLTemplateResult, LitElement } from 'lit';
-import { property } from 'lit/decorators.js';
+import { css, HTMLTemplateResult, LitElement } from 'lit';
+import { property, query } from 'lit/decorators.js';
 import IFormElement from './IFormElement.js';
 import AbstractSection from './base-class/AbstractSection.js';
 import IBaseFormElementParams from './IBaseFormElementParams.js';
@@ -9,7 +9,13 @@ export default abstract class AbstractFormElement extends LitElement implements 
 
   static formAssociated = true;
 
-  @property({attribute: true}) public name: string;
+  @property({attribute: true, reflect: true}) public name: string;
+
+  @property({attribute: true, reflect: true}) public value: any = '';
+
+  @property({type: Boolean, attribute: true, reflect: true}) public required: boolean;
+
+  @query('input') inputElement!: HTMLInputElement
 
   private _id: string;
   private _label: string;
@@ -21,7 +27,6 @@ export default abstract class AbstractFormElement extends LitElement implements 
 
   protected abstract inputType: InputType;
 
-  @property({type: Boolean}) protected _required: boolean;
 
   constructor(params: IBaseFormElementParams) {
     super();
@@ -29,10 +34,12 @@ export default abstract class AbstractFormElement extends LitElement implements 
     this.name = params.name;
     this._label = params.label;
     this._info = params.info;
-    this._required = params.required ?? true;
+    this.required = params.required ?? true;
     this._dependsOn = params.dependsOn;
     this._constraints = params.constraints;
+    this.attachShadow({ mode: 'open', delegatesFocus: true });
     this.internals_ = this.attachInternals();
+    this.internals_.setFormValue(this.value);
   }
 
   public get id(): string {
@@ -60,7 +67,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
   }
 
   public isRequired(): boolean {
-    return this._required;
+    return this.required;
   }
 
   public hasDependencies(): boolean {
@@ -78,6 +85,46 @@ export default abstract class AbstractFormElement extends LitElement implements 
 
     return this;
   }
+
+static styles = css`
+    md-filled-text-field, md-filled-select {
+      display: block;
+    }
+  `
+
+updated(changedProperties: Map<string, any>) {
+  if (changedProperties.has('value')) {
+    this.internals_.setFormValue(this.value);
+  }
+  if (changedProperties.has('required')) {
+    this.internals_.ariaRequired = this.required ? 'true' : 'false'; // Reflect required state for accessibility
+
+    // Update validity state for required fields
+    if (this.required && !this.value) {
+      this.internals_.setValidity({ valueMissing: true }, 'This field is required.');
+    } else {
+      this.internals_.setValidity({}, ''); // Clear validity state
+    }
+  }
+}
+
+public checkValidity(): boolean {
+  return this.internals_.checkValidity();
+}
+
+public reportValidity(): boolean {
+  return this.internals_.reportValidity();
+}
+
+public setCustomValidity(message: string): void {
+  this.internals_.setValidity(message ? { customError: true } : {}, message);
+}
+
+protected handleInput(event: InputEvent) {
+  const input = event.target as HTMLInputElement;
+  this.value = input.value;
+  console.log(this.internals_.validity)
+}
 
   abstract validate(): boolean
 

@@ -6,7 +6,10 @@ import AbstractTextarea from "../base-class/AbstractTextarea.js";
 export default class MaterialTextarea extends AbstractTextarea {
 
   render(): HTMLTemplateResult {
-    throw new Error("Method not implemented.");
+    return html`
+      <md-filled-text-field type="textarea" .name=${this.id} @input=${this.handleInput} ?required=${this.required} label=${this.label}>
+      </md-filled-text-field>
+    `;
   }
 
 }

@@ -7,7 +7,7 @@ export default class MaterialNumber extends AbstractNumber {
 
   render(): HTMLTemplateResult {
     return html`
-      <md-filled-text-field name=${this.id} type=number ?required=${this._required} label="${this.label}">
+      <md-filled-text-field .name=${this.id} @input=${this.handleInput} type=number ?required=${this.required} label="${this.label}">
       </md-filled-text-field>
     `;
   }

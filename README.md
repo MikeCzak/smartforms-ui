@@ -61,6 +61,7 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 > ### Necessary Metadata:
 > - section titles
 > - min, max, minlength, maxlength
+> - include range input(s)
 > - regex pattern for specific format restrictions
 > - chunk size for long number fields
 >

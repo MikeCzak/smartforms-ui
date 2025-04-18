@@ -7,7 +7,7 @@ export default class MaterialEmail extends AbstractEmail {
 
   render(): HTMLTemplateResult {
     return html`
-      <md-filled-text-field name=${this.id} type=email ?required=${this._required} label="${this.label}">
+      <md-filled-text-field .name=${this.id} @input=${this.handleInput} type=email ?required=${this.required} label="${this.label}">
       </md-filled-text-field>
     `;
   }

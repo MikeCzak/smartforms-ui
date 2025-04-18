@@ -1,5 +1,5 @@
 import { LitElement, html, css, HTMLTemplateResult, CSSResultGroup } from 'lit';
-import { property, customElement } from 'lit/decorators.js';
+import { property, customElement, query } from 'lit/decorators.js';
 import '@material/web/all.js';
 import IForm from './IForm.js';
 import IFormElement from '../form-element/IFormElement.js';
@@ -16,6 +16,8 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
 
   @property() public formTitle: string = '';
 
+  @query('#form') form!: HTMLFormElement;
+
   protected abstract _formElementFactory: AbstractFormElementFactory;
 
   protected _formSections: AbstractSection[] = [];
@@ -24,7 +26,6 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
 
 
   protected parseData(data: { [key: string]: any }): void {
-    this.formTitle = data.formTitle;
 
     const createElement = (element: any): IFormElement | never => {
       if (element.type !== "form" && (!element.label || !element.name || element.required === undefined || !element.type)) {
@@ -69,7 +70,16 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
       }
 
       this._formSections.push(formSection);
+      if(this.form) {
+        this.form.appendChild(formSection);
+      } else {
+        throw new Error("Form element not found in the DOM");
+      }
     }
+    const submit = document.createElement('button');
+    submit.setAttribute('type', 'submit');
+    submit.innerHTML = 'Submit';
+    this.form.appendChild(submit);
   }
 
   static styles = css`
@@ -83,30 +93,29 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
 
   render() {
     return html`
-    ${this._formSections.length > 0 ?
-      html`
-        <h1>${this.formTitle}</h1>
-        <form @submit=${this.submitForm} id=${this.formType} method="post">
-          ${this._formSections.map(el => el)}
-          <button type="submit">Submit</button>
-        </form>
-        `
-      : html`<md-circular-progress indeterminate></md-circular-progress>`
-    }
+      <h1>${this.formTitle}</h1>
+      <form @submit=${this.submitForm} id="form">
+      </form>
     ${isDev ? html`<div class="debug--formType">${this.formType}</div>` : ''}`;
   }
 
   connectedCallback(): void {
-    // eslint-disable-next-line wc/guard-super-call
     super.connectedCallback();
+    this.formTitle = this.formData.formTitle;
+  }
+
+  protected firstUpdated(): void {
     this.parseData(this.formData);
   }
 
   private submitForm(event: SubmitEvent) {
-    event.preventDefault();
+    // event.preventDefault();
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
-    console.log(formData.get("first_name_1"));
+    console.log(formData);
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
   }
 
   private getElementByName(name: string): IFormElement {

@@ -7,5 +7,4 @@ export default interface IForm {
   // getFormElementById(id: string): IFormElement|null;
 
   render(): HTMLTemplateResult;
-
 }

@@ -5,11 +5,12 @@ import AbstractTextfield from "../base-class/AbstractTextfield.js";
 @customElement('material-textfield')
 export default class MaterialTextfield extends AbstractTextfield {
 
+
+
   public render(): HTMLTemplateResult {
     return html`
-    <input type="text" name=${this.id} ?required=${this._required} label=${this.label}>
-      <!-- <md-filled-text-field name=${this.id} ?required=${this._required} label=${this.label}>
-      </md-filled-text-field> -->
+      <md-filled-text-field .name=${this.id} @input=${this.handleInput} ?required=${this.required} label=${this.label}>
+      </md-filled-text-field>
     `;
   }
 }
