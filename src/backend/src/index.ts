@@ -31,8 +31,6 @@ app.post('/api/form/new/:formType', (req, res, next) => {
 })
 
 
-
-
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
   Logger.log(err.message);

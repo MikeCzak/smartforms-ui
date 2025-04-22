@@ -1,3 +1,4 @@
+import { html } from 'lit';
 import AbstractFormElementFactory from './AbstractFormElementFactory.js';
 import IBaseFormElementParams from './IBaseFormElementParams.js';
 import IChoiceElementParams from './IChoiceElementParams.js';
@@ -11,12 +12,9 @@ import SmartNumber from './smart/SmartNumber.js';
 import SmartPassword from './smart/SmartPassword.js';
 import SmartRange from './smart/SmartRange.js';
 import SmartSection from './smart/SmartSection.js';
-import SmartSubmit from './smart/SmartSubmit.js';
 import SmartTel from './smart/SmartTel.js';
 import SmartTextarea from './smart/SmartTextarea.js';
 import SmartTextfield from './smart/SmartTextfield.js';
-
-
 
 export default class SmartFormElementFactory extends AbstractFormElementFactory {
   createSection(name: string, label: string, info: string, dependsOn: IFormElement | undefined = undefined): AbstractSection {
@@ -33,5 +31,10 @@ export default class SmartFormElementFactory extends AbstractFormElementFactory 
   createHidden(params: IBaseFormElementParams): IFormElement { return this.createElement(SmartHidden, params); }
   createEmail(params: IBaseFormElementParams): IFormElement { return this.createElement(SmartEmail, params); }
   createTel(params: IBaseFormElementParams): IFormElement { return this.createElement(SmartTel, params); }
-  createSubmit(params: IBaseFormElementParams): IFormElement { return this.createElement(SmartSubmit, params); }
+
+  public getSubmit(label: string) {
+    return html`
+      <md-filled-button type="submit">${label}</md-filled-button>
+    `
+  }
 }

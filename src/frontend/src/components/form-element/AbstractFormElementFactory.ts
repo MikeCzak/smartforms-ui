@@ -26,18 +26,18 @@ export default abstract class AbstractFormElementFactory
         hidden: (params) => this.createHidden(params),
         email: (params) => this.createEmail(params),
         tel: (params) => this.createTel(params),
-        submit: (params) => this.createSubmit(params),
       };
 
   protected createElement<T extends IFormElement>(
     ElementClass: Constructor<T>,
     params: IBaseFormElementParams,
   ): T {
+    // eslint-disable-next-line no-param-reassign
     params.id = this.getUniqueIdFromName(params.name);
     return new ElementClass(params);
   }
 
-  protected getUniqueIdFromName(name: string): string {
+  public getUniqueIdFromName(name: string): string {
     if (this._idMap[name] === undefined) {
       this._idMap[name] = 1;
     } else {
@@ -58,5 +58,5 @@ export default abstract class AbstractFormElementFactory
   abstract createHidden(params: IBaseFormElementParams): IFormElement
   abstract createEmail(params: IBaseFormElementParams): IFormElement
   abstract createTel(params: IBaseFormElementParams): IFormElement
-  abstract createSubmit(params: IBaseFormElementParams): IFormElement
+  abstract getSubmit(label: string): any;
 }

@@ -1,5 +1,5 @@
 export type InputType =
   "hidden" | "text" | "search" | "tel" | "url" | "email" | "password" |
   "datetime" | "date" | "month" | "week" | "time" | "datetime-local" |
-  "number" | "range" | "color" | "checkbox" | "radio" | "file" | "submit" |
+  "number" | "range" | "color" | "checkbox" | "radio" | "file" |
   "image" | "reset" | "button";

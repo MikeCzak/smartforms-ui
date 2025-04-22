@@ -1,5 +1,6 @@
-import { LitElement, html, css, HTMLTemplateResult, CSSResultGroup } from 'lit';
-import { property, customElement, query } from 'lit/decorators.js';
+import { LitElement, html, css } from 'lit';
+import { property, query } from 'lit/decorators.js';
+import { choose } from 'lit/directives/choose.js';
 import '@material/web/all.js';
 import IForm from './IForm.js';
 import IFormElement from '../form-element/IFormElement.js';
@@ -17,7 +18,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
 
   @property() public formTitle: string = '';
 
-  @query('#form') form!: HTMLFormElement;
+  @query('#form #elements') form!: HTMLFormElement;
 
   protected abstract _formElementFactory: AbstractFormElementFactory;
 
@@ -41,6 +42,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
       }
 
       if (element.dependsOn) {
+        // eslint-disable-next-line no-param-reassign
         element.dependsOn.field = this.getElementByName(element.dependsOn.field);
       }
 
@@ -77,10 +79,6 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
         throw new Error("Form element not found in the DOM");
       }
     }
-    const submit = document.createElement('button');
-    submit.setAttribute('type', 'submit');
-    submit.innerHTML = 'Submit';
-    this.form.appendChild(submit);
   }
 
   static styles = css`
@@ -90,12 +88,22 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
       left: 2px;
       background: red;
     }
+
+    .submit-button {
+      display: flex;
+      width: 100%;
+      justify-content: flex-end;
+    }
   `
 
   render() {
     return html`
       <h1>${this.formTitle}</h1>
       <form @submit=${this.submitForm} id="form">
+        <div id="elements"></div>
+        <div class="submit-button">
+          ${this._formElementFactory.getSubmit("Submit")}
+        </div>
       </form>
     ${isDev ? html`<div class="debug--formType">${this.formType}</div>` : ''}`;
   }
