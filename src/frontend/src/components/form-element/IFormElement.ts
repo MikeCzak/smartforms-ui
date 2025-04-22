@@ -9,6 +9,6 @@ export default interface IFormElement extends HTMLElement {
   readonly info?: string;
   isRequired(): Boolean;
   addDependingField(element: IFormElement|AbstractSection): IFormElement
-  validate(): Boolean;
+  validate(): IFormElement | undefined;
   render(): HTMLTemplateResult
 }

@@ -1,31 +1,28 @@
 import { css, HTMLTemplateResult, LitElement } from 'lit';
-import { property, query } from 'lit/decorators.js';
+import { property, queryAll, state } from 'lit/decorators.js';
 import IFormElement from './IFormElement.js';
 import AbstractSection from './base-class/AbstractSection.js';
 import IBaseFormElementParams from './IBaseFormElementParams.js';
-import { InputType } from './InputType.js';
 
 export default abstract class AbstractFormElement extends LitElement implements IFormElement {
 
   static formAssociated = true;
 
   @property({attribute: true, reflect: true}) public name: string;
-
   @property({attribute: true, reflect: true}) public value: any = '';
-
   @property({type: Boolean, attribute: true, reflect: true}) public required: boolean;
+  @queryAll('.material-field') protected _materialFields?: HTMLElement[];
+  @state() protected _error: Boolean = false;
 
-  @query('input') inputElement!: HTMLInputElement
+  // private _validationElement!: HTMLInputElement;
 
   private _id: string;
   private _label: string;
-  private _info?: string;
+  private _info: string;
   private _constraints?:  {[key: string]: any};
   private _dependsOn?: IFormElement;
   private _dependingFields: Array<IFormElement|AbstractSection> = [];
   public internals_;
-
-  protected abstract inputType: InputType;
 
 
   constructor(params: IBaseFormElementParams) {
@@ -33,7 +30,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
     this._id = params.id;
     this.name = params.name;
     this._label = params.label;
-    this._info = params.info;
+    this._info = params.info || '';
     this.required = params.required ?? true;
     this._dependsOn = params.dependsOn;
     this._constraints = params.constraints;
@@ -50,7 +47,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
     return this._label;
   }
 
-  public get info(): string | undefined {
+  public get info(): string {
     return this._info;
   }
 
@@ -91,24 +88,80 @@ static styles = css`
       display: block;
     }
   `
+// protected firstUpdated(_changedProperties: PropertyValues): void {
+//   requestAnimationFrame(() => {
+//     const input = this._materialFields?.shadowRoot?.querySelector('input') as HTMLInputElement;
+//     if (input) {
+//       this._validationElement = input;
+//     } else if (this._materialFields !== undefined) {
+//       this._validationElement = this._materialFields as any;
+//     }
+//     // console.log("Validation element for", this.id, ":", this._validationElement)
+//   });
+// }
 
 updated(changedProperties: Map<string, any>) {
   if (changedProperties.has('value')) {
     this.internals_.setFormValue(this.value);
+    for (const field of this._materialFields! as any) {
+      field.removeAttribute('error');
+    }
+    this._error = false;
   }
+
+  const errors: { [key: string]: boolean } = {};
+  const errorMessages: string[] = [];
+
   if (this.required && !this.value) {
-    this.internals_.setValidity({ valueMissing: true }, 'This field is required.');
-  } else {
-    this.internals_.setValidity({}, ''); // Clear validity state
+    errors.valueMissing = true;
+    errorMessages.push('This field is required.');
   }
+  if (this.constraints?.min !== undefined && this.value < this.constraints.min) {
+    errors.rangeUnderflow = true;
+    errorMessages.push(`Value must be at least ${this.constraints.min}.`);
+  }
+  if (this.constraints?.max !== undefined && this.value > this.constraints.max) {
+    errors.rangeOverflow = true;
+    errorMessages.push(`Value must be at most ${this.constraints.max}.`);
+  }
+  if (this.constraints?.minLength !== undefined && this.value.length < this.constraints.minLength) {
+    errors.tooShort = true;
+    errorMessages.push(`Value must be at least ${this.constraints.minLength} characters long.`);
+  }
+  if (this.constraints?.maxLength !== undefined && this.value.length > this.constraints.maxLength) {
+    errors.tooLong = true;
+    errorMessages.push(`Value must be at most ${this.constraints.maxLength} characters long.`);
+  }
+  if (this.constraints?.pattern && !new RegExp(this.constraints.pattern).test(this.value)) {
+    errors.patternMismatch = true;
+    errorMessages.push('Invalid format.');
+  }
+
+  const combinedErrorMessage = errorMessages.join('\n');
+
+  if (Object.keys(errors).length > 0) {
+    this.internals_.setValidity(errors, combinedErrorMessage);
+  } else {
+    this.internals_.setValidity({}, '');
+  }
+
+  // Do not update the supporting text here; defer it to validate()
 }
 
-public checkValidity(): boolean {
-  return this.internals_.checkValidity();
-}
+public validate(): IFormElement | undefined {
+  const isValid = this.internals_.checkValidity();
+  const { validationMessage } = this.internals_;
+  const materialFields = this._materialFields as any;
+  if (materialFields && !isValid) {
+    for (const field of this._materialFields! as any) {
+      field.supportingText = validationMessage;
+      field.setAttribute('error', true);
+    }
 
-public reportValidity(): boolean {
-  return this.internals_.reportValidity();
+    this._error = true;
+    return this;
+  }
+  return undefined;
 }
 
 public setCustomValidity(message: string): void {
@@ -116,18 +169,16 @@ public setCustomValidity(message: string): void {
 }
 
 protected handleInput(event: InputEvent): void {
-  const mdField = event.target as HTMLElement;
+  const mdField = event.target as any;
   const input = mdField.shadowRoot?.querySelector('input') as HTMLInputElement;
 
   if (input) {
-    this.value = input.value; // Synchronize the value
-    this.internals_.setFormValue(this.value); // Update the ElementInternals form value
+    this.value = input.value;
   } else {
-    console.error('Internal input element not found!');
+    this.value = mdField.value;
   }
+  this.internals_.setFormValue(this.value);
 }
-
-  abstract validate(): boolean
 
   abstract render(): HTMLTemplateResult
 }

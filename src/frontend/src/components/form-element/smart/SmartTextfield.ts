@@ -60,7 +60,7 @@ export default class SmartTextfield extends AbstractTextfield {
       </div>
 
       <div class="content">
-        <input type="${this.inputType}" id="${this.id}" name="${this.id}" >
+        <input type="text" id="${this.id}" name="${this.id}" >
         <small>you know</small>
       </div>
     </div>

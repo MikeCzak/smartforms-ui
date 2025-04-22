@@ -16,6 +16,12 @@ export default class SmartForm extends AbstractBaseForm {
     this._formElementFactory = new SmartFormElementFactory();
   }
 
+  public validateForm(): boolean {
+    let isValid = true;
+    // TODO: implement this
+    return isValid;
+  }
+
   connectedCallback(): void {
     // eslint-disable-next-line wc/guard-super-call
     super.connectedCallback();

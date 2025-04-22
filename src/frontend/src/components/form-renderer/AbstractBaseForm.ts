@@ -1,6 +1,5 @@
 import { LitElement, html, css } from 'lit';
 import { property, query } from 'lit/decorators.js';
-import { choose } from 'lit/directives/choose.js';
 import '@material/web/all.js';
 import IForm from './IForm.js';
 import IFormElement from '../form-element/IFormElement.js';
@@ -99,7 +98,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
   render() {
     return html`
       <h1>${this.formTitle}</h1>
-      <form @submit=${this.submitForm} id="form">
+      <form @submit=${this.submitForm} id="form" novalidate>
         <div id="elements"></div>
         <div class="submit-button">
           ${this._formElementFactory.getSubmit("Submit")}
@@ -118,18 +117,20 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
   }
 
   private async submitForm(event: SubmitEvent): Promise<void> {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
+    const isValid = this.validateForm();
 
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
+    if (isValid) {
+      const form = event.target as HTMLFormElement;
+      const formData = new FormData(form);
 
-    // Convert FormData to JSON
-    const jsonData: { [key: string]: any } = {};
-    formData.forEach((value, key) => {
-      jsonData[key] = value;
-    });
+      const jsonData: { [key: string]: any } = {};
+      formData.forEach((value, key) => {
+        jsonData[key] = value;
+      });
 
-    ApiClient.saveForm(jsonData, this.formType)
+      ApiClient.saveForm(jsonData, this.formType)
+    }
   }
 
   private getElementByName(name: string): IFormElement {
@@ -140,4 +141,6 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
     }
     throw new Error(`Referenced dependency element with name "${name}" not found.`);
   }
+
+  abstract validateForm(): boolean;
 }

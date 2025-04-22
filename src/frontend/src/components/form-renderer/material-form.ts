@@ -15,6 +15,21 @@ export default class MaterialForm extends AbstractBaseForm {
     this._formElementFactory = new MaterialFormElementFactory();
   }
 
+  public validateForm(): boolean {
+    const invalidElements = [];
+    for (const element of this._formElements) {
+      if (element.validate()) {
+       invalidElements.push(element);
+      }
+    }
+    if (invalidElements.length === 0) {
+      return true;
+    }
+
+    invalidElements[0].focus();
+    return false;
+  }
+
   connectedCallback(): void {
     // eslint-disable-next-line wc/guard-super-call
     super.connectedCallback();

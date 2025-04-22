@@ -48,9 +48,6 @@ export default abstract class AbstractSection extends LitElement {
     return this;
   }
 
-  public validate(): boolean {
-    throw new Error('Method not implemented.');
-  }
 
 
   static styles = css`

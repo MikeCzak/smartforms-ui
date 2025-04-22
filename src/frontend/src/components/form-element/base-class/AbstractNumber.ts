@@ -1,11 +1,9 @@
 import { property } from "lit/decorators.js";
 import AbstractFormElement from "../AbstractFormElement.js";
-import { InputType } from "../InputType.js";
 import IBaseFormElementParams from "../IBaseFormElementParams.js";
 
 export default abstract class AbstractNumber extends AbstractFormElement {
 
-  protected inputType: InputType = "number";
 
   @property({type: Number, attribute: true}) protected min: number|undefined = undefined;
 
@@ -20,7 +18,4 @@ export default abstract class AbstractNumber extends AbstractFormElement {
       }
     }
 
-  public validate(): boolean {
-    throw new Error('Method not implemented.');
-  }
 }

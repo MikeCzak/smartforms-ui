@@ -28,7 +28,7 @@ export class SmartformsUiFrontend extends LitElement {
       align-items: center;
       justify-content: center;
       width: 100%;
-      max-width: 960px;
+      max-width: 460px;
       margin: 32px auto;
       flex-grow: 1;
     }
