@@ -22,6 +22,8 @@ export default abstract class AbstractFormElement extends LitElement implements 
   private _constraints?:  {[key: string]: any};
   private _dependsOn?: IFormElement;
   private _dependingFields: Array<IFormElement|AbstractSection> = [];
+  private _metaData: Map<string, any> = new Map<string, any>([['focusTime', 0], ['validationErrors', {}]]);
+  private _startTime?: number|null = null;
   public internals_;
 
 
@@ -180,6 +182,29 @@ export default abstract class AbstractFormElement extends LitElement implements 
     const mdField = event.target as any;
     const input = mdField.shadowRoot?.querySelector('input') as HTMLInputElement;
     this.value = input.value;
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener('focus', this.focusHandler);
+    this.addEventListener('blur', this.blurHandler);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('focus', this.focusHandler);
+    this.removeEventListener('blur', this.blurHandler);
+  }
+
+  protected focusHandler(e: FocusEvent): void {
+    this._startTime = Date.now();
+  }
+
+  protected blurHandler(e: FocusEvent): void {
+    if (this._startTime) {
+      this._metaData.set('focusTime', Date.now() - this._startTime);
+    }
+    //TODO: finish time tracking
   }
 
   abstract render(): HTMLTemplateResult
