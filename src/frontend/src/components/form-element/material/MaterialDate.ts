@@ -1,4 +1,4 @@
-import { HTMLTemplateResult, html, css } from "lit";
+import { HTMLTemplateResult, html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { customElement } from "lit/decorators.js";
 import AbstractDate from "../base-class/AbstractDate.js";
@@ -12,7 +12,8 @@ export default class MaterialDate extends AbstractDate {
         class="material-field"
         type="date"
         .name=${this.id}
-        .supportingText=${this.info}
+        .supportingText=${this._errorText ?? this.info}
+        ?error=${this._error}
         @input=${this.handleInput}
         ?required=${this.required}
         label=${this.label}

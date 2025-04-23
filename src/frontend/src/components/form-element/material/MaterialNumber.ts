@@ -12,7 +12,8 @@ export default class MaterialNumber extends AbstractNumber {
         class="material-field"
         type="number"
         .name=${this.id}
-        .supportingText=${this.info}
+        .supportingText=${this._errorText ?? this.info}
+        ?error=${this._error}
         @input=${this.handleInput}
         ?required=${this.required}
         label=${this.label}

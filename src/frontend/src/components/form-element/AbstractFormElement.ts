@@ -1,5 +1,6 @@
-import { css, HTMLTemplateResult, LitElement } from 'lit';
-import { property, queryAll, state } from 'lit/decorators.js';
+/* eslint-disable no-param-reassign */
+import { css, CSSResultGroup, HTMLTemplateResult, LitElement } from 'lit';
+import { property, query, state } from 'lit/decorators.js';
 import IFormElement from './IFormElement.js';
 import AbstractSection from './base-class/AbstractSection.js';
 import IBaseFormElementParams from './IBaseFormElementParams.js';
@@ -11,10 +12,9 @@ export default abstract class AbstractFormElement extends LitElement implements 
   @property({attribute: true, reflect: true}) public name: string;
   @property({attribute: true, reflect: true}) public value: any = '';
   @property({type: Boolean, attribute: true, reflect: true}) public required: boolean;
-  @queryAll('.material-field') protected _materialFields?: HTMLElement[];
-  @state() protected _error: Boolean = false;
-
-  // private _validationElement!: HTMLInputElement;
+  @query('.material-field') protected _materialField: any;
+  @state() protected _error: boolean = false;
+  @state() protected _errorText?: string|null = null;
 
   private _id: string;
   private _label: string;
@@ -71,114 +71,116 @@ export default abstract class AbstractFormElement extends LitElement implements 
     return this._dependingFields.length > 0;
   }
 
-  public addDependingFields(...elements: IFormElement[]): IFormElement {
-    this._dependingFields.push(...elements);
-
-    return this;
-  }
-
   public addDependingField(element: IFormElement|AbstractSection): IFormElement {
     this._dependingFields.push(element)
 
     return this;
   }
 
-static styles = css`
+  static styles: CSSResultGroup = css`
     md-filled-text-field, md-filled-select {
       display: block;
     }
+    md-filled-text-field {
+      white-space: pre-line
+    }
   `
-// protected firstUpdated(_changedProperties: PropertyValues): void {
-//   requestAnimationFrame(() => {
-//     const input = this._materialFields?.shadowRoot?.querySelector('input') as HTMLInputElement;
-//     if (input) {
-//       this._validationElement = input;
-//     } else if (this._materialFields !== undefined) {
-//       this._validationElement = this._materialFields as any;
-//     }
-//     // console.log("Validation element for", this.id, ":", this._validationElement)
-//   });
-// }
 
-updated(changedProperties: Map<string, any>) {
-  if (changedProperties.has('value')) {
-    this.internals_.setFormValue(this.value);
-    for (const field of this._materialFields! as any) {
-      field.removeAttribute('error');
+  updated(changedProperties: Map<string, any>) {
+    if (changedProperties.has('value')) {
+      this.internals_.setFormValue(this.value);
+
+      this._error = false;
+      this._errorText = null;
+      this.setValidity();
     }
-    this._error = false;
   }
 
-  const errors: { [key: string]: boolean } = {};
-  const errorMessages: string[] = [];
+  protected setValidity() {
+    const errors: { [key: string]: boolean; } = {};
+    const errorMessages: string[] = [];
 
-  if (this.required && !this.value) {
-    errors.valueMissing = true;
-    errorMessages.push('This field is required.');
-  }
-  if (this.constraints?.min !== undefined && this.value < this.constraints.min) {
-    errors.rangeUnderflow = true;
-    errorMessages.push(`Value must be at least ${this.constraints.min}.`);
-  }
-  if (this.constraints?.max !== undefined && this.value > this.constraints.max) {
-    errors.rangeOverflow = true;
-    errorMessages.push(`Value must be at most ${this.constraints.max}.`);
-  }
-  if (this.constraints?.minLength !== undefined && this.value.length < this.constraints.minLength) {
-    errors.tooShort = true;
-    errorMessages.push(`Value must be at least ${this.constraints.minLength} characters long.`);
-  }
-  if (this.constraints?.maxLength !== undefined && this.value.length > this.constraints.maxLength) {
-    errors.tooLong = true;
-    errorMessages.push(`Value must be at most ${this.constraints.maxLength} characters long.`);
-  }
-  if (this.constraints?.pattern && !new RegExp(this.constraints.pattern).test(this.value)) {
-    errors.patternMismatch = true;
-    errorMessages.push('Invalid format.');
-  }
+    this.validateRequiredField(errors, errorMessages);
+    this.validateMinValue(errors, errorMessages);
+    this.validateMaxValue(errors, errorMessages);
+    this.validateMinLength(errors, errorMessages);
+    this.validateMaxLength(errors, errorMessages);
+    this.validatePattern(errors, errorMessages);
 
-  const combinedErrorMessage = errorMessages.join('\n');
+    const combinedErrorMessage = errorMessages.join('\n');
 
-  if (Object.keys(errors).length > 0) {
-    this.internals_.setValidity(errors, combinedErrorMessage);
-  } else {
-    this.internals_.setValidity({}, '');
-  }
-
-  // Do not update the supporting text here; defer it to validate()
-}
-
-public validate(): IFormElement | undefined {
-  const isValid = this.internals_.checkValidity();
-  const { validationMessage } = this.internals_;
-  const materialFields = this._materialFields as any;
-  if (materialFields && !isValid) {
-    for (const field of this._materialFields! as any) {
-      field.supportingText = validationMessage;
-      field.setAttribute('error', true);
+    if (Object.keys(errors).length > 0) {
+      this.internals_.setValidity(errors, combinedErrorMessage);
+    } else {
+      this.internals_.setValidity({}, '');
     }
+  }
 
+  protected validatePattern(errors: { [key: string]: boolean; }, errorMessages: string[]) {
+    if (this.constraints?.pattern && !new RegExp(this.constraints.pattern).test(this.value)) {
+      errors.patternMismatch = true;
+      errorMessages.push('Invalid format.');
+    }
+  }
+
+  protected validateMaxLength(errors: { [key: string]: boolean; }, errorMessages: string[]) {
+    if (this.constraints?.maxLength !== undefined && this.value.length > this.constraints.maxLength) {
+      errors.tooLong = true;
+      errorMessages.push(`Value must be at most ${this.constraints.maxLength} characters long.`);
+    }
+  }
+
+  protected validateMinLength(errors: { [key: string]: boolean; }, errorMessages: string[]) {
+    if (this.constraints?.minLength !== undefined && this.value.length < this.constraints.minLength) {
+      errors.tooShort = true;
+      errorMessages.push(`Value must be at least ${this.constraints.minLength} characters long.`);
+    }
+  }
+
+  protected validateMaxValue(errors: { [key: string]: boolean; }, errorMessages: string[]) {
+    if (this.constraints?.max !== undefined && this.value > this.constraints.max) {
+      errors.rangeOverflow = true;
+      errorMessages.push(`Value must be at most ${this.constraints.max}.`);
+    }
+  }
+
+  protected validateMinValue(errors: { [key: string]: boolean; }, errorMessages: string[]) {
+    if (this.constraints?.min !== undefined && this.value < this.constraints.min) {
+      errors.rangeUnderflow = true;
+      errorMessages.push(`Value must be at least ${this.constraints.min}.`);
+    }
+  }
+
+  protected validateRequiredField(errors: { [key: string]: boolean; }, errorMessages: string[]) {
+    if (this.required && !this.value) {
+      errors.valueMissing = true;
+      errorMessages.push('This field is required.');
+    }
+  }
+
+  public validate(reportValidity: boolean = true): IFormElement | null {
+    const isValid = this.internals_.checkValidity();
+    const { validationMessage } = this.internals_;
+    if (this._materialField && !isValid) {
+      if (reportValidity) {
+        this.reportValidity(validationMessage);
+      }
+
+      return this;
+    }
+    return null;
+  }
+
+  protected reportValidity(validationMessage: string) {
     this._error = true;
-    return this;
+    this._errorText = validationMessage;
   }
-  return undefined;
-}
 
-public setCustomValidity(message: string): void {
-  this.internals_.setValidity(message ? { customError: true } : {}, message);
-}
-
-protected handleInput(event: InputEvent): void {
-  const mdField = event.target as any;
-  const input = mdField.shadowRoot?.querySelector('input') as HTMLInputElement;
-
-  if (input) {
+  protected handleInput(event: InputEvent): void {
+    const mdField = event.target as any;
+    const input = mdField.shadowRoot?.querySelector('input') as HTMLInputElement;
     this.value = input.value;
-  } else {
-    this.value = mdField.value;
   }
-  this.internals_.setFormValue(this.value);
-}
 
   abstract render(): HTMLTemplateResult
 }

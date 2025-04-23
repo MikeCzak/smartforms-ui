@@ -1,4 +1,4 @@
-import { HTMLTemplateResult, html, css } from "lit";
+import { HTMLTemplateResult, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import AbstractEmail from "../base-class/AbstractEmail.js";
@@ -12,7 +12,8 @@ export default class MaterialEmail extends AbstractEmail {
         class="material-field"
         type="email"
         .name=${this.id}
-        .supportingText=${this.info}
+        .supportingText=${this._errorText ?? this.info}
+        ?error=${this._error}
         @input=${this.handleInput}
         ?required=${this.required}
         label=${this.label}
