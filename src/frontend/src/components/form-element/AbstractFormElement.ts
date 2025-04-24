@@ -69,6 +69,10 @@ export default abstract class AbstractFormElement extends LitElement implements 
     return this.required;
   }
 
+  public get metaData(): Map<string, any> {
+    return this._metaData;
+  }
+
   public hasDependencies(): boolean {
     return this._dependingFields.length > 0;
   }

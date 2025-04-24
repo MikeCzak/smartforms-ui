@@ -8,7 +8,8 @@ export default interface IFormElement extends HTMLElement {
   readonly label: string;
   readonly info?: string;
   isRequired(): Boolean;
-  addDependingField(element: IFormElement|AbstractSection): IFormElement
+  addDependingField(element: IFormElement|AbstractSection): IFormElement;
+  readonly metaData: Map<string, any>;
   /**
    * Returns the element if validation fails, null otherwise.
    */

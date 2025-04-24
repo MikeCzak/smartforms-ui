@@ -128,6 +128,9 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
       formData.forEach((value, key) => {
         jsonData[key] = value;
       });
+      jsonData.metaData = {};
+      this._formElements.forEach((e) => {jsonData.metaData[e.id] = e.metaData})
+      console.log(jsonData)
 
       ApiClient.saveForm(jsonData, this.formType)
     }
