@@ -1,4 +1,5 @@
 import { property, customElement } from 'lit/decorators.js';
+import { html } from 'lit';
 import '@material/web/progress/circular-progress.js';
 import AbstractBaseForm from './AbstractBaseForm.js';
 import AbstractFormElementFactory from '../form-element/AbstractFormElementFactory.js';
@@ -29,6 +30,17 @@ export default class SmartForm extends AbstractBaseForm {
     // for (const el in this._formData) {
     //   console.log(el)
     // }
+  }
+
+  protected override getSubmissionOverlay() {
+    return html`
+      <div class="submitted-overlay">
+        <md-elevated-card>
+          submitting...
+          <md-circular-progress indeterminate></md-circular-progress>
+        </md-elevated-card>
+      </div>
+    `
   }
 
 }

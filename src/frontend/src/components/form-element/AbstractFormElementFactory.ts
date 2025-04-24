@@ -58,5 +58,5 @@ export default abstract class AbstractFormElementFactory
   abstract createHidden(params: IBaseFormElementParams): IFormElement
   abstract createEmail(params: IBaseFormElementParams): IFormElement
   abstract createTel(params: IBaseFormElementParams): IFormElement
-  abstract getSubmit(label: string): any;
+  abstract getSubmit(label: string, disabled: boolean): any;
 }

@@ -27,7 +27,7 @@ app.get('/api/formtype/', (req, res, next) => {
 });
 
 app.post('/api/form/new/:formType', (req, res, next) => {
-  FormController.newForm(req.body, req.params.formType)
+  FormController.newForm(req.body, req.params.formType, res, next)
 })
 
 

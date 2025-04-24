@@ -48,10 +48,11 @@ export default class ApiClient {
       if (!response.ok) {
         throw new Error(`Failed to submit form: ${response.statusText}`);
       }
+      return true;
 
-      console.log('Form submitted successfully!');
     } catch (error) {
       console.error('Error submitting form:', error);
     }
+    return false;
   }
 }

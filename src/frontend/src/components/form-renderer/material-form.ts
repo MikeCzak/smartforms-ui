@@ -1,4 +1,5 @@
 import { property, customElement } from 'lit/decorators.js';
+import { html } from 'lit';
 import AbstractBaseForm from './AbstractBaseForm.js';
 import MaterialFormElementFactory from '../form-element/MaterialFormElementFactory.js';
 import AbstractFormElementFactory from '../form-element/AbstractFormElementFactory.js';
@@ -28,6 +29,10 @@ export default class MaterialForm extends AbstractBaseForm {
 
     invalidElements[0].focus();
     return false;
+  }
+
+  protected override getSubmissionOverlay() {
+    return html``
   }
 
   connectedCallback(): void {

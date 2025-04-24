@@ -32,7 +32,7 @@ export default class MaterialFormElementFactory extends AbstractFormElementFacto
   createEmail(params: IBaseFormElementParams): IFormElement { return this.createElement(MaterialEmail, params); }
   createTel(params: IBaseFormElementParams): IFormElement { return this.createElement(MaterialTel, params); }
 
-  public getSubmit(label: string) {
+  public getSubmit(label: string, disabled: boolean = false) {
     return html`
       <md-filled-button type="submit">${label}</md-filled-button>
     `

@@ -32,9 +32,9 @@ export default class SmartFormElementFactory extends AbstractFormElementFactory 
   createEmail(params: IBaseFormElementParams): IFormElement { return this.createElement(SmartEmail, params); }
   createTel(params: IBaseFormElementParams): IFormElement { return this.createElement(SmartTel, params); }
 
-  public getSubmit(label: string) {
+  public getSubmit(label: string, disabled: boolean = false) {
     return html`
-      <md-filled-button type="submit">${label}</md-filled-button>
+      <md-filled-button ?disabled=${disabled} type="submit">${label}</md-filled-button>
     `
   }
 }

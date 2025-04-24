@@ -1,5 +1,6 @@
-import { LitElement, html, css } from 'lit';
-import { property, query } from 'lit/decorators.js';
+import { LitElement, html, css, HTMLTemplateResult } from 'lit';
+import { property, query, state } from 'lit/decorators.js';
+import { choose } from 'lit/directives/choose.js';
 import '@material/web/all.js';
 import IForm from './IForm.js';
 import IFormElement from '../form-element/IFormElement.js';
@@ -8,6 +9,8 @@ import AbstractSection from '../form-element/base-class/AbstractSection.js';
 import '../form-element/material/MaterialSection.js';
 import { isDev } from '../../smartforms-ui-frontend.js';
 import ApiClient from '../../util/ApiClient.js';
+import '../thank-you.js';
+import '../submission-error.js';
 
 export default abstract class AbstractBaseForm extends LitElement implements IForm {
 
@@ -18,6 +21,10 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
   @property() public formTitle: string = '';
 
   @query('#form #elements') form!: HTMLFormElement;
+
+  @state() private _submissionSuccessful: boolean|null = null;
+
+  @state() private _submitted: boolean = false;
 
   protected abstract _formElementFactory: AbstractFormElementFactory;
 
@@ -93,18 +100,48 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
       width: 100%;
       justify-content: flex-end;
     }
+
+    .submitted-overlay {
+      position: fixed;
+      z-index: 100;
+      display: flex;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, .6);
+      & md-elevated-card {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        padding: 20px;
+      }
+    }
   `
 
   render() {
     return html`
-      <h1>${this.formTitle}</h1>
-      <form @submit=${this.submitForm} id="form" novalidate>
-        <div id="elements"></div>
-        <div class="submit-button">
-          ${this._formElementFactory.getSubmit("Submit")}
-        </div>
-      </form>
-    ${isDev ? html`<div class="debug--formType">${this.formType}</div>` : ''}`;
+      ${choose(this._submissionSuccessful, [
+        [null, () => html`
+          <h1>${this.formTitle}</h1>
+          <form @submit=${this.submitForm} id="form" novalidate>
+            <div id="elements"></div>
+            <div class="submit-button">
+              ${this._formElementFactory.getSubmit("Submit", this._submitted)}
+            </div>
+          </form>
+          ${(this._submitted && this.getSubmissionOverlay()) || ''}
+          ${isDev ? html`<div class="debug--formType">${this.formType}</div>` : ''}`
+        ],
+        [true, () => html`<thank-you></thank-you>`],
+        [false, () => html`<submission-error></submission-error>`],
+      ])}
+    `
+    ;
   }
 
   connectedCallback(): void {
@@ -120,7 +157,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
     event.preventDefault();
     const isValid = this.validateForm();
 
-    if (isValid) {
+    if (!isValid) {
       const form = event.target as HTMLFormElement;
       const formData = new FormData(form);
 
@@ -135,9 +172,11 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
           jsonData.metaData[e.id][k] = v;
         })
       })
-      console.log(jsonData)
-
-      ApiClient.saveForm(jsonData, this.formType)
+      this._submitted = true;
+      ApiClient.saveForm(jsonData, this.formType).then(res => {
+        this._submissionSuccessful = res;
+      }
+      )
     }
   }
 
@@ -151,4 +190,6 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
   }
 
   abstract validateForm(): boolean;
+
+  protected abstract getSubmissionOverlay(): HTMLTemplateResult;
 }
