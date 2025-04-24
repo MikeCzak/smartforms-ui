@@ -196,15 +196,16 @@ export default abstract class AbstractFormElement extends LitElement implements 
     this.removeEventListener('blur', this.blurHandler);
   }
 
-  protected focusHandler(e: FocusEvent): void {
+  protected focusHandler(): void {
     this._startTime = Date.now();
   }
 
-  protected blurHandler(e: FocusEvent): void {
+  protected blurHandler(): void {
     if (this._startTime) {
-      this._metaData.set('focusTime', Date.now() - this._startTime);
+      const prevTime = this._metaData.get('focusTime');
+      const newTime = prevTime + Date.now() - this._startTime;
+      this._metaData.set('focusTime', newTime);
     }
-    //TODO: finish time tracking
   }
 
   abstract render(): HTMLTemplateResult
