@@ -11,7 +11,6 @@ export default class MaterialTel extends AbstractTel {
       <md-filled-text-field
         class="material-field"
         type="tel"
-        .name=${this.id}
         .supportingText=${this._errorText ?? this.info}
         ?error=${this._error}
         @input=${this.handleInput}

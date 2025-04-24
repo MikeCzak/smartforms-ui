@@ -11,7 +11,6 @@ export default class MaterialPassword extends AbstractPassword {
       <md-filled-text-field
         class="material-field"
         type="password"
-        .name=${this.id}
         .supportingText=${this._errorText ?? this.info}
         ?error=${this._error}
         @input=${this.handleInput}

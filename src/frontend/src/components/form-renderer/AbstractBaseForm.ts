@@ -129,7 +129,12 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
         jsonData[key] = value;
       });
       jsonData.metaData = {};
-      this._formElements.forEach((e) => {jsonData.metaData[e.id] = e.metaData})
+      this._formElements.forEach((e) => {
+        jsonData.metaData[e.id] = {}
+        e.metaData.forEach((v, k) => {
+          jsonData.metaData[e.id][k] = v;
+        })
+      })
       console.log(jsonData)
 
       ApiClient.saveForm(jsonData, this.formType)
@@ -138,7 +143,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
 
   private getElementByName(name: string): IFormElement {
     for (const formElement of this._formElements) {
-      if (formElement.name === name) {
+      if (formElement.originalName === name) {
         return formElement;
       }
     }

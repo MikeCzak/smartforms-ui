@@ -1,4 +1,4 @@
-import { html, HTMLTemplateResult } from 'lit';
+import { html } from 'lit';
 import AbstractFormElementFactory from './AbstractFormElementFactory.js';
 import IBaseFormElementParams from './IBaseFormElementParams.js';
 import IChoiceElementParams from './IChoiceElementParams.js';

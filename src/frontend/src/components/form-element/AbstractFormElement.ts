@@ -17,6 +17,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
   @state() protected _errorText?: string|null = null;
 
   private _id: string;
+  private _originalName: string;
   private _label: string;
   private _info: string;
   private _constraints?:  {[key: string]: any};
@@ -30,7 +31,8 @@ export default abstract class AbstractFormElement extends LitElement implements 
   constructor(params: IBaseFormElementParams) {
     super();
     this._id = params.id;
-    this.name = params.name;
+    this.name = params.id;
+    this._originalName = params.name;
     this._label = params.label;
     this._info = params.info || '';
     this.required = params.required ?? true;
@@ -47,6 +49,10 @@ export default abstract class AbstractFormElement extends LitElement implements 
 
   public get label(): string {
     return this._label;
+  }
+
+  public get originalName(): string {
+    return this._originalName;
   }
 
   public get info(): string {

@@ -11,7 +11,6 @@ export default class MaterialNumber extends AbstractNumber {
       <md-filled-text-field
         class="material-field"
         type="number"
-        .name=${this.id}
         .supportingText=${this._errorText ?? this.info}
         ?error=${this._error}
         @input=${this.handleInput}

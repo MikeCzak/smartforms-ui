@@ -11,7 +11,6 @@ export default class MaterialDate extends AbstractDate {
       <md-filled-text-field
         class="material-field"
         type="date"
-        .name=${this.id}
         .supportingText=${this._errorText ?? this.info}
         ?error=${this._error}
         @input=${this.handleInput}

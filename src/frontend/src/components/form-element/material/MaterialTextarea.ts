@@ -11,7 +11,6 @@ export default class MaterialTextarea extends AbstractTextarea {
       <md-filled-text-field
         class="material-field"
         type="textarea"
-        .name=${this.id}
         .supportingText=${this._errorText ?? this.info}
         ?error=${this._error}
         @input=${this.handleInput}

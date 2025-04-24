@@ -5,6 +5,7 @@ export default interface IFormElement extends HTMLElement {
   readonly id: string;
   value: any;
   readonly name: string;
+  readonly originalName: string;
   readonly label: string;
   readonly info?: string;
   isRequired(): Boolean;

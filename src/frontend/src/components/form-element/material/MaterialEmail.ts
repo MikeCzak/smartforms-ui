@@ -11,7 +11,6 @@ export default class MaterialEmail extends AbstractEmail {
       <md-filled-text-field
         class="material-field"
         type="email"
-        .name=${this.id}
         .supportingText=${this._errorText ?? this.info}
         ?error=${this._error}
         @input=${this.handleInput}
