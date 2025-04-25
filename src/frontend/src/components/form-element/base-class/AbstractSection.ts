@@ -1,4 +1,4 @@
-import {HTMLTemplateResult, LitElement, css, html} from 'lit';
+import {CSSResultGroup, HTMLTemplateResult, LitElement, css, html} from 'lit';
 import IFormElement from "../IFormElement.js";
 
 export default abstract class AbstractSection extends LitElement {
@@ -50,7 +50,7 @@ export default abstract class AbstractSection extends LitElement {
 
 
 
-  static styles = css`
+  static styles: CSSResultGroup = css`
   :host {
     display: flex;
     flex-direction: column;

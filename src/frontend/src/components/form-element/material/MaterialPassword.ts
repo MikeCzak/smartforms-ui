@@ -1,10 +1,10 @@
 import { HTMLTemplateResult, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import AbstractPassword from "../base-class/AbstractPassword.js";
+import AbstractFormElement from "../AbstractFormElement.js";
 
 @customElement('material-password')
-export default class MaterialPassword extends AbstractPassword {
+export default class MaterialPassword extends AbstractFormElement {
 
   render(): HTMLTemplateResult {
     return html`

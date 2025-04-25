@@ -1,10 +1,10 @@
 import { HTMLTemplateResult, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import AbstractTel from "../base-class/AbstractTel.js";
+import AbstractFormElement from "../AbstractFormElement.js";
 
 @customElement('material-tel')
-export default class MaterialTel extends AbstractTel {
+export default class MaterialTel extends AbstractFormElement {
 
   render(): HTMLTemplateResult {
     return html`

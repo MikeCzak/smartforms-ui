@@ -1,10 +1,10 @@
 import { HTMLTemplateResult, html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { customElement } from "lit/decorators.js";
-import AbstractDate from "../base-class/AbstractDate.js";
+import AbstractFormElement from "../AbstractFormElement.js";
 
 @customElement('material-date')
-export default class MaterialDate extends AbstractDate {
+export default class MaterialDate extends AbstractFormElement {
 
   render(): HTMLTemplateResult {
     return html`

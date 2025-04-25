@@ -1,10 +1,10 @@
 import { HTMLTemplateResult, html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { customElement } from "lit/decorators.js";
-import AbstractTextfield from "../base-class/AbstractTextfield.js";
+import AbstractFormElement from "../AbstractFormElement.js";
 
 @customElement('material-textfield')
-export default class MaterialTextfield extends AbstractTextfield {
+export default class MaterialTextfield extends AbstractFormElement {
 
   public render(): HTMLTemplateResult {
     return html`
