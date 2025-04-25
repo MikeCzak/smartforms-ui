@@ -56,6 +56,15 @@
           "type": "email",
           "label": "Email",
           "required": true
+        },
+        {
+          "name": "children",
+          "type": "number",
+          "label": "Amount of children",
+          "required": true,
+          "constraints": {
+            "max": 10
+          }
         }
       ]
     },
@@ -135,7 +144,7 @@
           "name": "newsletter",
           "type": "choice",
           "label": "Subscribe to newsletter",
-          "options": ["Yes", "No"],
+          "options": ["Yes"],
           "required": true,
           "choiceType": "single"
         },
