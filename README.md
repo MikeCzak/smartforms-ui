@@ -3,7 +3,9 @@ This repository contains the prototype for the Bachelor thesis "SmartForms UI" b
 
 The following is a list of rules, both already implemented ([x]) and planned ([ ]), applied to the prototype.
 
-> Note for future implementations: Read not only json but also XML, SQL-Schema, etc.
+# Note for future implementations
+- Read not only json but also XML, SQL-Schema, etc.
+- Use LLM for constraint pattern interpretation
 
 # Functional
 ## Form
@@ -44,9 +46,9 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 ### Format Restrictions
 - [ ] state rule and display real-time updated check
 # Visual
-- [ ] ensure proximity for related choice elements
-  - [ ] checkboxes
-  - [ ] radio buttons
+- [x] ensure proximity for related choice elements
+  - [x] checkboxes
+  - [x] radio buttons
 - [x] provide common region for sections
 - [x] provide similarity in color for required and erroneous fields
 - [x] large subheadings to disrupt F-shaped reading pattern and re-focus the user's attention
