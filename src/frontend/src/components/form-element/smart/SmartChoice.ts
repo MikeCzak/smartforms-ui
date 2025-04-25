@@ -3,8 +3,8 @@ import { css, html, HTMLTemplateResult } from "lit";
 import { customElement } from "lit/decorators.js";
 import { InputType } from "../InputType.js";
 import AbstractChoice from "../base-class/AbstractChoice.js";
-import Colors from "../Colors.js";
-import SmartInputs from "../SmartInputs.js";
+import Colors from "../../../styles/Colors.js";
+import SmartInputs from "../../../styles/SmartInputs.js";
 
 @customElement('smart-choice')
 export default class SmartChoice extends AbstractChoice {

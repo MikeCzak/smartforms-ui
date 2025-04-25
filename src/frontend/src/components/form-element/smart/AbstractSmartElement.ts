@@ -2,8 +2,8 @@ import { HTMLTemplateResult, html, CSSResultGroup } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { query } from "lit/decorators.js";
 import AbstractFormElement from "../AbstractFormElement.js";
-import Colors from "../Colors.js";
-import SmartInputs from "../SmartInputs.js";
+import Colors from "../../../styles/Colors.js";
+import SmartInputs from "../../../styles/SmartInputs.js";
 import { InputType } from "../InputType.js";
 
 
