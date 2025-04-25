@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { property, customElement } from 'lit/decorators.js';
+import { property, customElement, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import './components/form-greeting.js';
 import './components/theme-toggle.js';
@@ -21,6 +21,8 @@ export class SmartformsUiFrontend extends LitElement {
 
   @property({attribute: false}) private _formType: FormType|null = null;
 
+  @state() private _showPersonalInfo: boolean = false;
+
   static styles = css`
     :host {
       display: flex;
@@ -28,14 +30,16 @@ export class SmartformsUiFrontend extends LitElement {
       align-items: center;
       justify-content: center;
       width: 100%;
-      max-width: 460px;
       margin: 32px auto;
       flex-grow: 1;
+      box-sizing: border-box;
+      padding: 0 8px;
     }
     #personal-info-button {
       position: fixed;
       bottom: 56px;
       right: 16px;
+      z-index: 100;
     }
     #personal-info-button.highlighted::before {
       content: 'south_east';
@@ -52,8 +56,30 @@ export class SmartformsUiFrontend extends LitElement {
       to {transform: translateX(0) translateY(0)}
     }
     #personal-info {
-      margin: auto 16px 132px auto;
+      /* display: none; */
+      position: fixed;
+      bottom: 132px;
+      right: 16px;
       max-width: 90vw;
+      background-color: var(--md-sys-color-surface);
+      padding: 16px;
+      padding-top: 6px;
+      border-radius: var(--smart-border-radius);
+      opacity: 0;
+      z-index: 100;
+      transition: opacity .3s ease-in-out;
+
+      &.open {
+        display: block;
+        opacity: 1;
+      }
+
+      & .headline {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0;
+      }
     }
 
   `;
@@ -73,17 +99,19 @@ export class SmartformsUiFrontend extends LitElement {
         <md-fab @click=${this.showPersonalData} id="personal-info-button" class="highlighted" aria-label="Your personal data">
           <my-icon slot="icon" icon="info"></my-icon>
         </md-fab>
-        <md-dialog id="personal-info">
-          <span slot="headline">
-            <span style="flex: 1;">Your personal data</span>
-            <md-icon-button form="form" value="close" aria-label="Close dialog">
+        <div id="personal-info" class="${this._showPersonalInfo ? 'open': ''}">
+          <h3 class="headline">
+            Your personal data
+            <md-icon-button @click=${this.hidePersonalData} aria-label="Close dialog">
               <my-icon icon="close"></my-icon>
             </md-icon-button>
-          </span>
-          <form id="dialog-form" slot="content" method="dialog">
-            Your Birthday: 20.10.2000
-          </form>
-        </md-dialog>
+          </h3>
+
+          <div class="content">
+            Your Birthday: 20.10.2000<br>
+            Your IBAN: AT23 1234 5678 1234 5678
+          </div>
+        </div>
       `) || html`<pre>loading form data...</pre>`;
   }
 
@@ -96,18 +124,12 @@ export class SmartformsUiFrontend extends LitElement {
   private showPersonalData(event: Event): void {
     const target = event.target as Element;
     target.classList.remove("highlighted");
-    const dialog = target.getRootNode() instanceof ShadowRoot
-        ? (target.getRootNode() as ShadowRoot).querySelector('md-dialog')
-        : target.nextElementSibling as MdDialog;
-    if(dialog) {
-      const open = dialog.getOpenAnimation();
-      open.dialog = [[[{'transform': 'translateX(150px)'}, {'transform': 'translateX(0)'}], {duration: 500, easing: EASING.EMPHASIZED}]]
-      const close = dialog.getCloseAnimation();
-      close.dialog = [[[{"transform":"translateX(0)"},{"transform":"translateX(150px)"}],{"duration":150,"easing":"cubic-bezier(.3,0,.8,.15)"}]]
-    }
+    this._showPersonalInfo = true;
+  }
 
-    dialog?.show();
-}
+  private hidePersonalData(): void {
+    this._showPersonalInfo = false;
+  }
 
   private async loadFormData() {
     this._rawForm = await ApiClient.loadFormData('registration');
