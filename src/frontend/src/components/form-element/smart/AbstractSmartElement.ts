@@ -5,10 +5,11 @@ import AbstractFormElement from "../AbstractFormElement.js";
 import Colors from "../../../styles/Colors.js";
 import SmartInputs from "../../../styles/SmartInputs.js";
 import { InputType } from "../InputType.js";
+import { PatternValidator } from "../../../util/PatternValidator.js";
+import IBaseFormElementParams from "../IBaseFormElementParams.js";
 
 
 export default abstract class AbstractSmartElement extends AbstractFormElement {
-
   static styles: CSSResultGroup = [
     Colors.styles,
     SmartInputs.styles
@@ -16,9 +17,29 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
 
   @query('input') protected inputElement!: HTMLInputElement;
 
+  protected patternValidator?: PatternValidator;
+
+  constructor(params: IBaseFormElementParams) {
+    super(params);
+    if (params.constraints?.pattern) {
+      this.patternValidator = new PatternValidator(params.constraints?.pattern);
+    }
+  }
+
   protected handleInput(event: InputEvent): void {
     const input = event.target as any;
     this.value = input.value;
+
+    if(this.patternValidator !== undefined) {
+      const results = this.patternValidator!.validate(this.inputElement.value);
+
+      results.forEach(({ rule, valid }) => {
+        console.log(rule.description, valid ? "✅" : "❌");
+      });
+
+      const overallValid = this.patternValidator!.isValid(this.inputElement.value);
+      console.log("Overall valid:", overallValid);
+    }
   }
 
   override connectedCallback(): void {
