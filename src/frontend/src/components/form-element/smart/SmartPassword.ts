@@ -1,10 +1,9 @@
-import { HTMLTemplateResult, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
-import AbstractPassword from "../base-class/AbstractPassword.js";
+import AbstractSmartElement from "./AbstractSmartElement.js";
+import { InputType } from "../InputType.js";
 
 @customElement('smart-password')
-export default class SmartPassword extends AbstractPassword {
-  render(): HTMLTemplateResult {
-    throw new Error("Method not implemented.");
-  }
+export default class SmartPassword extends AbstractSmartElement {
+
+  protected inputType: InputType = "password";
 }

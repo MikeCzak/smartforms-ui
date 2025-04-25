@@ -1,10 +1,10 @@
-import { HTMLTemplateResult, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
-import AbstractDate from "../base-class/AbstractDate.js";
+import AbstractSmartElement from "./AbstractSmartElement.js";
+import { InputType } from "../InputType.js";
 
 @customElement('smart-date')
-export default class SmartDate extends AbstractDate {
-  render(): HTMLTemplateResult {
-    throw new Error("Method not implemented.");
-  }
+export default class SmartDate extends AbstractSmartElement {
+
+  protected inputType: InputType = "date";
+
 }

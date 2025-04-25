@@ -1,10 +1,9 @@
-import { HTMLTemplateResult, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
-import AbstractHidden from "../base-class/AbstractHidden.js";
+import AbstractSmartElement from "./AbstractSmartElement.js";
+import { InputType } from "../InputType.js";
 
 @customElement('smart-hidden')
-export default class SmartHidden extends AbstractHidden {
-  render(): HTMLTemplateResult {
-    throw new Error("Method not implemented.");
-  }
+export default class SmartHidden extends AbstractSmartElement {
+
+  protected inputType: InputType = "hidden";
 }
