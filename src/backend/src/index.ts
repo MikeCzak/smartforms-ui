@@ -8,6 +8,7 @@ const cors = require('cors');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
+let smart = false;
 
 app.use(cors())
 app.use(express.json());
@@ -23,7 +24,8 @@ app.get('/api/formdata/:name', (req, res, next) => {
 app.get('/api/formtype/', (req, res, next) => {
   // TODO: return formtype with fewer saved forms
   // FormController.getNextFormType(req, res, next);
-  res.send("smart");
+  smart = !smart;
+  res.send(smart ? 'smart' : 'material');
 });
 
 app.post('/api/form/new/:formType', (req, res, next) => {

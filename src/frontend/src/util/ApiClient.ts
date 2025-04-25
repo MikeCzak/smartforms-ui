@@ -17,7 +17,7 @@ export default class ApiClient {
     }
   }
 
-  public static async loadNextFormType() :Promise<FormType|null> {
+  public static async loadNextFormType() :Promise<string|null> {
     try {
       const response = (await fetch(`${this.API_ROOT}/formtype`, { method: 'GET' }));
       if (!response.ok) {
@@ -25,8 +25,8 @@ export default class ApiClient {
       }
       const data = await response.text();
       switch(data) {
-        case "material": return FormType.MATERIAL;
-        case "smart": return FormType.SMART;
+        case "material":
+        case "smart": return data;
         default: throw new Error(`Invalid form type: ${data}`)
       }
     } catch (error: any) {

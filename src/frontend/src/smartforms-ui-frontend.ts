@@ -5,8 +5,6 @@ import './components/form-greeting.js';
 import './components/theme-toggle.js';
 import './components/form-renderer/smart-form.js';
 import './components/form-renderer/material-form.js';
-import { MdDialog } from '@material/web/all.js';
-import {EASING} from '@material/web/internal/motion/animation.js';
 import { FormType } from './FormType.js';
 import ApiClient from './util/ApiClient.js';
 
@@ -19,7 +17,7 @@ export class SmartformsUiFrontend extends LitElement {
 
   @property({type: Object}) private _rawForm: Object = {};
 
-  @property({attribute: false}) private _formType: FormType|null = null;
+  @property({attribute: false}) private _formType: string|null = localStorage.getItem('formType');
 
   @state() private _showPersonalInfo: boolean = false;
 
@@ -85,15 +83,15 @@ export class SmartformsUiFrontend extends LitElement {
   `;
 
   render() {
-      return (this._rawForm && this._formType && html`
+      return ((Object.keys(this._rawForm).length > 0 && this._formType !== null) && html`
       ${!this._greetingRead ? html`
         <main>
           <form-greeting @submit=${this.handleGreetingSubmit}></form-greeting>
         </main>
       ` :
         choose(this._formType, [
-          [FormType.MATERIAL, () => html`<material-form .formData=${this._rawForm}></material-form>`],
-          [FormType.SMART, () => html`<smart-form .formData=${this._rawForm}></smart-form>`],
+          ['material', () => html`<material-form .formData=${this._rawForm}></material-form>`],
+          ['smart', () => html`<smart-form .formData=${this._rawForm}></smart-form>`],
         ]
         )}
         <md-fab @click=${this.showPersonalData} id="personal-info-button" class="highlighted" aria-label="Your personal data">
@@ -133,7 +131,10 @@ export class SmartformsUiFrontend extends LitElement {
 
   private async loadFormData() {
     this._rawForm = await ApiClient.loadFormData('registration');
-    this._formType = await ApiClient.loadNextFormType();
+    if(this._formType === null) {
+      this._formType = await ApiClient.loadNextFormType();
+      localStorage.setItem('formType', this._formType!)
+    }
   }
 
   private handleGreetingSubmit(e: SubmitEvent): void {
