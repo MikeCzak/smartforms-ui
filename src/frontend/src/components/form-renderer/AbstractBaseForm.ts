@@ -1,4 +1,4 @@
-import { LitElement, html, css, HTMLTemplateResult } from 'lit';
+import { LitElement, html, css, HTMLTemplateResult, CSSResultGroup } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
 import '@material/web/all.js';
@@ -87,7 +87,10 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
     }
   }
 
-  static styles = css`
+  static styles: CSSResultGroup = css`
+    :host {
+      max-width: 460px;
+    }
     .debug--formType {
       position: fixed;
       bottom: 2px;
@@ -157,7 +160,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
     event.preventDefault();
     const isValid = this.validateForm();
 
-    if (!isValid) {
+    if (!isValid) { // TODO: remove debug not
       const form = event.target as HTMLFormElement;
       const formData = new FormData(form);
 

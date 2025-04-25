@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { css, CSSResultGroup, HTMLTemplateResult, LitElement } from 'lit';
-import { property, query, state } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 import IFormElement from './IFormElement.js';
 import AbstractSection from './base-class/AbstractSection.js';
 import IBaseFormElementParams from './IBaseFormElementParams.js';
@@ -12,7 +12,6 @@ export default abstract class AbstractFormElement extends LitElement implements 
   @property({attribute: true, reflect: true}) public name: string;
   @property({attribute: true, reflect: true}) public value: any = '';
   @property({type: Boolean, attribute: true, reflect: true}) public required: boolean;
-  @query('.material-field') protected _materialField: any;
   @state() protected _error: boolean = false;
   @state() protected _errorText?: string|null = null;
 
@@ -71,10 +70,6 @@ export default abstract class AbstractFormElement extends LitElement implements 
     return this._constraints;
   }
 
-  public isRequired(): boolean {
-    return this.required;
-  }
-
   public get metaData(): Map<string, any> {
     return this._metaData;
   }
@@ -89,14 +84,16 @@ export default abstract class AbstractFormElement extends LitElement implements 
     return this;
   }
 
-  static styles: CSSResultGroup = css`
+  static styles: CSSResultGroup = [
+    css`
     md-filled-text-field, md-filled-select {
       display: block;
     }
     md-filled-text-field {
       white-space: pre-line
     }
-  `
+  `]
+
 
   updated(changedProperties: Map<string, any>) {
     if (changedProperties.has('value')) {
@@ -173,7 +170,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
   public validate(reportValidity: boolean = true): IFormElement | null {
     const isValid = this.internals_.checkValidity();
     const { validationMessage } = this.internals_;
-    if (this._materialField && !isValid) {
+    if (!isValid) {
       if (reportValidity) {
         this.reportValidity(validationMessage);
       }

@@ -26,11 +26,11 @@ export default class MaterialForm extends AbstractBaseForm {
     if (invalidElements.length === 0) {
       return true;
     }
-
     invalidElements[0].focus();
     return false;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   protected override getSubmissionOverlay() {
     return html``
   }

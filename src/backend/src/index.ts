@@ -23,7 +23,7 @@ app.get('/api/formdata/:name', (req, res, next) => {
 app.get('/api/formtype/', (req, res, next) => {
   // TODO: return formtype with fewer saved forms
   // FormController.getNextFormType(req, res, next);
-  res.send("material");
+  res.send("smart");
 });
 
 app.post('/api/form/new/:formType', (req, res, next) => {

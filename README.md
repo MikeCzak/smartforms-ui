@@ -9,11 +9,11 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 ## Form
 ### Form Navigation
 - [ ] navigate erroneous fields with arrow keys up/down
-- [ ] deactivate submit button on submission
+- [x] deactivate submit button on submission
 ### Required Fields
-- [ ] use * and color
+- [x] use * and color
 ### Label Location
-- [ ] put only above, not floating
+- [x] put only above, not floating
 ### Validation and Feedback
 - [ ] embedded instant validation
 - [ ] mark erroneous fields after submit and provide said navigation
@@ -47,12 +47,12 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 - [ ] ensure proximity for related choice elements
   - [ ] checkboxes
   - [ ] radio buttons
-- [ ] provide common region for sections
-- [ ] provide similarity in color for required and erroneous fields
-- [ ] large subheadings to disrupt F-shaped reading pattern and re-focus the user's attention
+- [x] provide common region for sections
+- [x] provide similarity in color for required and erroneous fields
+- [x] large subheadings to disrupt F-shaped reading pattern and re-focus the user's attention
 - [ ] chunk long numbers
 # Additional Guidelines
-- [ ] don't clear fields on erroneous submit
+- [x] don't clear fields on erroneous submit
 ---
 ---
 &nbsp;

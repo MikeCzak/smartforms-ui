@@ -1,5 +1,5 @@
 import { property, customElement } from 'lit/decorators.js';
-import { html } from 'lit';
+import { css, html } from 'lit';
 import '@material/web/progress/circular-progress.js';
 import AbstractBaseForm from './AbstractBaseForm.js';
 import AbstractFormElementFactory from '../form-element/AbstractFormElementFactory.js';
@@ -18,9 +18,17 @@ export default class SmartForm extends AbstractBaseForm {
   }
 
   public validateForm(): boolean {
-    let isValid = true;
-    // TODO: implement this
-    return isValid;
+    const invalidElements = [];
+    for (const element of this._formElements) {
+      if (element.validate()) {
+       invalidElements.push(element);
+      }
+    }
+    if (invalidElements.length === 0) {
+      return true;
+    }
+    invalidElements[0].focus();
+    return false;
   }
 
   connectedCallback(): void {
@@ -32,6 +40,7 @@ export default class SmartForm extends AbstractBaseForm {
     // }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   protected override getSubmissionOverlay() {
     return html`
       <div class="submitted-overlay">
@@ -43,4 +52,12 @@ export default class SmartForm extends AbstractBaseForm {
     `
   }
 
+  static styles = [
+    AbstractBaseForm.styles,
+    css`
+      :host {
+        max-width: 600px;
+      }
+    `
+   ]
 }
