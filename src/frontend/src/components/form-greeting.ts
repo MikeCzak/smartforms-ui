@@ -13,13 +13,14 @@ export default class FormGreeting extends LitElement {
 
 
   static styles = css`
+
     md-elevated-card {
       padding: 16px;
       margin: auto 16px;
       display: flex;
       align-items: flex-start;
       text-align: start;
-
+      max-width: 900px;
     }
 
     md-elevated-card.agreed {

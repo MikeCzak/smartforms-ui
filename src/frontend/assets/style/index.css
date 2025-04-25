@@ -1,3 +1,7 @@
+:root {
+  --smart-border-radius: 16px;
+}
+
 html,
 body {
   display: grid;
