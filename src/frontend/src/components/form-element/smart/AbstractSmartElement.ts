@@ -1,12 +1,13 @@
 import { HTMLTemplateResult, html, CSSResultGroup } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { query } from "lit/decorators.js";
+import { query, state } from "lit/decorators.js";
 import AbstractFormElement from "../AbstractFormElement.js";
 import Colors from "../../../styles/Colors.js";
 import SmartInputs from "../../../styles/SmartInputs.js";
 import { InputType } from "../InputType.js";
 import { PatternValidator } from "../../../util/PatternValidator.js";
 import IBaseFormElementParams from "../IBaseFormElementParams.js";
+import { when } from "lit/directives/when.js";
 
 
 export default abstract class AbstractSmartElement extends AbstractFormElement {
@@ -15,7 +16,11 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     SmartInputs.styles
   ]
 
+  @state() private validationResults: Array<{ rule: string; valid: boolean }> = [];
+  @state() private overallValid: boolean | null = null;
+
   @query('input') protected inputElement!: HTMLInputElement;
+  @query('.real-time-validation') protected realTimeValidation!: HTMLElement;
 
   protected patternValidator?: PatternValidator;
 
@@ -30,15 +35,10 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     const input = event.target as any;
     this.value = input.value;
 
-    if(this.patternValidator !== undefined) {
-      const results = this.patternValidator!.validate(this.inputElement.value);
-
-      results.forEach(({ rule, valid }) => {
-        console.log(rule.description, valid ? "✅" : "❌");
-      });
-
-      const overallValid = this.patternValidator!.isValid(this.inputElement.value);
-      console.log("Overall valid:", overallValid);
+    if(this.patternValidator !== undefined && this.patternValidator.fullyParsed) {
+      this.validationResults = this.patternValidator!.validate(this.inputElement.value);
+      this.overallValid = this.patternValidator!.isValid(this.inputElement.value);
+      this.realTimeValidation.classList.add('show');
     }
   }
 
@@ -47,6 +47,7 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     this.addEventListener('click', this.delegateFocusToInput)
     this.addEventListener('focus', this.focusHandler);
     this.addEventListener('blur', this.blurHandler);
+    this.addEventListener('blur', this.hideValidationHandler);
   }
 
   override disconnectedCallback(): void {
@@ -54,6 +55,11 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     this.removeEventListener('click', this.delegateFocusToInput)
     this.removeEventListener('focus', this.focusHandler);
     this.removeEventListener('blur', this.blurHandler);
+    this.removeEventListener('blur', this.hideValidationHandler);
+  }
+
+  private hideValidationHandler(): void {
+    this.realTimeValidation.classList.remove('show');
   }
 
   protected delegateFocusToInput() {
@@ -63,7 +69,14 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
 
   render(): HTMLTemplateResult {
     return html`
-    <div class="wrapper ${this.required ? 'required' : ''}">
+    <div class="real-time-validation">
+      <md-elevated-card>
+        <ul>
+          ${this.validationResults.map(({ rule, valid }) => html`<li>${rule}: ${valid ? "✅" : "❌"}</li>`)}
+        </ul>
+      </md-elevated-card>
+    </div>
+    <div class="wrapper ${this.required ? 'required' : ''} ${this.overallValid ? 'valid' : ''}">
       <div class="top">
         <div class="left"></div>
           ${this.labelHTML()}
@@ -73,7 +86,10 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
         ${this.inputHTML()}
       </div>
     </div>
-    <small>${this.info}</small>
+    <div class="info">
+      <small>${this.info}</small>
+      ${when(this.constraints?.maxLength, () => html`<small class="counter">${this.value.length}/${this.constraints?.maxLength}</small>`)}
+    </div>
     `
   }
 

@@ -42,11 +42,11 @@ export class PatternValidator {
       });
     }
 
-    if (pattern.includes("(?=.*[!@#$%^&*])")) {
+    if (pattern.includes("(?=.*[!@#$%&*])")) {
       recognized++;
       rules.push({
-        description: "At least one special character (!@#$%^&*)",
-        validate: input => /[!@#$%^&*]/.test(input),
+        description: "At least one special character (!@#$%&*)",
+        validate: input => /[!@#$%&*]/.test(input),
       });
     }
 
@@ -66,18 +66,67 @@ export class PatternValidator {
       });
     }
 
+    if (pattern === "^\\+?[1-9]\\d{1,14}$") {
+      recognized++;
+      rules.push({
+        description: "Valid phone number (starts with optional +, one non-zero digit, then digits)",
+        validate: input => /^\+?[1-9]\d{1,14}$/.test(input),
+      });
+    }
+
+    if (pattern.includes("^[A-Z]{2}\\d{2}[A-Z0-9]{11,30}$")) {
+      recognized++;
+      rules.push({
+        description: "Valid IBAN (2-letter country code, 2-digit checksum, alphanumeric rest)",
+        validate: input => /^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(input),
+      });
+    }
+
+    if (pattern.includes("^\\S+@\\S+\\.\\S+$")) {
+      recognized++;
+      rules.push({
+        description: "Valid email address (basic format)",
+        validate: input => /^\S+@\S+\.\S+$/.test(input),
+      });
+    }
+
+    if (pattern.includes("^[A-Za-z0-9]+$")) {
+      recognized++;
+      rules.push({
+        description: "Only letters and numbers allowed",
+        validate: input => /^[A-Za-z0-9]+$/.test(input),
+      });
+    }
+
+    if (pattern.includes("^[A-Za-z]+$")) {
+      recognized++;
+      rules.push({
+        description: "Only letters allowed",
+        validate: input => /^[A-Za-z]+$/.test(input),
+      });
+    }
+
+    if (pattern.includes("(?!.*(.)\\1)")) {
+      recognized++;
+      rules.push({
+        description: "No repeating characters",
+        validate: input => !/(.).*?\1/.test(input),
+      });
+    }
+
+
     // Determine how many positive lookaheads (e.g. (?=...)) exist
     const patternParts = (pattern.match(/\(\?=/g) || []).length;
 
     // If we found fewer rules than expected, it's only partially parsed
-    this.fullyParsed = patternParts === recognized;
+    this.fullyParsed = recognized > 0;
 
     return rules;
   }
 
-  public validate(input: string): { rule: ValidationRule; valid: boolean }[] {
+  public validate(input: string): { rule: string; valid: boolean }[] {
     return this.rules.map(rule => ({
-      rule,
+      rule: rule.description,
       valid: rule.validate(input),
     }));
   }

@@ -6,6 +6,9 @@ export default class SmartInputs {
 
   :host {
     --smart-border-radius: 12px;
+    --success: rgb(35, 144, 35);
+    --success-rgb: 35, 144, 35;
+    position: relative;
   }
 
   .left, .right {
@@ -55,9 +58,29 @@ export default class SmartInputs {
     outline: 3px solid var(--required);
   }
 
+  .wrapper.required.valid:focus-within {
+    outline: 3px solid var(--success);
+  }
+
+  .wrapper:has(.required) {
+    border: 2px solid var(--required);
+    border-top: transparent;
+    background: linear-gradient(340deg, rgba(var(--required-rgb), .4) 0%, transparent max(100px, 30%));
+  }
+
   .wrapper.required .left, .wrapper.required  .right {
     border-top: 2px solid var(--required);
     height: 12px;
+  }
+
+  .wrapper.required.valid .left, .wrapper.required.valid  .right {
+    border-top: 2px solid var(--success);
+  }
+
+  .wrapper.required.valid {
+    border: 2px solid var(--success);
+    border-top: transparent;
+    background: linear-gradient(340deg, rgba(var(--success-rgb), .4) 0%, transparent max(100px, 30%));
   }
 
   .content {
@@ -86,15 +109,40 @@ export default class SmartInputs {
     padding: 6px 12px;
   }
 
-  .wrapper:has(.required) {
-    border: 2px solid var(--required);
-    border-top: transparent;
-    background: linear-gradient(340deg, rgba(var(--required-rgb), .4) 0%, transparent max(100px, 30%));
-  }
-
   label.required:after {
     content: ' *';
     color: var(--required);
+  }
+
+  .info {
+    display: flex;
+    justify-content: space-between;
+
+    & .counter {
+      flex: 0 0 0;
+    }
+  }
+
+  .real-time-validation {
+    position: absolute;
+    display: none;
+    bottom: calc(100% + 12px);
+    right: 12px;
+    font-size: 14px;
+
+    & md-elevated-card {
+      padding: 12px 24px;
+      border-bottom-right-radius: 0;
+
+      & ul {
+        padding: 0;
+        margin: 0;
+      }
+    }
+  }
+
+  .real-time-validation.show {
+    display: block;
   }
   `
 }

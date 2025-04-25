@@ -132,7 +132,7 @@
           "constraints": {
             "minLength": 8,
             "maxLength": 100,
-            "pattern": "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{8,}$"
+            "pattern": "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%&*])[A-Za-z\\d!@#$%&*]{8,}$"
           }
         }
       ]
@@ -177,7 +177,8 @@
           "label": "IBAN",
           "required": true,
           "constraints": {
-            "pattern": "^[A-Z]{2}\\d{2}[A-Z0-9]{1,30}$"
+            "pattern": "^[A-Z]{2}\\d{2}[A-Z0-9]{11,30}$",
+            "maxLength": 34
           },
           "dependsOn": {
             "field": "payment_method",
