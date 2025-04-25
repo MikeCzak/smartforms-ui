@@ -35,6 +35,7 @@ export default class SmartInputs {
     padding: 0 6px;
     font-size: 16px;
     white-space: nowrap;
+    background-color: var(--smart-container-background-color);
   }
 
   .wrapper {
@@ -44,6 +45,14 @@ export default class SmartInputs {
     border-top: transparent;
     border-radius: var(--smart-border-radius);
     background-color: transparent;
+  }
+
+  .wrapper:focus-within {
+    outline: 3px solid var(--md-sys-color-outline);
+  }
+
+  .wrapper.required:focus-within {
+    outline: 3px solid var(--required);
   }
 
   .wrapper.required .left, .wrapper.required  .right {
