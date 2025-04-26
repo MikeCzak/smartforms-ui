@@ -55,4 +55,8 @@
   --required: rgb(187, 115, 27);
   --required-rgb: 187, 115, 27;
   --smart-container-background-color: hsl(204, 47%, 21%);
+  --success: rgb(31, 112, 56);
+  --success-rgb: 31, 112, 56;
+  --error: rgb(255 180 171);
+  --error-rgb: 255 180 171;
 }
