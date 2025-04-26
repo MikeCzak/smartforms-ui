@@ -17,8 +17,8 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     SmartInputs.styles
   ]
 
-  @state() private validationResults: Array<{ rule: string; valid: boolean }> = [];
-  @state() private overallValid: boolean | null = null;
+  @state() protected validationResults: Array<{ rule: string; valid: boolean }> = [];
+  @state() protected overallValid: boolean | null = null;
 
   @query('input') protected inputElement!: HTMLInputElement;
   @query('.real-time-validation') protected realTimeValidation!: HTMLElement;

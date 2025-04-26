@@ -26,7 +26,7 @@ export default class SmartDate extends AbstractSmartElement {
           this.highlightDatePart(part);
           part.value = numVal.toString();
         }
-        this.month = part.value;
+        this.month = part.value.padStart(2, '0');
         break;
       case 'day':
         if(numVal > 31) {
@@ -34,7 +34,7 @@ export default class SmartDate extends AbstractSmartElement {
           this.highlightDatePart(part);
           part.value = numVal.toString();
         }
-        this.day = part.value;
+        this.day = part.value.padStart(2, '0');
         break;
       default: break;
     }
@@ -56,7 +56,6 @@ export default class SmartDate extends AbstractSmartElement {
   private highlightDatePart(part: HTMLInputElement): void {
     const label = this.shadowRoot?.querySelector(`label[for=${part.getAttribute('id')}]`)
     label!.classList.add('highlight');
-    console.log(label, label!.classList)
     setTimeout(() => label!.classList.remove('highlight'), 500)
   }
 
@@ -121,6 +120,33 @@ export default class SmartDate extends AbstractSmartElement {
         padding-inline: 4px;
         margin-top: -10px;
       }
+
+      .date-wrapper.material {
+        display: flex;
+        gap: 2px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px 16px 16px 16px;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      md-outlined-select {
+        flex: 1 0 0;
+        min-width: unset;
+      }
+      :host {
+      --md-outlined-select-text-field-outline-color: var(--md-sys-color-outline);
+      --md-outlined-select-text-field-focus-outline-color: var(--md-sys-color-outline);
+      --md-outlined-select-text-field-outline-width: 2px;
+      --md-outlined-select-text-field-hover-outline-width: 2px;
+      --md-outlined-select-text-field-container-shape: 8px;
+      }
+
+      md-outlined-select::part(menu) {
+        --md-menu-container-color: white;
+        --md-menu-container-shape: 0;
+      }
     `
   ]
 
@@ -128,7 +154,20 @@ export default class SmartDate extends AbstractSmartElement {
     return html`
       ${when(this.required,
         () => html`
-          d
+          <div class="date-wrapper material">
+            <md-outlined-select required ?error=${this._error} class="year-input" label="Year" id="${this.id}_year" @input=${this.handleInput}>
+            ${Array.from({ length: 100 }, (_, i) => i + 1925).map((option) => html`
+              <md-select-option value=${option}><div slot="headline">${option}</div></md-select-option>`)}
+            </md-outlined-select>
+            <md-outlined-select required ?error=${this._error} class="month-input" label="Month" id="${this.id}_month" @input=${this.handleInput}>
+            ${Array.from({ length: 12 }, (_, i) => i + 1).map((option) => html`
+              <md-select-option value=${option}><div slot="headline">${option}</div></md-select-option>`)}
+            </md-outlined-select>
+            <md-outlined-select required ?error=${this._error} class="day-input" label="Day" id="${this.id}_day" @input=${this.handleInput}>
+            ${Array.from({ length: 31 }, (_, i) => i + 1).map((option) => html`
+              <md-select-option value=${option}><div slot="headline">${option}</div></md-select-option>`)}
+            </md-outlined-select>
+          </div>
         `,
         () => html`
           <div class="date-wrapper">
