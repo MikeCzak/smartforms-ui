@@ -11,6 +11,7 @@ export default class SmartInputs {
     --error: rgb(200, 0, 20);
     --error-rgb: 200, 0, 20;
     position: relative;
+    width: 100%;
   }
 
   .left, .right {
@@ -20,12 +21,12 @@ export default class SmartInputs {
 
   .left {
     border-top-left-radius: var(--smart-border-radius);
-    margin-left: -3px;
-      flex: 0 1 5%;
+    margin-left: -1px;
+      flex: 0 1 24px;
   }
   .right {
     border-top-right-radius: var(--smart-border-radius);
-    margin-right: -3px;
+    margin-right: -1px;
       flex: 0 1 100%;
   }
 
