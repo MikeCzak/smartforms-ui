@@ -94,7 +94,7 @@ export class PatternValidator {
     if (pattern.includes("^\\S+@\\S+\\.\\S+$")) {
       recognized++;
       rules.push({
-        description: "Valid email address (basic format)",
+        description: "Valid email address",
         validate: input => /^\S+@\S+\.\S+$/.test(input),
       });
     }
