@@ -8,6 +8,8 @@ export default class SmartInputs {
     --smart-border-radius: 12px;
     --success: rgb(35, 144, 35);
     --success-rgb: 35, 144, 35;
+    --error: rgb(200, 0, 20);
+    --error-rgb: 200, 0, 20;
     position: relative;
   }
 
@@ -51,15 +53,19 @@ export default class SmartInputs {
   }
 
   .wrapper:focus-within {
-    outline: 3px solid var(--md-sys-color-outline);
+    outline: 2px solid var(--md-sys-color-outline);
   }
 
   .wrapper.required:focus-within {
-    outline: 3px solid var(--required);
+    outline: 2px solid var(--required);
+  }
+
+  .wrapper.invalid:focus-within {
+    outline: 2px solid var(--error) !important;
   }
 
   .wrapper.required.valid:focus-within {
-    outline: 3px solid var(--success);
+    outline: 2px solid var(--success);
   }
 
   .wrapper:has(.required) {
@@ -81,6 +87,16 @@ export default class SmartInputs {
     border: 2px solid var(--success);
     border-top: transparent;
     background: linear-gradient(340deg, rgba(var(--success-rgb), .4) 0%, transparent max(100px, 30%));
+  }
+
+  .wrapper.required.invalid .left, .wrapper.required.invalid  .right {
+    border-top: 2px solid var(--error);
+  }
+
+  .wrapper.required.invalid {
+    border: 2px solid var(--error);
+    border-top: transparent;
+    background: linear-gradient(340deg, rgba(var(--error-rgb), .4) 0%, transparent max(100px, 30%));
   }
 
   .content {
@@ -117,6 +133,11 @@ export default class SmartInputs {
   .info {
     display: flex;
     justify-content: space-between;
+    padding-bottom: 0;
+
+    & small {
+      padding-bottom: 0;
+    }
 
     & .counter {
       flex: 0 0 0;
@@ -143,6 +164,12 @@ export default class SmartInputs {
 
   .real-time-validation.show {
     display: block;
+  }
+
+  .error-text {
+    color: var(--error);
+    padding: 4px 12px 0 12px;
+    height: 16px;
   }
   `
 }

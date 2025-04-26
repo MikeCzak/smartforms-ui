@@ -43,7 +43,6 @@ export default class SmartChoice extends AbstractChoice {
           ${option}
         </label>
       `)}
-      ${this._errorText && html`<p class="error-text">${this._errorText}</p>`}
       `
   };
 
@@ -64,12 +63,12 @@ export default class SmartChoice extends AbstractChoice {
           ${option}
         </label>
       `)}
-      ${this._errorText && html`<p class="error-text">${this._errorText}</p>`}
       `
   };
 
   private dropdown(): HTMLTemplateResult {
     return html`
+      ${this.info && html`<p>${this.info}</p>`}
       <md-outlined-select
         class="material-field"
         ?required=${this.required}
@@ -100,8 +99,10 @@ export default class SmartChoice extends AbstractChoice {
       errors.valueMissing = true;
       if(this.options.length === 1) {
         errorMessages.push('Please check this box if you want to proceed.');
+      } else if (this.choiceType === 'multiple') {
+          errorMessages.push('Please select at least one option.');
       } else {
-        errorMessages.push('Please select at least one option.');
+        errorMessages.push('Please select an option.');
       }
     }
   }
@@ -164,7 +165,7 @@ export default class SmartChoice extends AbstractChoice {
 
   render(): HTMLTemplateResult {
     return html`
-    <div class="wrapper ${this.required ? 'required' : ''}">
+    <div class="wrapper ${this.required ? 'required' : ''}  ${this._error ? 'invalid' : ''}">
       <div class="top">
         <div class="left"></div>
           ${this.labelHTML()}
@@ -174,7 +175,7 @@ export default class SmartChoice extends AbstractChoice {
         ${this.inputHTML()}
       </div>
     </div>
-    <small>${this.info}</small>
+    <small class="error-text">${this._errorText}</small>
     `
   }
 }

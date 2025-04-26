@@ -1,13 +1,13 @@
 import { HTMLTemplateResult, html, CSSResultGroup } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { query, state } from "lit/decorators.js";
+import { when } from "lit/directives/when.js";
 import AbstractFormElement from "../AbstractFormElement.js";
 import Colors from "../../../styles/Colors.js";
 import SmartInputs from "../../../styles/SmartInputs.js";
 import { InputType } from "../InputType.js";
 import { PatternValidator } from "../../../util/PatternValidator.js";
 import IBaseFormElementParams from "../IBaseFormElementParams.js";
-import { when } from "lit/directives/when.js";
 
 
 export default abstract class AbstractSmartElement extends AbstractFormElement {
@@ -26,18 +26,17 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
 
   constructor(params: IBaseFormElementParams) {
     super(params);
-    if (params.constraints?.pattern) {
-      this.patternValidator = new PatternValidator(params.constraints?.pattern);
+    if (params.constraints !== undefined) {
+      this.patternValidator = new PatternValidator(params.constraints);
     }
   }
 
   protected handleInput(event: InputEvent): void {
     const input = event.target as any;
     this.value = input.value;
-
     if(this.patternValidator !== undefined && this.patternValidator.fullyParsed) {
       this.validationResults = this.patternValidator!.validate(this.inputElement.value);
-      this.overallValid = this.patternValidator!.isValid(this.inputElement.value);
+      this.overallValid = this.patternValidator?.isValid(this.inputElement.value);
       this.realTimeValidation.classList.add('show');
     }
   }
@@ -76,7 +75,7 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
         </ul>
       </md-elevated-card>
     </div>
-    <div class="wrapper ${this.required ? 'required' : ''} ${this.overallValid ? 'valid' : ''}">
+    <div class="wrapper ${this.required ? 'required' : ''} ${this.overallValid ? 'valid' : ''} ${this._error ? 'invalid' : ''}">
       <div class="top">
         <div class="left"></div>
           ${this.labelHTML()}
@@ -87,9 +86,10 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
       </div>
     </div>
     <div class="info">
-      <small>${this.info}</small>
+      ${when(this.info, () => html`<small>${this.info}</small>`)}
       ${when(this.constraints?.maxLength, () => html`<small class="counter">${this.value.length}/${this.constraints?.maxLength}</small>`)}
     </div>
+    <small class="error-text">${this._errorText}</small>
     `
   }
 

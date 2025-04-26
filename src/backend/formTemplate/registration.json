@@ -13,7 +13,8 @@
           "required": true,
           "constraints": {
             "minLength": 2,
-            "maxLength": 50
+            "maxLength": 50,
+            "pattern": "^[A-Za-z]+$"
           }
         },
         {
@@ -24,7 +25,8 @@
           "required": true,
           "constraints": {
             "minLength": 2,
-            "maxLength": 50
+            "maxLength": 50,
+            "pattern": "^[A-Za-z]+$"
           }
         },
         {
@@ -94,18 +96,8 @@
         {
           "name": "zipcode",
           "type": "text",
-          "info": "Must match the ZIP code format for your country.",
           "label": "ZIP Code",
-          "required": true,
-          "constraints": {
-            "patternByCountry": {
-              "USA": "^[0-9]{5}(-[0-9]{4})?$",
-              "Canada": "^[A-Za-z]\\d[A-Za-z] ?\\d[A-Za-z]\\d$",
-              "Germany": "^[0-9]{5}$",
-              "UK": "^[A-Z]{1,2}[0-9R][0-9A-Z]?[ ]?[0-9][A-Z]{2}$",
-              "France": "^[0-9]{5}$"
-            }
-          }
+          "required": true
         }
       ]
     },

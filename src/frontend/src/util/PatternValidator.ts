@@ -9,9 +9,18 @@ export class PatternValidator {
   public rules: ValidationRule[] = [];
   public fullyParsed: boolean = true;
 
-  constructor(pattern: string) {
-    this.pattern = pattern;
-    this.rules = this.parsePattern(pattern);
+  constructor(constraints: {[key: string]: any}) {
+    this.pattern = constraints.pattern;
+    if(this.pattern) {
+      this.rules = this.parsePattern(this.pattern);
+    }
+    if(constraints.minLength) {
+      this.rules.push({
+        description: `At least ${constraints.minLength} characters`,
+        validate: input => input.length >= constraints.minLength
+      })
+    }
+    this.fullyParsed = this.rules.length > 0;
   }
 
   private parsePattern(pattern: string): ValidationRule[] {
@@ -117,9 +126,6 @@ export class PatternValidator {
 
     // Determine how many positive lookaheads (e.g. (?=...)) exist
     const patternParts = (pattern.match(/\(\?=/g) || []).length;
-
-    // If we found fewer rules than expected, it's only partially parsed
-    this.fullyParsed = recognized > 0;
 
     return rules;
   }
