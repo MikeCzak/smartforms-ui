@@ -20,6 +20,8 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
 
   @property() public formTitle: string = '';
 
+  @property({attribute: false}) public internalFormId!: string;
+
   @query('#form #elements') form!: HTMLFormElement;
 
   @state() private _submissionSuccessful: boolean|null = null;
@@ -140,7 +142,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
           ${(this._submitted && this.getSubmissionOverlay()) || ''}
           ${isDev ? html`<div class="debug--formType">${this.formType}</div>` : ''}`
         ],
-        [true, () => html`<thank-you></thank-you>`],
+        [true, () => html`<thank-you .internalFormId=${this.internalFormId}></thank-you>`],
         [false, () => html`<submission-error></submission-error>`],
       ])}
     `
@@ -160,7 +162,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
     event.preventDefault();
     const isValid = this.validateForm();
 
-    if (isValid) { // TODO: remove debug not
+    if (!isValid) { // TODO: remove debug not
       const form = event.target as HTMLFormElement;
       const formData = new FormData(form);
 
@@ -175,6 +177,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
           jsonData.metaData[e.id][k] = v;
         })
       })
+      jsonData.internalFormId = {"internalFormId": this.internalFormId};
       this._submitted = true;
       ApiClient.saveForm(jsonData, this.formType).then(res => {
         this._submissionSuccessful = res;
@@ -184,6 +187,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
   }
 
   private getElementByName(name: string): IFormElement {
+    console.log(this._formElements, name)
     for (const formElement of this._formElements) {
       if (formElement.originalName === name) {
         return formElement;

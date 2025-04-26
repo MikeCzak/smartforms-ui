@@ -22,6 +22,8 @@ export class SmartformsUiFrontend extends LitElement {
 
   @state() private _showPersonalInfo: boolean = false;
 
+  private _internalFormId: string | null = sessionStorage.getItem('internalFormId');
+
   static styles = css`
     :host {
       display: flex;
@@ -89,15 +91,15 @@ export class SmartformsUiFrontend extends LitElement {
   `;
 
   render() {
-      return ((Object.keys(this._rawForm).length > 0 && this._formType !== null) && html`
-      ${!this._greetingRead ? html`
-        <main>
-          <form-greeting @submit=${this.handleGreetingSubmit}></form-greeting>
-        </main>
-      ` :
+      return ((Object.keys(this._rawForm).length > 0 && this._formType !== null && this._internalFormId !== null) && html`
+        ${!this._greetingRead ? html`
+          <main>
+            <form-greeting @submit=${this.handleGreetingSubmit}></form-greeting>
+          </main>
+        ` :
         choose(this._formType, [
-          ['material', () => html`<material-form .formData=${this._rawForm}></material-form>`],
-          ['smart', () => html`<smart-form .formData=${this._rawForm}></smart-form>`],
+          ['material', () => html`<material-form .formData=${this._rawForm} .internalFormId=${this._internalFormId!}></material-form>`],
+          ['smart', () => html`<smart-form .formData=${this._rawForm} .internalFormId=${this._internalFormId!}></smart-form>`],
         ]
         )}
         <md-fab @click=${this.showPersonalData} id="personal-info-button" class="highlighted" aria-label="Your personal data">
@@ -141,8 +143,14 @@ export class SmartformsUiFrontend extends LitElement {
   private async loadFormData() {
     this._rawForm = await ApiClient.loadFormData('registration');
     if(this._formType === null) {
-      this._formType = await ApiClient.loadNextFormType();
-      localStorage.setItem('formType', this._formType!)
+      const typeAndUUID = await ApiClient.loadNextFormType();
+      if (typeAndUUID) {
+        const {formtype, uuid} = typeAndUUID;
+        this._formType = formtype;
+        this._internalFormId = uuid;
+        sessionStorage.setItem('internalFormId', uuid);
+        localStorage.setItem('formType', this._formType!)
+      }
     }
   }
 

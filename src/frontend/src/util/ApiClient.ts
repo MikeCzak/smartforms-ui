@@ -17,7 +17,7 @@ export default class ApiClient {
     }
   }
 
-  public static async loadNextFormType() :Promise<string|null> {
+  public static async loadNextFormType() :Promise<{formtype: string, uuid: string}|null> {
     try {
       const response = (await fetch(`${this.API_ROOT}/formtype`, { method: 'GET' }));
       if (!response.ok) {
@@ -25,11 +25,10 @@ export default class ApiClient {
       }
       const data = await response.json();
       const { formtype, uuid } = data;
-      sessionStorage.setItem('internalFormId', uuid);
       switch(formtype) {
         case "material":
-        case "smart": return formtype;
-        default: throw new Error(`Invalid form type: ${data}`)
+        case "smart": return {"formtype": formtype, "uuid": uuid};
+        default: throw new Error(`Invalid form type: ${formtype}`)
       }
     } catch (error: any) {
 
