@@ -17,7 +17,7 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 ### Label Location
 - [x] put only above, not floating
 ### Validation and Feedback
-- [ ] embedded instant validation
+- [x] embedded instant validation
 - [ ] mark erroneous fields after submit and provide said navigation
 ## Elements
 ### Choices
@@ -44,7 +44,7 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 
 > Note: Localization for future implementations
 ### Format Restrictions
-- [ ] state rule and display real-time updated check
+- [x] state rule and display real-time updated check
 # Visual
 - [x] ensure proximity for related choice elements
   - [x] checkboxes
@@ -59,7 +59,7 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 ---
 &nbsp;
 
-> ## TODOS <div style="width: 0;height: 0;border-left: 20px solid transparent;border-right: 20px solid transparent;border-bottom: 32px solid #d13;position: relative; display:inline-block;margin-left:-140px"><div style="width: 0;height: 0;border-left: 14px solid transparent;border-right: 14px solid transparent;border-bottom: 23px solid #eee;position: absolute; display:inline-block; left:-14.5px; top: 6px"><span style="position: absolute; top: 4px; left:-2.5px; color: black; font-weight:bold; font-size: 16px">!</span></div></div>
+> ## TODOS
 > ### Necessary Metadata:
 > - section titles
 > - min, max, minlength, maxlength
@@ -75,5 +75,3 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 > - ~~generate unique id from label for html id~~
 > - visitor for "fields exist that depend on this field" for toggle decision (maybe array is enough since dependsOn is in the interface)
 > - invalidIterator for post-submit navigation
-
-<span style="font-size: 6px; font-style:italic">don't judge me on the warning sign - sometimes my inner monk needs to know how certain things are done</span>
