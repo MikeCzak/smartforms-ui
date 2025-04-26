@@ -39,8 +39,8 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 - [ ] both
   - \> 15 options: Dropdown with search field (text input)
 ### Date entry
-- [ ] dropdown for required
-- [ ] text with format indication below for non-required
+- [x] dropdown for required
+- [x] text with format indication below for non-required
 
 > Note: Localization for future implementations
 ### Format Restrictions
