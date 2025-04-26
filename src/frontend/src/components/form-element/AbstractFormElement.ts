@@ -130,7 +130,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
   }
 
   protected validatePattern(errors: { [key: string]: boolean; }, errorMessages: string[]) {
-    if (this.constraints?.pattern && !new RegExp(this.constraints.pattern).test(this.value)) {
+    if (this.constraints?.pattern && this.value && !new RegExp(this.constraints.pattern).test(this.value)) {
       errors.patternMismatch = true;
       errorMessages.push('Invalid format.');
     }
