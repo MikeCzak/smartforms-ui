@@ -7,6 +7,7 @@ import './components/form-renderer/smart-form.js';
 import './components/form-renderer/material-form.js';
 import { FormType } from './FormType.js';
 import ApiClient from './util/ApiClient.js';
+import { when } from 'lit/directives/when.js';
 
 export const isDev = document.location.hostname==='localhost';
 
@@ -48,10 +49,15 @@ export class SmartformsUiFrontend extends LitElement {
       color: var(--required);
       animation: jumping .5s infinite ease-in-out alternate
     }
-
     @keyframes jumping {
       from {transform: translateX(-20px) translateY(-20px)}
       to {transform: translateX(0) translateY(0)}
+    }
+    #back-button {
+      position: fixed;
+      bottom: 56px;
+      left: 16px;
+      z-index: 100;
     }
     #personal-info {
       /* display: none; */
@@ -97,6 +103,9 @@ export class SmartformsUiFrontend extends LitElement {
         <md-fab @click=${this.showPersonalData} id="personal-info-button" class="highlighted" aria-label="Your personal data">
           <my-icon slot="icon" icon="info"></my-icon>
         </md-fab>
+        ${when(this._greetingRead, () => html`<md-fab label="Back to start" id="back-button" @click=${() => {this._greetingRead = false; sessionStorage.greetingRead = JSON.stringify(this._greetingRead)}}>
+          <my-icon slot="icon" icon="arrow_back"></my-icon>
+        </md-fab>`)}
         <div id="personal-info" class="${this._showPersonalInfo ? 'open': ''}">
           <h3 class="headline">
             Your personal data
