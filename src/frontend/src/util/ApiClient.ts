@@ -23,10 +23,12 @@ export default class ApiClient {
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
-      const data = await response.text();
-      switch(data) {
+      const data = await response.json();
+      const { formtype, uuid } = data;
+      sessionStorage.setItem('internalFormId', uuid);
+      switch(formtype) {
         case "material":
-        case "smart": return data;
+        case "smart": return formtype;
         default: throw new Error(`Invalid form type: ${data}`)
       }
     } catch (error: any) {

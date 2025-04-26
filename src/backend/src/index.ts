@@ -25,7 +25,8 @@ app.get('/api/formtype/', (req, res, next) => {
   // TODO: return formtype with fewer saved forms
   // FormController.getNextFormType(req, res, next);
   smart = !smart;
-  res.send(smart ? 'smart' : 'material');
+  const uuid = crypto.randomUUID();
+  res.json({"formtype": smart ? 'smart' : 'material', "uuid": uuid});
 });
 
 app.post('/api/form/new/:formType', (req, res, next) => {
