@@ -1,13 +1,12 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
+import { when } from 'lit/directives/when.js';
 import './components/form-greeting.js';
 import './components/theme-toggle.js';
 import './components/form-renderer/smart-form.js';
 import './components/form-renderer/material-form.js';
-import { FormType } from './FormType.js';
 import ApiClient from './util/ApiClient.js';
-import { when } from 'lit/directives/when.js';
 
 export const isDev = document.location.hostname==='localhost';
 
@@ -105,7 +104,7 @@ export class SmartformsUiFrontend extends LitElement {
         <md-fab @click=${this.showPersonalData} id="personal-info-button" class="highlighted" aria-label="Your personal data">
           <my-icon slot="icon" icon="info"></my-icon>
         </md-fab>
-        ${when(this._greetingRead, () => html`<md-fab label="Back to start" id="back-button" @click=${() => {this._greetingRead = false; sessionStorage.greetingRead = JSON.stringify(this._greetingRead)}}>
+        ${when(this._greetingRead, () => html`<md-fab label="Back to start" id="back-button" @click=${() => {this._greetingRead = false; this.loadFormData(); sessionStorage.greetingRead = JSON.stringify(this._greetingRead)}}>
           <my-icon slot="icon" icon="arrow_back"></my-icon>
         </md-fab>`)}
         <div id="personal-info" class="${this._showPersonalInfo ? 'open': ''}">
