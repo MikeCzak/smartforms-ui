@@ -19,6 +19,7 @@ export default class MaterialTextarea extends AbstractFormElement {
         label=${this.label}
         maxLength=${ifDefined(this.constraints?.maxLength)}
         minLength=${ifDefined(this.constraints?.minLength)}
+        value=${this.value}
         >
       </md-filled-text-field>
     `;

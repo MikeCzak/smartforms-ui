@@ -24,6 +24,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
   private _dependingFields: Array<IFormElement|AbstractSection> = [];
   private _metaData: Map<string, any> = new Map<string, any>([['focusTime', 0], ['validationErrors', {}]]);
   private _startTime?: number|null = null;
+  protected _maySaveToStorage: boolean = true;
   public internals_;
 
 
@@ -101,8 +102,10 @@ export default abstract class AbstractFormElement extends LitElement implements 
 
   updated(changedProperties: Map<string, any>) {
     if (changedProperties.has('value')) {
+      if(this._maySaveToStorage) {
+        sessionStorage.setItem(this.id, JSON.stringify(this.value));
+      }
       this.internals_.setFormValue(this.value);
-
       this._error = false;
       this._errorText = null;
       this.setValidity();
@@ -197,6 +200,18 @@ export default abstract class AbstractFormElement extends LitElement implements 
 
   connectedCallback(): void {
     super.connectedCallback()
+    const stored = sessionStorage.getItem(this.id);
+    if (stored) {
+      let parsed;
+      try { parsed = JSON.parse(stored) }
+      catch (e) { parsed = null }
+      if(parsed !== null && parsed !== '') {
+        this.value = parsed;
+        this.internals_.setFormValue(parsed);
+        console.log("Parsed value from session storage: ", parsed)
+      }
+    }
+
     this.addEventListener('focus', this.focusHandler);
     this.addEventListener('blur', this.blurHandler);
   }

@@ -19,6 +19,7 @@ export default class MaterialTel extends AbstractFormElement {
         pattern=${ifDefined(this.constraints?.pattern)}
         maxLength=${ifDefined(this.constraints?.maxLength)}
         minLength=${ifDefined(this.constraints?.minLength)}
+        value=${this.value}
         >
       </md-filled-text-field>`
   }

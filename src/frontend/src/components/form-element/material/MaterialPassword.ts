@@ -6,6 +6,8 @@ import AbstractFormElement from "../AbstractFormElement.js";
 @customElement('material-password')
 export default class MaterialPassword extends AbstractFormElement {
 
+  protected _maySaveToStorage: boolean = false;
+
   render(): HTMLTemplateResult {
     return html`
       <md-filled-text-field

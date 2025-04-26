@@ -18,6 +18,7 @@ export default class MaterialDate extends AbstractFormElement {
         label=${this.label}
         min=${(ifDefined(this.constraints?.min))}
         max=${(ifDefined(this.constraints?.max))}
+        value=${this.value}
         >
       </md-filled-text-field>
       `

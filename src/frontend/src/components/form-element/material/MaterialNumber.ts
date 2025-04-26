@@ -21,6 +21,7 @@ export default class MaterialNumber extends AbstractFormElement {
         minLength=${ifDefined(this.constraints?.minLength)}
         min=${(ifDefined(this.constraints?.min))}
         max=${(ifDefined(this.constraints?.max))}
+        value=${this.value}
         >
       </md-filled-text-field>
     `;

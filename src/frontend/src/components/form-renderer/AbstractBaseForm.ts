@@ -187,7 +187,6 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
   }
 
   private getElementByName(name: string): IFormElement {
-    console.log(this._formElements, name)
     for (const formElement of this._formElements) {
       if (formElement.originalName === name) {
         return formElement;
