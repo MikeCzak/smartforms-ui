@@ -144,7 +144,6 @@ export default class SmartDate extends AbstractSmartElement {
       }
 
       md-outlined-select::part(menu) {
-        --md-menu-container-color: white;
         --md-menu-container-shape: 0;
       }
     `
