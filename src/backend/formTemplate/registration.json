@@ -46,18 +46,23 @@
         {
           "name": "phone",
           "type": "tel",
-          "info": "Must be a valid phone number (e.g., +123456789).",
+          "info": "Can start with optional +, then one non-zero digit, then digits",
           "label": "Phone Number",
           "required": false,
           "constraints": {
-            "pattern": "^\\+?[1-9]\\d{1,14}$"
+            "pattern": "^\\+?[1-9]\\d{1,14}$",
+            "maxLength": 16
           }
         },
         {
           "name": "email",
           "type": "email",
           "label": "Email",
-          "required": true
+          "required": true,
+          "info": "Must be a valid email address",
+          "constraints": {
+            "pattern": "^\\S+@\\S+\\.\\S+$"
+          }
         },
         {
           "name": "children",
