@@ -11,6 +11,7 @@ import IBaseFormElementParams from "../IBaseFormElementParams.js";
 
 
 export default abstract class AbstractSmartElement extends AbstractFormElement {
+
   static styles: CSSResultGroup = [
     Colors.styles,
     SmartInputs.styles
@@ -29,6 +30,10 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     if (params.constraints !== undefined) {
       this.patternValidator = new PatternValidator(params.constraints);
     }
+  }
+
+  protected override _attachShadow(): void {
+    this.attachShadow({ mode: 'open', delegatesFocus: false });
   }
 
   protected handleInput(event: InputEvent): void {
@@ -61,17 +66,23 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     this.realTimeValidation.classList.remove('show');
   }
 
-  protected delegateFocusToInput() {
-    this.blur();
-    this.focus();
+  protected delegateFocusToInput(e: MouseEvent) {
+    const path = e.composedPath() as HTMLElement[];
+
+    const clickedInput = path.find(el => el.tagName === 'INPUT');
+
+    if (!clickedInput) {
+      const firstInput = this.shadowRoot?.querySelector('input');
+      firstInput?.focus();
+    }
   }
 
   render(): HTMLTemplateResult {
     return html`
     <div class="real-time-validation">
       <md-elevated-card>
-        <ul>
-          ${this.validationResults.map(({ rule, valid }) => html`<li>${rule}: ${valid ? "✅" : "❌"}</li>`)}
+        <ul style="list-style-type: none">
+          ${this.validationResults.map(({ rule, valid }) => html`<li>${valid ? "✅" : "❌"} ${rule}</li>`)}
         </ul>
       </md-elevated-card>
     </div>
@@ -97,8 +108,6 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     return html`
       <input
         type=${this.inputType}
-        .supportingText=${this._errorText ?? this.info}
-        ?error=${this._error}
         @input=${this.handleInput}
         ?required=${this.required}
         pattern=${ifDefined(this.constraints?.pattern)}

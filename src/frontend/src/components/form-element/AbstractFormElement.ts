@@ -37,9 +37,13 @@ export default abstract class AbstractFormElement extends LitElement implements 
     this.required = params.required ?? true;
     this._dependsOn = params.dependsOn;
     this._constraints = params.constraints;
-    this.attachShadow({ mode: 'open', delegatesFocus: true });
+    this._attachShadow();
     this.internals_ = this.attachInternals();
     this.internals_.setFormValue(this.value);
+  }
+
+  protected _attachShadow(): void {
+    this.attachShadow({ mode: 'open', delegatesFocus: true });
   }
 
   public get id(): string {
@@ -192,7 +196,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
   }
 
   connectedCallback(): void {
-    super.connectedCallback();
+    super.connectedCallback()
     this.addEventListener('focus', this.focusHandler);
     this.addEventListener('blur', this.blurHandler);
   }
