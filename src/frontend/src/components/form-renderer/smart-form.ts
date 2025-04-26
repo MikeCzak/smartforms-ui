@@ -27,8 +27,7 @@ export default class SmartForm extends AbstractBaseForm {
     if (invalidElements.length === 0) {
       return true;
     }
-    invalidElements[0].focus();
-    invalidElements[0].scrollIntoView({ behavior: 'smooth', block: 'center'})
+    invalidElements[0].focus({preventScroll: true});
     return false;
   }
 

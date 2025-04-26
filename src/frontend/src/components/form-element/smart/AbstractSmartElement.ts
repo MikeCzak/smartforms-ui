@@ -66,7 +66,7 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     this.realTimeValidation.classList.remove('show');
   }
 
-  protected delegateFocusToInput(e: MouseEvent) {
+  protected delegateFocusToInput(e: Event) {
     const path = e.composedPath() as HTMLElement[];
 
     const clickedInput = path.find(el => el.tagName === 'INPUT');
@@ -74,6 +74,16 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     if (!clickedInput) {
       const firstInput = this.shadowRoot?.querySelector('input');
       firstInput?.focus();
+    }
+  }
+
+  override focus(options?: {preventScroll: boolean, focusVisible: boolean}): void {
+    const firstInput = this.shadowRoot?.querySelector('input');
+    if (firstInput) {
+      firstInput.focus({ preventScroll: true, ...options });
+      firstInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      this.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
 

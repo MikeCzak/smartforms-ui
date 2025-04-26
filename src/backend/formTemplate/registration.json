@@ -33,7 +33,7 @@
           "name": "dob",
           "type": "date",
           "label": "Date of Birth",
-          "required": false
+          "required": true
         },
         {
           "name": "gender",
@@ -65,7 +65,8 @@
           "label": "Amount of children",
           "required": true,
           "constraints": {
-            "max": 10
+            "max": 10,
+            "min": 0
           }
         }
       ]
