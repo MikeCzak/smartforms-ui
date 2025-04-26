@@ -79,8 +79,8 @@ export default class SmartChoice extends AbstractChoice {
             <md-select-option value=${option}>
               <div slot="headline">${option}</div>
             </md-select-option>
-              `)}
-        </md-outlined-select>
+          `)}
+      </md-outlined-select>
     `
   };
 
