@@ -34,10 +34,6 @@ export default class SmartForm extends AbstractBaseForm {
   connectedCallback(): void {
     // eslint-disable-next-line wc/guard-super-call
     super.connectedCallback();
-
-    // for (const el in this._formData) {
-    //   console.log(el)
-    // }
   }
 
   // eslint-disable-next-line class-methods-use-this

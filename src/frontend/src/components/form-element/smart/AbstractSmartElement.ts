@@ -24,6 +24,7 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
   @query('.real-time-validation') protected realTimeValidation!: HTMLElement;
 
   protected patternValidator?: PatternValidator;
+  protected _maySaveToStorage: boolean = true;
 
   constructor(params: IBaseFormElementParams) {
     super(params);
@@ -46,8 +47,31 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     }
   }
 
+  updated(changedProperties: Map<string, any>) {
+    if (changedProperties.has('value')) {
+      if(this._maySaveToStorage) {
+        sessionStorage.setItem(this.id, JSON.stringify(this.value));
+      }
+      this.internals_.setFormValue(this.value);
+      this._error = false;
+      this._errorText = null;
+      this.setValidity();
+    }
+  }
+
   override connectedCallback(): void {
     super.connectedCallback();
+    const stored = sessionStorage.getItem(this.id);
+    if (stored) {
+      let parsed;
+      try { parsed = JSON.parse(stored) }
+      catch (e) { parsed = null }
+      if(parsed !== null && parsed !== '') {
+        this.value = parsed;
+        this.internals_.setFormValue(parsed);
+        console.log("Parsed value from session storage: ", parsed)
+      }
+    }
     this.addEventListener('click', this.delegateFocusToInput)
     this.addEventListener('focus', this.focusHandler);
     this.addEventListener('blur', this.blurHandler);
