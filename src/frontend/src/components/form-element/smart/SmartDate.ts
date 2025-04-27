@@ -26,11 +26,21 @@ export default class SmartDate extends AbstractSmartElement {
           this.highlightDatePart(part);
           part.value = numVal.toString();
         }
+        if(numVal < 1) {
+          numVal = 1;
+          this.highlightDatePart(part);
+          part.value = numVal.toString();
+        }
         this.month = part.value.padStart(2, '0');
         break;
       case 'day':
         if(numVal > 31) {
           numVal = 31;
+          this.highlightDatePart(part);
+          part.value = numVal.toString();
+        }
+        if(numVal < 1) {
+          numVal = 1;
           this.highlightDatePart(part);
           part.value = numVal.toString();
         }
