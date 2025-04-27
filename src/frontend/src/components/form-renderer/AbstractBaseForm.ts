@@ -181,10 +181,17 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
       this._submitted = true;
       ApiClient.saveForm(jsonData, this.formType).then(res => {
         this._submissionSuccessful = res;
-      }
-      )
+      })
+      this.postSubmitCallback();
     }
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  protected postSubmitCallback(): void {
+    this.dispatchEvent(new CustomEvent('formSubmitted', {bubbles: true, composed: true}));
+    sessionStorage.clear();
+    localStorage.clear();
+  };
 
   private getElementByName(name: string): IFormElement {
     for (const formElement of this._formElements) {
