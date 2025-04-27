@@ -141,7 +141,7 @@ export class SmartformsUiFrontend extends LitElement {
 
   private async loadFormData() {
     this._rawForm = await ApiClient.loadFormData('registration');
-    if(this._formType === null) {
+    if(this._formType === null || this._internalFormId === null) {
       const typeAndUUID = await ApiClient.loadNextFormType();
       if (typeAndUUID) {
         const {formtype, uuid} = typeAndUUID;
