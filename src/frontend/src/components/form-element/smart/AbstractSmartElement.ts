@@ -61,21 +61,24 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    const stored = sessionStorage.getItem(this.id);
-    if (stored) {
-      let parsed;
-      try { parsed = JSON.parse(stored) }
-      catch (e) { parsed = null }
-      if(parsed !== null && parsed !== '') {
-        this.value = parsed;
-        this.internals_.setFormValue(parsed);
-        console.log("Parsed value from session storage: ", parsed)
-      }
-    }
+    this.loadStoredData();
     this.addEventListener('click', this.delegateFocusToInput)
     this.addEventListener('focus', this.focusHandler);
     this.addEventListener('blur', this.blurHandler);
     this.addEventListener('blur', this.hideValidationHandler);
+  }
+
+  protected loadStoredData(): void {
+    const stored = sessionStorage.getItem(this.id);
+    if (stored) {
+      let parsed;
+      try { parsed = JSON.parse(stored); }
+      catch (e) { parsed = null; }
+      if (parsed !== null && parsed !== '') {
+        this.value = parsed;
+        this.internals_.setFormValue(parsed);
+      }
+    }
   }
 
   override disconnectedCallback(): void {
@@ -87,7 +90,9 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
   }
 
   private hideValidationHandler(): void {
-    this.realTimeValidation.classList.remove('show');
+    if(this.realTimeValidation !== null) {
+      this.realTimeValidation.classList.remove('show');
+    }
   }
 
   protected delegateFocusToInput(e: Event) {

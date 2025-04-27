@@ -2,12 +2,12 @@
 import { css, html, HTMLTemplateResult } from "lit";
 import { customElement } from "lit/decorators.js";
 import { InputType } from "../InputType.js";
-import AbstractChoice from "../base-class/AbstractChoice.js";
 import Colors from "../../../styles/Colors.js";
 import SmartInputs from "../../../styles/SmartInputs.js";
+import AbstractSmartChoice from "./AbstractSmartChoice.js";
 
 @customElement('smart-choice')
-export default class SmartChoice extends AbstractChoice {
+export default class SmartChoice extends AbstractSmartChoice {
 
   protected inputType: InputType = null;
 
@@ -35,6 +35,7 @@ export default class SmartChoice extends AbstractChoice {
           <md-radio
           class="material-field"
           ?required=${this.required}
+          ?checked=${this.value.includes(option)}
           ?error=${this._error}
           id=${this.getOptionId(index)}
           .name=${this.id}
@@ -54,6 +55,7 @@ export default class SmartChoice extends AbstractChoice {
           <md-checkbox
             class="material-field"
             ?required=${this.required}
+            ?checked=${this.value.includes(option)}
             ?error=${this._error}
             id=${this.getOptionId(index)}
             .name=${this.id}
@@ -74,6 +76,7 @@ export default class SmartChoice extends AbstractChoice {
         ?required=${this.required}
         ?error=${this._error}
         .name=${this.id}
+        value=${this.value}
         @input=${this.handleInput}>
           ${this.options.map((option) => html`
             <md-select-option value=${option}>
