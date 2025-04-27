@@ -1,3 +1,4 @@
+/* eslint-disable wc/guard-super-call */
 import { LitElement, html, css } from 'lit';
 import { property, customElement, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
@@ -20,6 +21,8 @@ export class SmartformsUiFrontend extends LitElement {
   @property({attribute: false}) private _formType: string|null = localStorage.getItem('formType');
 
   @state() private _showPersonalInfo: boolean = false;
+
+  @state() private _formSubmitted: boolean = false;
 
   private _internalFormId: string | null = sessionStorage.getItem('internalFormId');
 
@@ -101,10 +104,10 @@ export class SmartformsUiFrontend extends LitElement {
           ['smart', () => html`<smart-form .formData=${this._rawForm} .internalFormId=${this._internalFormId!}></smart-form>`],
         ]
         )}
-        <md-fab @click=${this.showPersonalData} id="personal-info-button" class="highlighted" aria-label="Your personal data">
+        ${when(!this._formSubmitted, () => html`<md-fab @click=${this.showPersonalData} id="personal-info-button" class="highlighted" aria-label="Your personal data">
           <my-icon slot="icon" icon="info"></my-icon>
-        </md-fab>
-        ${when(this._greetingRead, () => html`<md-fab label="Back to start" id="back-button" @click=${() => {this._greetingRead = false; this.loadFormData(); sessionStorage.greetingRead = JSON.stringify(this._greetingRead)}}>
+        </md-fab>`)}
+        ${when(this._greetingRead && !this._formSubmitted, () => html`<md-fab label="Back to start" id="back-button" @click=${() => {this._greetingRead = false; this.loadFormData(); sessionStorage.greetingRead = JSON.stringify(this._greetingRead)}}>
           <my-icon slot="icon" icon="arrow_back"></my-icon>
         </md-fab>`)}
         <div id="personal-info" class="${this._showPersonalInfo ? 'open': ''}">
@@ -124,9 +127,18 @@ export class SmartformsUiFrontend extends LitElement {
   }
 
   connectedCallback(): void {
-    // eslint-disable-next-line wc/guard-super-call
     super.connectedCallback();
+    this.addEventListener('formSubmitted', this.submissionHandler)
     this.loadFormData();
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.removeEventListener('formSubmitted', this.submissionHandler);
+  }
+
+  private submissionHandler(): void {
+    this._formSubmitted = true;
   }
 
   private showPersonalData(event: Event): void {
