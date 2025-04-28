@@ -32,7 +32,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - form_data:/app/src/data/:rw
+      - form_data:/app/src/backend/data/:rw
       - ./.env:/app/src/backend/.env:ro
 
 volumes:
