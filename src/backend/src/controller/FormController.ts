@@ -4,8 +4,9 @@ import RawFormLoader from '../util/RawFormLoader';
 import { NextFunction } from 'express-serve-static-core';
 import * as fs from 'fs';
 import * as path from 'path';
-import 'crypto';
 import Logger from '../util/Logger';
+
+const crypto = require('crypto');
 
 interface FormParams {
   name: string;
