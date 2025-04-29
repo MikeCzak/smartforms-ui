@@ -32,8 +32,9 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - form_data:/app/src/backend/data/:rw
+      - form_data:/app/data/:rw
       - ./.env:/app/src/backend/.env:ro
+      - logs:/app/logs/:rw
 
 volumes:
   ssl_data:
@@ -42,3 +43,6 @@ volumes:
   form_data:
     external:
       name: form_data
+  logs:
+    external:
+      name: logs
