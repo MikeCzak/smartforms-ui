@@ -4,7 +4,9 @@ import FormController from './controller/FormController';
 import { Request, Response, NextFunction } from 'express';
 import FileNotFoundError from './util/FileNotFoundError';
 import Logger from './util/Logger';
+
 const cors = require('cors');
+const crypto = require('crypto')
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -22,8 +24,7 @@ app.get('/api/formdata/:name', (req, res, next) => {
 });
 
 app.get('/api/formtype/', (req, res, next) => {
-  // TODO: return formtype with fewer saved forms
-  // FormController.getNextFormType(req, res, next);
+  console.log("getting /api/formtype/")
   smart = !smart;
   const uuid = crypto.randomUUID();
   res.json({"formtype": smart ? 'smart' : 'material', "uuid": uuid});

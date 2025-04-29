@@ -9,6 +9,6 @@
       "rootDir": "./src",
       "resolveJsonModule": true
     },
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "formTemplate/*", "log/*" ],
     "exclude": ["node_modules"]
   }
