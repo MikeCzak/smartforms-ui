@@ -12,11 +12,6 @@ import IBaseFormElementParams from "../IBaseFormElementParams.js";
 
 export default abstract class AbstractSmartElement extends AbstractFormElement {
 
-  static styles: CSSResultGroup = [
-    Colors.styles,
-    SmartInputs.styles
-  ]
-
   @state() protected validationResults: Array<{ rule: string; valid: boolean }> = [];
   @state() protected overallValid: boolean | null = null;
 
@@ -62,7 +57,12 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
   override connectedCallback(): void {
     super.connectedCallback();
     this.loadStoredData();
-    this.addEventListener('click', this.delegateFocusToInput)
+    const maxLength = this.constraints?.maxLength;
+    if (typeof maxLength === 'number') {
+      this.style.setProperty('--maxLength', `${maxLength}ch`);
+      this.style.setProperty('--max-length-bottom-border','1px dashed rgba(0, 0, 0, .3)')
+    }
+    this.addEventListener('click', this.delegateFocusToInput);
     this.addEventListener('focus', this.focusHandler);
     this.addEventListener('blur', this.blurHandler);
     this.addEventListener('blur', this.hideValidationHandler);
@@ -120,6 +120,11 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
       this.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
+
+  static styles: CSSResultGroup = [
+    Colors.styles,
+    SmartInputs.styles
+  ]
 
   render(): HTMLTemplateResult {
     return html`

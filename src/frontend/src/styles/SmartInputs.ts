@@ -7,7 +7,7 @@ export default class SmartInputs {
   :host {
     --smart-border-radius: 12px;
     position: relative;
-    width: 100%;
+    max-width: 100%;
   }
 
   .left, .right {
@@ -51,6 +51,9 @@ export default class SmartInputs {
 
   .wrapper:focus-within {
     outline: 1px solid var(--md-sys-color-outline);
+    & .label {
+      font-weight: bold;
+    }
   }
 
   .wrapper.required:focus-within {
@@ -102,18 +105,20 @@ export default class SmartInputs {
     justify-content: center;
     align-items: flex-start;
     width: 100%;
+    padding: 6px 12px 12px 12px;
+    box-sizing: border-box;
   }
   input {
     color: var(--md-sys-color-on-surface);
     font-family: monospace;
     display: block;
-    width: 100%;
-    box-sizing: border-box;
+    width: var(--maxLength, 100%);
+    max-width: 100%;
     outline: none;
     border: none;
-    border-radius: 12px;
+    border-bottom: var(--max-length-bottom-border, none);
     font-size: 16px;
-    padding: 6px 12px 12px 12px;
+    padding: 0;
     background-color: transparent;
   }
 
