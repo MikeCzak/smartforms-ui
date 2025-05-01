@@ -50,7 +50,7 @@
           "label": "Phone Number",
           "required": false,
           "constraints": {
-            "pattern": "^\\+?[1-9]\\d{1,14}$",
+            "pattern": "^\\+?[1-9]\\d{1,15}$",
             "maxLength": 16
           }
         },
@@ -113,12 +113,13 @@
         {
           "name": "username",
           "type": "text",
-          "info": "Must be between 5 and 20 characters.",
+          "info": "Must be between 5 and 20 characters, no spaces.",
           "label": "Username",
           "required": true,
           "constraints": {
             "minLength": 5,
-            "maxLength": 20
+            "maxLength": 20,
+            "pattern": "^\\S+$"
           }
         },
         {
@@ -221,7 +222,7 @@
                 "label": "Contact Phone",
                 "required": false,
                 "constraints": {
-                  "pattern": "^\\+?[1-9]\\d{1,14}$"
+                  "pattern": "^\\+?[1-9]\\d{1,15}$"
                 }
               },
               {

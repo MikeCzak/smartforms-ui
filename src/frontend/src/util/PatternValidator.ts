@@ -67,7 +67,7 @@ export class PatternValidator {
       });
     }
 
-    if (pattern.includes("(?!.*\\s)")) {
+    if (pattern.includes("(?!.*\\s)") || pattern === "^\\S+$") {
       recognized++;
       rules.push({
         description: "No spaces allowed",
@@ -75,11 +75,11 @@ export class PatternValidator {
       });
     }
 
-    if (pattern === "^\\+?[1-9]\\d{1,14}$") {
+    if (pattern === "^\\+?[1-9]\\d{1,15}$") {
       recognized++;
       rules.push({
         description: "Valid phone number (starts with optional +, one non-zero digit, then digits)",
-        validate: input => /^\+?[1-9]\d{1,14}$/.test(input),
+        validate: input => /^\+?[1-9]\d{1,15}$/.test(input),
       });
     }
 
