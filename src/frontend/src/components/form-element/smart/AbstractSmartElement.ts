@@ -89,6 +89,11 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     this.removeEventListener('blur', this.hideValidationHandler);
   }
 
+  protected override focusHandler(e: FocusEvent): void {
+    this.startTime = Date.now();
+    (e.target as HTMLElement).scrollIntoView({block: "center", behavior: "smooth"})
+  }
+
   private hideValidationHandler(): void {
     if(this.realTimeValidation !== null) {
       this.realTimeValidation.classList.remove('show');

@@ -23,7 +23,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
   private _dependsOn?: IFormElement;
   private _dependingFields: Array<IFormElement|AbstractSection> = [];
   private _metaData: Map<string, any> = new Map<string, any>([['focusTime', 0], ['validationErrors', {}]]);
-  private _startTime?: number|null = null;
+  private _startTime: number|null = null;
   public internals_;
 
 
@@ -76,6 +76,14 @@ export default abstract class AbstractFormElement extends LitElement implements 
 
   public get metaData(): Map<string, any> {
     return this._metaData;
+  }
+
+  public get startTime(): number | null  {
+    return this._startTime;
+  }
+
+  public set startTime(value: number | null) {
+    this._startTime = value;
   }
 
   public hasDependencies(): boolean {
@@ -206,7 +214,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
     this.removeEventListener('blur', this.blurHandler);
   }
 
-  protected focusHandler(): void {
+  protected focusHandler(e: FocusEvent): void {
     this._startTime = Date.now();
   }
 
