@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+newDir=$(date "+%Y-%m-%d_%H-%M-%S")
+echo "backing up form data to $(pwd)/backups/form_data/$newDir ...";
+mkdir -p ./backups/form_data/$newDir;
+scp root@ionos:/var/lib/docker/volumes/form_data/_data/\* ./backups/form_data/$newDir;
+echo "...done.\nbacking up logs...";
+scp root@ionos:/var/lib/docker/volumes/logs/_data/api.log ./backups/logs;
+cat ./backups/logs/api.log >> ./backups/logs/concatenated_api.log;
+rm ./backups/logs/api.log; 
