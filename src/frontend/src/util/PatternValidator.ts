@@ -20,6 +20,7 @@ export class PatternValidator {
         validate: input => input.length >= constraints.minLength
       })
     }
+    // TODO: improve parsed determination
     this.fullyParsed = this.rules.length > 0;
   }
 
