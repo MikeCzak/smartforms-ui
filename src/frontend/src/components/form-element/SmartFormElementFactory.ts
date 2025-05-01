@@ -32,9 +32,10 @@ export default class SmartFormElementFactory extends AbstractFormElementFactory 
   createEmail(params: IBaseFormElementParams): IFormElement { return this.createElement(SmartEmail, params); }
   createTel(params: IBaseFormElementParams): IFormElement { return this.createElement(SmartTel, params); }
 
+  // eslint-disable-next-line class-methods-use-this
   public getSubmit(label: string, disabled: boolean = false) {
     return html`
-      <md-filled-button ?disabled=${disabled} type="submit">${label}</md-filled-button>
+      <md-filled-tonal-button ?disabled=${disabled} type="submit">${label}</md-filled-tonal-button>
     `
   }
 }
