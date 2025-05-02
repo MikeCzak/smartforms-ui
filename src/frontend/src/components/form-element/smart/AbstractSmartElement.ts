@@ -11,6 +11,7 @@ import IBaseFormElementParams from "../IBaseFormElementParams.js";
 import IValueFormatter from "../../../util/ValueFormatter/IValueFormatter.js";
 import ChunkFormatter from "../../../util/ValueFormatter/ChunkFormatter.js";
 import IbanFormatter from "../../../util/ValueFormatter/IbanFormatter.js";
+import { getLastInteractionWasKeyboard } from "../../../util/LastInterActionTracker.js";
 
 
 export default abstract class AbstractSmartElement extends AbstractFormElement {
@@ -112,6 +113,7 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     this.setTabIndexForSafari();
   }
 
+  // eslint-disable-next-line class-methods-use-this
   protected setTabIndexForSafari() {};
 
   protected loadStoredData(): void {
@@ -145,7 +147,13 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
 
   protected override focusHandler(e: FocusEvent): void {
     this.startTime = Date.now();
-    (e.target as HTMLElement).scrollIntoView({block: "center", behavior: "smooth"})
+    const target = e.target as HTMLElement;
+    if (getLastInteractionWasKeyboard()) {
+      requestAnimationFrame(() => {
+        target.focus({ preventScroll: true });
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    }
   }
 
   protected hideValidationHandler(): void {
