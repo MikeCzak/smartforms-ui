@@ -52,24 +52,39 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 - [x] provide common region for sections
 - [x] provide similarity in color for required and erroneous fields
 - [x] large subheadings to disrupt F-shaped reading pattern and re-focus the user's attention
-- [ ] chunk long numbers
+- [x] chunk long numbers
 # Additional Guidelines
 - [x] don't clear fields on erroneous submit
+# Further improvement ideas
+- [x] don't clear fields on reload (save every input in local storage except password data)
+- [x] parse custom chunks/groupings with arbitrary delimiter
+
 ---
----
+
 &nbsp;
 
 > ## TODOS
 > ### Necessary Metadata:
-> - section titles
-> - min, max, minlength, maxlength
-> - include range input(s)
-> - regex pattern for specific format restrictions
-> - chunk size for long number fields
+> - [x] section titles
+> - [x] min, max, minlength, maxlength
+> - [] include range input(s)
+> - [x] regex pattern for specific format restrictions
+> - [x] chunk size for long data
+#### possible chunked data
+| Example | Group Length | Format Example |
+|-|-|-|
+Credit Card Numbers | 4 | 1234 5678 9012 3456
+|MAC Addresses | 2 (hex pairs) | 00:1A:2B:3C:4D:5E
+IPv4 Addresses | 3-digit max | 192.168.001.001 (optional zero-padding)
+Binary strings | 4 or 8 | 1100 1010 1111 0001
+Base32 Encoded Strings | 5 | ABCDE FGHIJ KLMNO PQRST
+UUIDs | 8-4-4-4-12 (some equal) | 123e4567-e89b-12d3-a456-426614174000
+Barcode Data | Depends on spec — but EAN-13 and Code128 often chunk digits for processing |
+License Keys (generic) | Often 5 | ABCDE-FGHIJ-KLMNO-PQRST
 >
 > ### Inform User on Landing Page About
-> - erroneous form navigation
-> - provided personal data
+> - [] erroneous form navigation
+> - [x] provided personal data (<span style="color: red">improve!</span>)
 >
 > ### Helpers
 > - ~~generate unique id from label for html id~~
