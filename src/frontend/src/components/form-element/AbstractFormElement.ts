@@ -208,6 +208,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
 
   connectedCallback(): void {
     super.connectedCallback()
+    // this.setAttribute('tabindex', '0');
     this.addEventListener('focus', this.focusHandler);
     this.addEventListener('blur', this.blurHandler);
   }

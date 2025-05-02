@@ -12,15 +12,22 @@ export default class SmartChoice extends AbstractSmartChoice {
   protected inputType: InputType = null;
 
   private selectChoiceType() {
+    if (typeof this.options[0] !== 'string') {
+      return this.dropdownGrouped();
+    }
     if (this.options.length === 1) {
       return this.checkbox();
     }
     switch(this.choiceType) {
       case "single":
-        if(this.options.length < 5) {
+        if((this.options as string[]).length < 5) {
           return this.radio();
         }
-        return this.dropdown();
+        if (typeof this.options[0] !== 'string') {
+          throw new Error("Invalid options format. Must be flat array or object { groupName: 'value', entries: [...].}");
+          ;
+        }
+        return this.dropdownFlat();
       case "multiple": return this.checkbox();
 
       default: throw new Error(`Invalid choice type on Choice ${this.label}: ${this.choiceType}`);
@@ -30,9 +37,10 @@ export default class SmartChoice extends AbstractSmartChoice {
   private radio(): HTMLTemplateResult {
     return html`
       ${this.info && html`<p>${this.info}</p>`}
-      ${this.options.map((option, index) => html`
+      ${(this.options as string[]).map((option, index) => html`
         <label for=${this.getOptionId(index)}>
           <md-radio
+          tabindex="0"
           class="material-field"
           ?required=${this.required}
           ?checked=${this.value.includes(option)}
@@ -50,9 +58,10 @@ export default class SmartChoice extends AbstractSmartChoice {
   private checkbox(): HTMLTemplateResult {
     return html`
       ${this.info && html`<p>${this.info}</p>`}
-      ${this.options.map((option, index) => html`
+      ${(this.options as string[]).map((option, index) => html`
         <label for=${this.getOptionId(index)}>
           <md-checkbox
+            tabindex="0"
             class="material-field"
             ?required=${this.required}
             ?checked=${this.value.includes(option)}
@@ -68,22 +77,57 @@ export default class SmartChoice extends AbstractSmartChoice {
       `
   };
 
-  private dropdown(): HTMLTemplateResult {
+  private dropdownFlat(): HTMLTemplateResult {
     return html`
       ${this.info && html`<p>${this.info}</p>`}
       <md-outlined-select
+        tabindex="0"
         class="material-field"
         ?required=${this.required}
         ?error=${this._error}
         .name=${this.id}
         value=${this.value}
         @input=${this.handleInput}>
-          ${this.options.map((option) => html`
+          ${(this.options as string[]).map((option) => html`
             <md-select-option value=${option}>
               <div slot="headline">${option}</div>
             </md-select-option>
           `)}
       </md-outlined-select>
+    `
+  };
+
+  private dropdownGrouped(): HTMLTemplateResult {
+    return html`
+      ${this.info && html`<p>${this.info}</p>`}
+      <md-outlined-select
+      tabindex="0"
+      class="material-field"
+      ?required=${this.required}
+      ?error=${this._error}
+      .name=${this.id}
+      value=${this.value}
+      @input=${this.handleInput}>
+      ${(
+        this.options as { groupName: string; entries: string[] }[]
+      )
+        .slice()
+        .sort((a, b) => a.groupName.localeCompare(b.groupName))
+        .map(group => {
+          const sortedEntries = group.entries.slice().sort((a, b) => a.localeCompare(b));
+          return html`
+            <md-select-option disabled class="groupHeader">
+              <div slot="headline"><strong>===== ${group.groupName} =====</strong></div>
+            </md-select-option>
+
+            ${sortedEntries.map(entry => html`
+              <md-select-option value=${entry}>
+                <div slot="headline">${entry}</div>
+              </md-select-option>
+            `)}
+          `;
+        })}
+    </md-outlined-select>
     `
   };
 
@@ -162,12 +206,17 @@ export default class SmartChoice extends AbstractSmartChoice {
     md-outlined-select::part(menu) {
       --md-menu-container-shape: 0;
     }
+
+    md-select-option.groupHeader {
+      text-align: center;
+      background-color: white;
+    }
     `
   ]
 
   render(): HTMLTemplateResult {
     return html`
-    <div class="wrapper ${this.required ? 'required' : ''}  ${this._error ? 'invalid' : ''}">
+    <div tabindex="0" class="wrapper ${this.required ? 'required' : ''}  ${this._error ? 'invalid' : ''}">
       <div class="top">
         <div class="left"></div>
           ${this.labelHTML()}

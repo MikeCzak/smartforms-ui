@@ -109,7 +109,10 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     this.addEventListener('focus', this.focusHandler);
     this.addEventListener('blur', this.blurHandler);
     this.addEventListener('blur', this.hideValidationHandler);
+    this.setTabIndexForSafari();
   }
+
+  protected setTabIndexForSafari() {};
 
   protected loadStoredData(): void {
     const stored = sessionStorage.getItem(this.id);
@@ -137,7 +140,7 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     (e.target as HTMLElement).scrollIntoView({block: "center", behavior: "smooth"})
   }
 
-  private hideValidationHandler(): void {
+  protected hideValidationHandler(): void {
     if(this.realTimeValidation !== null) {
       this.realTimeValidation.classList.remove('show');
     }

@@ -203,37 +203,242 @@
     {
       "title": "Emergency Contact (Nested Subform)",
       "fields": [
-        {
-          "name": "emergency_contact",
-          "type": "form",
-          "label": "Emergency Contact Information",
-          "subform": {
-            "fields": [
-              {
-                "name": "contact_name",
-                "type": "text",
-                "label": "Contact Name",
-                "required": true
-              },
-              {
-                "name": "contact_phone",
-                "type": "tel",
-                "info": "Must be a valid phone number (e.g., +123456789).",
-                "label": "Contact Phone",
-                "required": false,
-                "constraints": {
-                  "pattern": "^\\+?[1-9]\\d{1,15}$"
-                }
-              },
-              {
-                "name": "contact_relation",
-                "type": "text",
-                "label": "Relation",
-                "required": true
-              }
+      {
+        "name": "emergency_contact",
+        "type": "form",
+        "label": "Emergency Contact Information",
+        "subform": {
+        "fields": [
+          {
+          "name": "contact_name",
+          "type": "text",
+          "label": "Contact Name",
+          "required": true
+          },
+          {
+          "name": "contact_phone",
+          "type": "tel",
+          "info": "Must be a valid phone number (e.g., +123456789).",
+          "label": "Contact Phone",
+          "required": false,
+          "constraints": {
+            "pattern": "^\\+?[1-9]\\d{1,15}$"
+          }
+          },
+          {
+          "name": "contact_relation",
+          "type": "text",
+          "label": "Relation",
+          "required": true
+          }
+        ]
+        }
+      }
+      ]
+    },
+    {
+      "title": "Device Details",
+      "info": "Find your MAC Address and license number on the back of your device.",
+      "fields": [
+      {
+        "name": "device_name",
+        "type": "choice",
+        "choiceType": "single",
+        "options": [
+          {
+            "groupName": "TP-Link",
+            "entries": [
+              "Archer C7",
+              "Archer AX50",
+              "TL-WR841N",
+              "Deco M5",
+              "Archer AX73",
+              "Archer C6",
+              "Archer AX21"
+            ]
+          },
+          {
+            "groupName": "Netgear",
+            "entries": [
+              "Nighthawk R7000",
+              "Orbi RBK50",
+              "Nighthawk AX8",
+              "RAX120",
+              "Nighthawk XR500",
+              "RAX200",
+              "WNR2000"
+            ]
+          },
+          {
+            "groupName": "Asus",
+            "entries": [
+              "RT-AC68U",
+              "RT-AX88U",
+              "RT-N12",
+              "ZenWiFi AX XT8",
+              "RT-AX55",
+              "RT-AC5300",
+              "RT-AX86U"
+            ]
+          },
+          {
+            "groupName": "Linksys",
+            "entries": [
+              "WRT3200ACM",
+              "EA7500",
+              "MR9600",
+              "E5400",
+              "Velop MX5300",
+              "WRT1900ACS",
+              "EA9500"
+            ]
+          },
+          {
+            "groupName": "D-Link",
+            "entries": [
+              "DIR-867",
+              "DIR-878",
+              "DIR-825",
+              "EXO AX5400",
+              "DIR-X5460",
+              "DIR-842",
+              "DIR-882"
+            ]
+          },
+          {
+            "groupName": "Ubiquiti",
+            "entries": [
+              "AmpliFi HD",
+              "UniFi Dream Machine",
+              "EdgeRouter X",
+              "UniFi Security Gateway",
+              "UniFi Dream Router",
+              "EdgeRouter 4",
+              "AmpliFi Alien"
+            ]
+          },
+          {
+            "groupName": "Google",
+            "entries": [
+              "Nest Wifi",
+              "Google Wifi",
+              "Nest Wifi Pro",
+              "Google OnHub TP-Link",
+              "Google OnHub Asus"
+            ]
+          },
+          {
+            "groupName": "Huawei",
+            "entries": [
+              "WS5200",
+              "AX3",
+              "WS7100",
+              "WiFi Mesh 3",
+              "WS832",
+              "5G CPE Pro 2"
+            ]
+          },
+          {
+            "groupName": "Zyxel",
+            "entries": [
+              "NBG6817",
+              "AX7501-B0",
+              "Armor G5",
+              "C3000Z",
+              "VMG3925-B10B",
+              "NR5101"
+            ]
+          },
+          {
+            "groupName": "Tenda",
+            "entries": [
+              "AC10U",
+              "AC1200",
+              "Nova MW6",
+              "AC6",
+              "F9",
+              "AX3000"
+            ]
+          },
+          {
+            "groupName": "Cisco",
+            "entries": [
+              "RV340",
+              "RV160",
+              "RV042",
+              "WAP150",
+              "RV260",
+              "RV180"
+            ]
+          },
+          {
+            "groupName": "MikroTik",
+            "entries": [
+              "hAP ac²",
+              "RB4011",
+              "hEX S",
+              "hAP ax²",
+              "Audience",
+              "RB750Gr3"
+            ]
+          },
+          {
+            "groupName": "Synology",
+            "entries": [
+              "RT2600ac",
+              "MR2200ac",
+              "WRX560",
+              "RT6600ax",
+              "WRX560 Mesh"
+            ]
+          },
+          {
+            "groupName": "TOTOLINK",
+            "entries": [
+              "A3002RU",
+              "A702R",
+              "T10",
+              "N200RE",
+              "A950RG"
+            ]
+          },
+          {
+            "groupName": "Belkin",
+            "entries": [
+              "AC1200 DB",
+              "F9K1113",
+              "N600",
+              "AX3200",
+              "AC1900"
             ]
           }
+        ],
+        "label": "Device Name",
+        "required": true
+      },
+      {
+        "name": "mac_address",
+        "type": "text",
+        "label": "MAC Address",
+        "required": true,
+        "grouping": {
+          "chunkSize": 2,
+          "delimiter": ":"
         }
+      },
+      {
+        "name": "license_number",
+        "type": "text",
+        "label": "License Number",
+        "required": true,
+        "constraints": {
+          "pattern": "^\\d+$"
+        },
+        "grouping": {
+          "chunkSize": 5,
+          "delimiter": "-"
+        }
+      }
       ]
     }
   ]

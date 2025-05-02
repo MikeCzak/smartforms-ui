@@ -3,22 +3,21 @@ import IChoiceElementParams from "../IChoiceElementParams.js";
 
 export default abstract class AbstractChoice extends AbstractFormElement {
 
-  private _options: Array<string>;
+  private _options: Array<string> | { groupName: string; entries: string[] }[];
 
   private _choiceType: "single"|"multiple";
 
 
   constructor(params: IChoiceElementParams) {
     super(params);
+    if(params.options.length === 0) {
+      throw new Error("Options must not be empty.");
+    }
     this._options = params.options;
     this._choiceType = params.choiceType;
   }
 
-  get options() {
-    if(this._options.length > 5)
-      {
-        this._options.sort()
-      }
+  get options(): Array<string> | { groupName: string; entries: string[] }[] {
     return this._options;
   }
 

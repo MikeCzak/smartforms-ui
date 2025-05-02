@@ -8,15 +8,22 @@ export default class MaterialChoice extends AbstractChoice {
 // TODO: add rules for cb/radio depending on 1 el/more els, etc.
 
   private selectChoiceType() {
+    if (typeof this.options[0] !== 'string') {
+      return this.dropdownGrouped();
+    }
     if (this.options.length === 1) {
       return this.checkbox();
     }
     switch(this.choiceType) {
       case "single":
-        if(this.options.length < 5) {
+        if((this.options as string[]).length < 5) {
           return this.radio();
         }
-        return this.dropdown();
+        if (typeof this.options[0] !== 'string') {
+          throw new Error("Invalid options format. Must be flat array or object { groupName: 'value', entries: [...].}");
+          ;
+        }
+        return this.dropdownFlat();
       case "multiple": return this.checkbox();
 
       default: throw new Error(`Invalid choice type on Choice ${this.label}: ${this.choiceType}`);
@@ -26,7 +33,7 @@ export default class MaterialChoice extends AbstractChoice {
   private radio(): HTMLTemplateResult {
     return html`
       ${this.info && html`<p>${this.info}</p>`}
-      ${this.options.map((option, index) => html`
+      ${(this.options as string[]).map((option, index) => html`
         <div class="choice">
           <label for=${this.getOptionId(index)}>
             <md-radio
@@ -48,7 +55,7 @@ export default class MaterialChoice extends AbstractChoice {
   private checkbox(): HTMLTemplateResult {
     return html`
       ${this.info && html`<p>${this.info}</p>`}
-      ${this.options.map((option, index) => html`
+      ${(this.options as string[]).map((option, index) => html`
         <div class="choice">
           <label for=${this.getOptionId(index)}>
             <md-checkbox
@@ -68,7 +75,7 @@ export default class MaterialChoice extends AbstractChoice {
       `
   };
 
-  private dropdown(): HTMLTemplateResult {
+  private dropdownFlat(): HTMLTemplateResult {
     return html`
       <div class="choice">
           <md-filled-select
@@ -78,7 +85,7 @@ export default class MaterialChoice extends AbstractChoice {
           label=${this.label}
           .name=${this.id}
           @input=${this.handleInput}>
-            ${this.options.map((option) => html`
+            ${(this.options as string[]).map((option) => html`
               <md-select-option value=${option}>
                 <div slot="headline">${option}</div>
               </md-select-option>
@@ -87,6 +94,40 @@ export default class MaterialChoice extends AbstractChoice {
       </div>
     `
   };
+
+  private dropdownGrouped(): HTMLTemplateResult {
+    return html`
+      <div class="choice">
+        <md-filled-select
+          class="material-field"
+          ?required=${this.required}
+          ?error=${this._error}
+          label=${this.label}
+          .name=${this.id}
+          @input=${this.handleInput}>
+          ${(
+        this.options as { groupName: string; entries: string[] }[]
+      )
+        .slice()
+        .sort((a, b) => a.groupName.localeCompare(b.groupName))
+        .map(group => {
+          const sortedEntries = group.entries.slice().sort((a, b) => a.localeCompare(b));
+          return html`
+            <md-select-option disabled>
+              <div slot="headline"><strong>===== ${group.groupName} =====</strong></div>
+            </md-select-option>
+
+            ${sortedEntries.map(entry => html`
+              <md-select-option value=${entry}>
+                <div slot="headline">${entry}</div>
+              </md-select-option>
+            `)}
+          `;
+        })}
+        </md-filled-select>
+      </div>
+    `;
+  }
 
   private handleCheckboxChange(event: Event, option: string): void {
     const checkbox = event.target as HTMLInputElement;
@@ -123,6 +164,10 @@ export default class MaterialChoice extends AbstractChoice {
     font-size: 12px;
     color: var(--md-sys-color-error);
   }
+  md-select-option[disabled] {
+      text-align: center;
+      background-color: white;
+    }
   `
 
   render(): HTMLTemplateResult {
