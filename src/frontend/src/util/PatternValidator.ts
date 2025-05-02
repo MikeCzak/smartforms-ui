@@ -87,7 +87,7 @@ export class PatternValidator {
     if (pattern.includes("^[A-Z]{2}\\d{2}[A-Z0-9]{11,30}$")) {
       recognized++;
       rules.push({
-        description: "Valid IBAN (2-letter country code, 2-digit checksum, alphanumeric rest)",
+        description: "Valid IBAN (uppercase 2-letter country code, 2-digit checksum, alphanumeric rest)",
         validate: input => /^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(input),
       });
     }
@@ -115,6 +115,15 @@ export class PatternValidator {
         validate: input => /^[A-Za-z]+$/.test(input),
       });
     }
+
+    if (pattern.includes("^\\d+$") || pattern.includes("^[0-9]+$")) {
+      recognized++;
+      rules.push({
+        description: "Only numbers allowed",
+        validate: input => /^\d+$/.test(input),
+      });
+    }
+
 
     if (pattern.includes("(?!.*(.)\\1)")) {
       recognized++;
