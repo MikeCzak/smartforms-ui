@@ -6,5 +6,5 @@ import { InputType } from "../InputType.js";
 export default class SmartPassword extends AbstractSmartElement {
 
   protected inputType: InputType = "password";
-  protected _maySaveToStorage: boolean = false;
+  protected maySaveToStorage: boolean = false;
 }

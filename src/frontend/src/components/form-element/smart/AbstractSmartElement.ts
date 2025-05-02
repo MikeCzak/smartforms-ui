@@ -8,6 +8,9 @@ import SmartInputs from "../../../styles/SmartInputs.js";
 import { InputType } from "../InputType.js";
 import { PatternValidator } from "../../../util/PatternValidator.js";
 import IBaseFormElementParams from "../IBaseFormElementParams.js";
+import IValueFormatter from "../../../util/ValueFormatter/IValueFormatter.js";
+import ChunkFormatter from "../../../util/ValueFormatter/ChunkFormatter.js";
+import IbanFormatter from "../../../util/ValueFormatter/IbanFormatter.js";
 
 
 export default abstract class AbstractSmartElement extends AbstractFormElement {
@@ -19,12 +22,27 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
   @query('.real-time-validation') protected realTimeValidation!: HTMLElement;
 
   protected patternValidator?: PatternValidator;
-  protected _maySaveToStorage: boolean = true;
+  protected valueFormatter?: IValueFormatter;
+  protected maySaveToStorage: boolean = true;
+  protected formattedValue: any = this.value;
+  protected maxLength?: number;
+  protected formattedMaxLength?: number;
 
   constructor(params: IBaseFormElementParams) {
     super(params);
-    if (params.constraints !== undefined) {
+    if(params.constraints?.maxLength) {
+      this.maxLength = params.constraints.maxLength;
+    }
+    if (params.constraints?.pattern !== undefined) {
       this.patternValidator = new PatternValidator(params.constraints);
+    }
+    if (params.grouping !== undefined) {
+      this.valueFormatter = new ChunkFormatter(params.grouping.chunkSize, params.grouping.delimiter);
+      if (params.grouping.chunkSize && params.grouping.delimiter) {
+        this.info += ` Enter alphanumeric characters only. "${params.grouping.delimiter}" will be added automatically.`
+      }
+    } else if (this.label.toLowerCase().includes("iban")) {
+      this.valueFormatter = new IbanFormatter();
     }
   }
 
@@ -33,18 +51,41 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
   }
 
   protected handleInput(event: InputEvent): void {
-    const input = event.target as any;
-    this.value = input.value;
-    if(this.patternValidator !== undefined && this.patternValidator.fullyParsed) {
-      this.validationResults = this.patternValidator!.validate(this.inputElement.value);
-      this.overallValid = this.patternValidator?.isValid(this.inputElement.value);
+    const input = event.target as HTMLInputElement;
+    const oldFormatted = input.value;
+    const oldCursor = input.selectionStart ?? oldFormatted.length;
+
+    let formatted = oldFormatted;
+    let raw = formatted;
+
+    if (this.valueFormatter) {
+      raw = this.valueFormatter.getRawValue(formatted);
+      formatted = this.valueFormatter.getFormattedValue(raw);
+    }
+
+    this.value = raw;
+    this.formattedValue = formatted;
+
+    const newCursor = this.valueFormatter?.getAdjustedCursorPosition(
+      oldFormatted,
+      formatted,
+      oldCursor
+    ) ?? formatted.length;
+
+    requestAnimationFrame(() => {
+      input.setSelectionRange(newCursor, newCursor);
+    });
+
+    if (this.patternValidator?.fullyParsed) {
+      this.validationResults = this.patternValidator.validate(raw);
+      this.overallValid = this.patternValidator.isValid(raw);
       this.realTimeValidation.classList.add('show');
     }
   }
 
   updated(changedProperties: Map<string, any>) {
     if (changedProperties.has('value')) {
-      if(this._maySaveToStorage) {
+      if(this.maySaveToStorage) {
         sessionStorage.setItem(this.id, JSON.stringify(this.value));
       }
       this.internals_.setFormValue(this.value);
@@ -57,9 +98,11 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
   override connectedCallback(): void {
     super.connectedCallback();
     this.loadStoredData();
-    const maxLength = this.constraints?.maxLength;
-    if (typeof maxLength === 'number') {
-      this.style.setProperty('--maxLength', `${maxLength}ch`);
+    if (this.maxLength) {
+      const rawMaxLength = this.maxLength;
+      const extra = this.valueFormatter?.getMaxLengthIncrementFactor(rawMaxLength) ?? 0;
+      this.formattedMaxLength = rawMaxLength + extra;
+      this.style.setProperty('--maxLength', `${this.formattedMaxLength}ch`);
       this.style.setProperty('--max-length-bottom-border','1px dashed rgba(0, 0, 0, .3)')
     }
     this.addEventListener('click', this.delegateFocusToInput);
@@ -147,7 +190,7 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     </div>
     <div class="info">
       ${when(this.info, () => html`<small>${this.info}</small>`)}
-      ${when(this.constraints?.maxLength, () => html`<small class="counter">${this.value.length}/${this.constraints?.maxLength}</small>`)}
+      ${when(this.maxLength, () => html`<small class="counter">${this.value.length}/${this.maxLength}</small>`)}
     </div>
     <small class="error-text">${this._errorText}</small>
     `
@@ -160,11 +203,11 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
         @input=${this.handleInput}
         ?required=${this.required}
         pattern=${ifDefined(this.constraints?.pattern)}
-        maxLength=${ifDefined(this.constraints?.maxLength)}
+        maxLength=${ifDefined(this.formattedMaxLength)}
         minLength=${ifDefined(this.constraints?.minLength)}
         min=${(ifDefined(this.constraints?.min))}
         max=${(ifDefined(this.constraints?.max))}
-        .value=${this.value}
+        .value=${this.formattedValue}
         >
     `;
   }

@@ -62,6 +62,10 @@ export default abstract class AbstractFormElement extends LitElement implements 
     return this._info;
   }
 
+  public set info(value: string) {
+    this._info = value;
+  }
+
   public get dependsOn(): IFormElement | undefined {
     return this._dependsOn;
   }
