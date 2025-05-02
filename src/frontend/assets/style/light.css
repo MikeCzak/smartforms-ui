@@ -12,7 +12,7 @@
   --md-sys-color-on-tertiary: rgb(255 255 255);
   --md-sys-color-tertiary-container: rgb(189 240 179);
   --md-sys-color-on-tertiary-container: rgb(0 34 3);
-  --md-sys-color-error: rgb(186 26 26);
+  --md-sys-color-error: hsl(354, 66%, 37%);
   --md-sys-color-on-error: rgb(255 255 255);
   --md-sys-color-error-container: rgb(255 218 214);
   --md-sys-color-on-error-container: rgb(65 0 2);
@@ -57,6 +57,6 @@
   --smart-container-background-color: hsl(205, 58%, 93%);
   --success: rgb(31, 112, 56);
   --success-rgb: 31, 112, 56;
-  --error: rgb(144, 11, 24);
+  --error: hsl(354, 66%, 37%);
   --error-rgb: 144, 11, 24;
 }
