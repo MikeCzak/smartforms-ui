@@ -122,10 +122,18 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
       catch (e) { parsed = null; }
       if (parsed !== null && parsed !== '') {
         this.value = parsed;
+        this.formattedValue = parsed;
+        if (this.valueFormatter) {
+          this.formattedValue = this.valueFormatter.getFormattedValue(parsed);
+        }
+        this.transformValueToSubfields(parsed);
         this.internals_.setFormValue(parsed);
       }
     }
   }
+
+  // eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars
+  protected transformValueToSubfields(value: any) {}
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();

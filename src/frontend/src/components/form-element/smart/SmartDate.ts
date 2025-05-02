@@ -69,6 +69,13 @@ export default class SmartDate extends AbstractSmartElement {
     setTimeout(() => label!.classList.remove('highlight'), 500)
   }
 
+  protected transformValueToSubfields(value: any) {
+    const [year, month, day] = value.split('-');
+    this.year = year;
+    this.month = month;
+    this.day = day;
+  }
+
   static styles = [
     AbstractSmartElement.styles,
     css`
@@ -161,37 +168,37 @@ export default class SmartDate extends AbstractSmartElement {
 
   protected override inputHTML(): HTMLTemplateResult {
     return html`
-      ${when(this.required,
+      ${when(!this.required,
         () => html`
           <div class="date-wrapper material">
             <md-outlined-select required ?error=${this._error} class="year-input" label="Year" id="${this.id}_year" @input=${this.handleInput}>
             ${Array.from({ length: 100 }, (_, i) => i + 1925).map((option) => html`
-              <md-select-option value=${option}><div slot="headline">${option}</div></md-select-option>`)}
+              <md-select-option ?selected=${this.year === option.toString()} value=${option}><div slot="headline">${option}</div></md-select-option>`)}
             </md-outlined-select>
             <md-outlined-select required ?error=${this._error} class="month-input" label="Month" id="${this.id}_month" @input=${this.handleInput}>
             ${Array.from({ length: 12 }, (_, i) => i + 1).map((option) => html`
-              <md-select-option value=${option}><div slot="headline">${option}</div></md-select-option>`)}
+              <md-select-option ?selected=${this.month === option.toString().padStart(2, '0')} value=${option}><div slot="headline">${option}</div></md-select-option>`)}
             </md-outlined-select>
             <md-outlined-select required ?error=${this._error} class="day-input" label="Day" id="${this.id}_day" @input=${this.handleInput}>
             ${Array.from({ length: 31 }, (_, i) => i + 1).map((option) => html`
-              <md-select-option value=${option}><div slot="headline">${option}</div></md-select-option>`)}
+              <md-select-option ?selected=${this.day === option.toString().padStart(2, '0')} value=${option}><div slot="headline">${option}</div></md-select-option>`)}
             </md-outlined-select>
           </div>
         `,
         () => html`
           <div class="date-wrapper">
             <div class="date-part">
-              <input @input=${this.handleInput} id="${this.id}_year" type="text" class="year-input" maxlength="4" minlength="4">
+              <input @input=${this.handleInput} id="${this.id}_year" type="text" class="year-input" maxlength="4" minlength="4" .value=${this.year ?? ''}>
               <label class="format-restriction" for="${this.id}_year">YYYY</label>
             </div>
             <div class="dash">-</div>
             <div class="date-part">
-              <input @input=${this.handleInput} id="${this.id}_month" type="text" class="month-input" maxlength="2" minlength="2">
+              <input @input=${this.handleInput} id="${this.id}_month" type="text" class="month-input" maxlength="2" minlength="2" .value=${this.month ?? ''}>
               <label class="format-restriction" for="${this.id}_month">MM</label>
             </div>
             <div class="dash">-</div>
             <div class="date-part">
-              <input @input=${this.handleInput} id="${this.id}_day" type="text" class="day-input" maxlength="2" minlength="2">
+              <input @input=${this.handleInput} id="${this.id}_day" type="text" class="day-input" maxlength="2" minlength="2" .value=${this.day ?? ''}>
               <label class="format-restriction" for="${this.id}_day">DD</label>
             </div>
           </div>
