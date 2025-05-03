@@ -213,10 +213,13 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
         ${this.inputHTML()}
       </div>
     </div>
-    <div class="info">
-      ${when(this.info, () => html`<small>${this.info}</small>`)}
+    <div class="constraint-info">
+      ${when(this.constraints?.info, () => html`<small>${this.constraints!.info}</small>`)}
       ${when(this.maxLength, () => html`<small class="counter">${this.value.length}/${this.maxLength}</small>`)}
     </div>
+    ${when(this.info, () => html`<div class="info-text">
+      ${this.info}
+    </div>`)}
     <small class="error-text">${this._errorText}</small>
     `
   }
