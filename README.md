@@ -6,6 +6,8 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 # Note for future implementations
 - Read not only json but also XML, SQL-Schema, etc.
 - Use LLM for constraint pattern interpretation
+- Use LLM for reasonable date ranges depending on label
+
 
 # Functional
 ## Form
