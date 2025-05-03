@@ -14,13 +14,14 @@ export default class SmartDate extends AbstractSmartElement {
   @property() private day?: string;
 
   protected checkElementConstraints(): void {
-    if(this.constraints!.min !== undefined) {
+    const { min, max } = this.constraints!;
+    if(min !== undefined && min !== "today") {
       const minDate = new Date(this.constraints!.min);
       if (Number.isNaN(minDate.getTime())) {
         console.error(this.id, ": Invalid date format in min constraint");
       }
     }
-    if(this.constraints!.max !== undefined) {
+    if(max !== undefined && max !== "today") {
       const maxDate = new Date(this.constraints!.max);
       if (Number.isNaN(maxDate.getTime())) {
         console.error(this.id, ": Invalid date format in max constraint");
