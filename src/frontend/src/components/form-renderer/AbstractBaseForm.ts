@@ -44,6 +44,11 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
       if (element.type === "form" && !element.subform) {
         throw new Error(`Missing key "subform" for nested form: ${JSON.stringify(element)}`);
       }
+      if(element.constraints !== undefined) {
+        if(element.constraints.max < element.constraints.min) {
+          throw new Error(`Min constraint "${element.constraints.min}" is greater than max constraint "${element.constraints.min}"`);
+        }
+      }
       const factoryMethod = this._formElementFactory.factoryMap[element.type];
       if (!factoryMethod) {
         throw new Error(`No factory method found for element type: ${element.type}`);

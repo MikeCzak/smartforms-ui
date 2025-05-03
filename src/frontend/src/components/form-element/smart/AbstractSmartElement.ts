@@ -31,6 +31,9 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
 
   constructor(params: IBaseFormElementParams) {
     super(params);
+    if (params.constraints) {
+      this.checkElementConstraints();
+    }
     if(params.constraints?.maxLength) {
       this.maxLength = params.constraints.maxLength;
     }
@@ -46,6 +49,9 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
       this.valueFormatter = new IbanFormatter();
     }
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  protected checkElementConstraints(): void {};
 
   protected override _attachShadow(): void {
     this.attachShadow({ mode: 'open', delegatesFocus: false });

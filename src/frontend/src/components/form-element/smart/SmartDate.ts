@@ -13,6 +13,21 @@ export default class SmartDate extends AbstractSmartElement {
   @property() private month?: string;
   @property() private day?: string;
 
+  protected checkElementConstraints(): void {
+    if(this.constraints!.min !== undefined) {
+      const minDate = new Date(this.constraints!.min);
+      if (Number.isNaN(minDate.getTime())) {
+        console.error(this.id, ": Invalid date format in min constraint");
+      }
+    }
+    if(this.constraints!.max !== undefined) {
+      const maxDate = new Date(this.constraints!.max);
+      if (Number.isNaN(maxDate.getTime())) {
+        console.error(this.id, ": Invalid date format in max constraint");
+      }
+    }
+  };
+
   protected handleInput(event: InputEvent): void {
     const part = event.target as HTMLInputElement;
     part.value = part.value.replace(/\D/g, '')
@@ -147,6 +162,28 @@ export default class SmartDate extends AbstractSmartElement {
     this.year = year;
     this.month = month;
     this.day = day;
+  }
+
+  protected validateMaxValue(errors: { [key: string]: boolean; }, errorMessages: string[]) {
+    if (this.constraints?.max !== undefined && this.constraints.max === "today" && new Date(this.value) > new Date()) {
+      errors.rangeOverflow = true;
+      errorMessages.push(`Date must be in the past.`);
+    }
+    if (this.constraints?.max !== undefined && new Date(this.value) > new Date(this.constraints.max)) {
+      errors.rangeOverflow = true;
+      errorMessages.push(`Date must be before ${this.constraints.max}.`);
+    }
+  }
+
+  protected validateMinValue(errors: { [key: string]: boolean; }, errorMessages: string[]) {
+    if (this.constraints?.min !== undefined && this.constraints.min === "today" && new Date(this.value) < new Date()) {
+      errors.rangeOverflow = true;
+      errorMessages.push(`Date must be in the future.`);
+    }
+    if (this.constraints?.min !== undefined && new Date(this.value) < new Date(this.constraints.min)) {
+      errors.rangeUnderflow = true;
+      errorMessages.push(`Date must be after ${this.constraints.min}.`);
+    }
   }
 
   static styles = [
