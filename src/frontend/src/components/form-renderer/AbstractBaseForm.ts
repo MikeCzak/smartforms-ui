@@ -167,21 +167,28 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
     event.preventDefault();
     const isValid = this.validateForm();
 
-    if (isValid) { // TODO: remove debug not
+    if (!isValid) { // TODO: remove debug not
       const form = event.target as HTMLFormElement;
       const formData = new FormData(form);
-
       const jsonData: { [key: string]: any } = {};
+      let totalFocusTime = 0;
+
       formData.forEach((value, key) => {
         jsonData[key] = value;
       });
       jsonData.metaData = {};
+
       this._formElements.forEach((e) => {
         jsonData.metaData[e.id] = {}
         e.metaData.forEach((v, k) => {
           jsonData.metaData[e.id][k] = v;
         })
+        const elementFocusTime = e.metaData.get('focusTime');
+        if(elementFocusTime) {
+          totalFocusTime += elementFocusTime;
+        }
       })
+      jsonData.metaData.totalFocusTime = totalFocusTime;
       jsonData.internalFormId = {"internalFormId": this.internalFormId};
       this._submitted = true;
       ApiClient.saveForm(jsonData, this.formType).then(res => {
