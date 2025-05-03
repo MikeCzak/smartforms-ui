@@ -68,20 +68,19 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     if (this.valueFormatter) {
       raw = this.valueFormatter.getRawValue(formatted);
       formatted = this.valueFormatter.getFormattedValue(raw);
+      const newCursor = this.valueFormatter?.getAdjustedCursorPosition(
+        oldFormatted,
+        formatted,
+        oldCursor
+      ) ?? formatted.length;
+
+      requestAnimationFrame(() => {
+        input.setSelectionRange(newCursor, newCursor);
+      });
     }
 
     this.value = raw;
     this.formattedValue = formatted;
-
-    const newCursor = this.valueFormatter?.getAdjustedCursorPosition(
-      oldFormatted,
-      formatted,
-      oldCursor
-    ) ?? formatted.length;
-
-    requestAnimationFrame(() => {
-      input.setSelectionRange(newCursor, newCursor);
-    });
 
     if (this.patternValidator?.fullyParsed) {
       this.validationResults = this.patternValidator.validate(raw);
