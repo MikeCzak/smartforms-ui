@@ -33,6 +33,7 @@
           "name": "dob",
           "type": "date",
           "label": "Date of Birth",
+          "constraints": {"max": "today"},
           "required": true
         },
         {
