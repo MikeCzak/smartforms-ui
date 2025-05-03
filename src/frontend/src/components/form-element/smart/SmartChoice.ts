@@ -40,7 +40,6 @@ export default class SmartChoice extends AbstractSmartChoice {
       ${(this.options as string[]).map((option, index) => html`
         <label for=${this.getOptionId(index)}>
           <md-radio
-          tabindex="0"
           class="material-field"
           ?required=${this.required}
           ?checked=${this.value.includes(option)}
