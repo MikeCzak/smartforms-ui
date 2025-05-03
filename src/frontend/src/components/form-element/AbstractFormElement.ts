@@ -22,7 +22,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
   private _constraints?:  {[key: string]: any};
   private _dependsOn?: IFormElement;
   private _dependingFields: Array<IFormElement|AbstractSection> = [];
-  private _metaData: Map<string, any> = new Map<string, any>([['focusTime', 0], ['validationErrors', {}]]);
+  private _metaData: Map<string, any> = new Map<string, any>([['focusTime', 0], ['validationErrors', []]]);
   private _startTime: number|null = null;
   public internals_;
 
@@ -192,6 +192,10 @@ export default abstract class AbstractFormElement extends LitElement implements 
     const isValid = this.internals_.checkValidity();
     const { validationMessage } = this.internals_;
     if (!isValid) {
+      const currentErrors = AbstractFormElement.getValidityErrors(this.internals_.validity).filter(validity => validity !== 'valid');
+      const pastErrors = this._metaData.get('validationErrors');
+      pastErrors.push(currentErrors);
+      this._metaData.set('validationErrors', pastErrors);
       if (reportValidity) {
         this.reportValidity(validationMessage);
       }
@@ -200,6 +204,14 @@ export default abstract class AbstractFormElement extends LitElement implements 
     }
     return null;
   }
+
+  private static getValidityErrors(validity: ValidityState): string[] {
+    const keys = Object.getOwnPropertyNames(ValidityState.prototype)
+      .filter(k => typeof validity[k as keyof ValidityState] === "boolean");
+
+    return keys.filter(k => validity[k as keyof ValidityState] === true);
+  }
+
 
   protected reportValidity(validationMessage: string) {
     this._error = true;
