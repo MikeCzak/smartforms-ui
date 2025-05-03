@@ -1,6 +1,7 @@
 /* eslint-disable wc/guard-super-call */
 import { css, html, HTMLTemplateResult } from "lit";
 import { customElement } from "lit/decorators.js";
+import { when } from "lit/directives/when.js";
 import { InputType } from "../InputType.js";
 import Colors from "../../../styles/Colors.js";
 import SmartInputs from "../../../styles/SmartInputs.js";
@@ -10,25 +11,19 @@ import AbstractSmartChoice from "./AbstractSmartChoice.js";
 export default class SmartChoice extends AbstractSmartChoice {
 
   protected inputType: InputType = null;
+  private _grouped = !(typeof this.options[0] === 'string');
 
   private selectChoiceType() {
-    if (typeof this.options[0] !== 'string') {
-      return this.dropdownGrouped();
-    }
-    if (this.options.length === 1) {
-      return this.checkbox();
+    if (this.numOptions === 1) {
+      return this.checkbox(false);
     }
     switch(this.choiceType) {
       case "single":
-        if((this.options as string[]).length < 5) {
+        if(this.numOptions < 5) {
           return this.radio();
         }
-        if (typeof this.options[0] !== 'string') {
-          throw new Error("Invalid options format. Must be flat array or object { groupName: 'value', entries: [...].}");
-          ;
-        }
-        return this.dropdownFlat();
-      case "multiple": return this.checkbox();
+        return this.dropdown(this._grouped);
+      case "multiple": return this.checkbox(this._grouped);
 
       default: throw new Error(`Invalid choice type on Choice ${this.label}: ${this.choiceType}`);
     }
@@ -54,29 +49,56 @@ export default class SmartChoice extends AbstractSmartChoice {
       `
   };
 
-  private checkbox(): HTMLTemplateResult {
+  private checkbox(grouped: boolean): HTMLTemplateResult {
     return html`
       ${this.info && html`<p>${this.info}</p>`}
-      ${(this.options as string[]).map((option, index) => html`
-        <label for=${this.getOptionId(index)}>
-          <md-checkbox
-            tabindex="0"
-            class="material-field"
-            ?required=${this.required}
-            ?checked=${this.value.includes(option)}
-            ?error=${this._error}
-            id=${this.getOptionId(index)}
-            .name=${this.id}
-            value=${option}
-            @change=${(event: Event) => this.handleCheckboxChange(event, option)}
-          ></md-checkbox>
-          ${option}
-        </label>
-      `)}
-      `
+      ${when(grouped,
+        () => html`
+        <div class="checkbox-group">
+          ${(this.options as { groupName: string; entries: string[] }[])
+            .slice()
+            .sort((a, b) => a.groupName.localeCompare(b.groupName))
+            .map(group => {
+              const sortedEntries = group.entries.slice().sort((a, b) => a.localeCompare(b));
+              return html`
+                <div class="choice-group">
+                  <h3 class="group-header">${group.groupName}</h3>
+                  ${sortedEntries.map((option, index) => html`
+                    <label for=${this.getOptionId(index)}>
+                      <md-checkbox tabindex="0" class="material-field" ?required=${this.required} ?checked=${this.value.includes(option)} ?error=${this._error}
+                        id=${this.getOptionId(index)} .name=${this.id} value=${option} @change=${(event: Event) => this.handleCheckboxChange(event, option)}
+                      ></md-checkbox>
+                      ${option}
+                    </label>
+                  `)}
+                </div>
+              `;
+            })
+          }
+        </div>`,
+        () => html`
+          ${(this.options as string[]).map((option, index) => html`
+            <label for=${this.getOptionId(index)}>
+              <md-checkbox
+                tabindex="0"
+                class="material-field"
+                ?required=${this.required}
+                ?checked=${this.value.includes(option)}
+                ?error=${this._error}
+                id=${this.getOptionId(index)}
+                .name=${this.id}
+                value=${option}
+                @change=${(event: Event) => this.handleCheckboxChange(event, option)}
+              ></md-checkbox>
+              ${option}
+            </label>
+          `)}
+        `
+      )}
+    `
   };
 
-  private dropdownFlat(): HTMLTemplateResult {
+  private dropdown(grouped: boolean): HTMLTemplateResult {
     return html`
       ${this.info && html`<p>${this.info}</p>`}
       <md-outlined-select
@@ -87,48 +109,38 @@ export default class SmartChoice extends AbstractSmartChoice {
         .name=${this.id}
         value=${this.value}
         @input=${this.handleInput}>
-          ${(this.options as string[]).map((option) => html`
-            <md-select-option value=${option}>
-              <div slot="headline">${option}</div>
-            </md-select-option>
-          `)}
-      </md-outlined-select>
-    `
-  };
+        ${when(grouped,
+          () => html`
+            ${(this.options as { groupName: string; entries: string[] }[])
+              .slice()
+              .sort((a, b) => a.groupName.localeCompare(b.groupName))
+              .map(group => {
+                const sortedEntries = group.entries.slice().sort((a, b) => a.localeCompare(b));
+                return html`
+                  <md-select-option disabled class="group-header">
+                    <div slot="headline"><strong>===== ${group.groupName} =====</strong></div>
+                  </md-select-option>
 
-  private dropdownGrouped(): HTMLTemplateResult {
-    return html`
-      ${this.info && html`<p>${this.info}</p>`}
-      <md-outlined-select
-      tabindex="0"
-      class="material-field"
-      ?required=${this.required}
-      ?error=${this._error}
-      .name=${this.id}
-      value=${this.value}
-      @input=${this.handleInput}>
-      ${(
-        this.options as { groupName: string; entries: string[] }[]
-      )
-        .slice()
-        .sort((a, b) => a.groupName.localeCompare(b.groupName))
-        .map(group => {
-          const sortedEntries = group.entries.slice().sort((a, b) => a.localeCompare(b));
-          return html`
-            <md-select-option disabled class="groupHeader">
-              <div slot="headline"><strong>===== ${group.groupName} =====</strong></div>
-            </md-select-option>
-
-            ${sortedEntries.map(entry => html`
-              <md-select-option value=${entry}>
-                <div slot="headline">${entry}</div>
+                  ${sortedEntries.map(entry => html`
+                    <md-select-option value=${entry}>
+                      <div slot="headline">${entry}</div>
+                    </md-select-option>
+                  `)}
+                `;
+              })
+            }
+          `,
+          () => html`
+            ${(this.options as string[]).map((option) => html`
+              <md-select-option value=${option}>
+                <div slot="headline">${option}</div>
               </md-select-option>
             `)}
-          `;
-        })}
-    </md-outlined-select>
+          `
+        )}
+      </md-outlined-select>
     `
-  };
+  }
 
   private handleCheckboxChange(event: Event, option: string): void {
     const checkbox = event.target as HTMLInputElement;
@@ -206,9 +218,33 @@ export default class SmartChoice extends AbstractSmartChoice {
       --md-menu-container-shape: 0;
     }
 
-    md-select-option.groupHeader {
+    md-select-option.group-header {
       text-align: center;
       background-color: white;
+    }
+
+    .checkbox-group {
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .choice-group {
+      display: flex;
+      flex-direction: column;
+      & label {
+        display: block;
+      }
+    }
+
+    h3.group-header {
+      display: inline-block;
+      padding: 0 50px 0 0;
+      box-sizing: content-box;
+      border-bottom: 1px solid var(--md-sys-color-outline);
+      border-image: linear-gradient(to right, var(--md-sys-color-outline), transparent);
+      border-image-slice: 1;
     }
     `
   ]

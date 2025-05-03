@@ -153,8 +153,29 @@
           "name": "topics",
           "type": "choice",
           "info": "Select one or more topics that interest you:",
-          "label": "Interested Topics",
-          "options": ["Technology", "Sports", "Music", "Movies", "Science"],
+            "label": "Interested Topics",
+            "options": [
+            {
+              "groupName": "Technology",
+              "entries": ["AI", "Blockchain", "Cybersecurity", "Web Development", "Cloud Computing", "IoT", "AR/VR", "Quantum Computing", "Big Data", "Game Development"]
+            },
+            {
+              "groupName": "Sports",
+              "entries": ["Football", "Basketball", "Tennis", "Skiing", "Swimming", "Baseball", "Hockey", "Golf", "Rugby", "Athletics"]
+            },
+            {
+              "groupName": "Science",
+              "entries": ["Physics", "Biology", "Astronomy", "Chemistry", "Geology", "Ecology", "Genetics", "Meteorology", "Oceanography", "Mathematics"]
+            },
+            {
+              "groupName": "Music",
+              "entries": ["Rock", "Pop", "Jazz", "Classical", "Hip-Hop", "Country", "Reggae", "Blues", "Electronic", "Folk"]
+            },
+            {
+              "groupName": "Movies",
+              "entries": ["Action", "Comedy", "Drama", "Horror", "Sci-Fi", "Fantasy", "Thriller", "Romance", "Documentary", "Animation"]
+            }
+            ],
           "required": true,
           "choiceType": "multiple"
         }
@@ -241,7 +262,7 @@
     },
     {
       "title": "Device Details",
-      "info": "Find your MAC Address and license number in your dummy data.",
+      "info": "Find your device details in your dummy data.",
       "fields": [
       {
         "name": "device_name",
@@ -424,7 +445,7 @@
         "name": "mac_address",
         "type": "text",
         "label": "MAC Address",
-        "info": "The MAC Address consists of 12 characters (letters and numbers), typically grouped in 2, divided by a colon or dash.",
+        "info": "The MAC Address consists of 12 characters (letters and numbers), grouped in 2, divided by a colon or dash.",
         "required": true,
         "grouping": {
           "chunkSize": 2,
@@ -432,15 +453,30 @@
         }
       },
       {
-        "name": "license_number",
+        "name": "serial_no",
         "type": "text",
-        "label": "License Number",
+        "label": "Serial Number",
+        "info": "The Serial Number consists of 20 characters (numbers only), grouped in 5, divided by a dash.",
         "required": true,
         "constraints": {
           "pattern": "^\\d+$"
         },
         "grouping": {
           "chunkSize": 5,
+          "delimiter": "-"
+        }
+      },
+      {
+        "name": "license_number",
+        "type": "text",
+        "label": "License Number",
+        "info": "The Serial Number consists of 20 characters (letters and numbers), grouped in 4, divided by a dash.",
+        "required": true,
+        "constraints": {
+          "pattern": "^[A-Za-z0-9]+$"
+        },
+        "grouping": {
+          "chunkSize": 4,
           "delimiter": "-"
         }
       }
