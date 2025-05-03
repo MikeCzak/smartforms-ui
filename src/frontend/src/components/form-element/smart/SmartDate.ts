@@ -1,6 +1,7 @@
+/* eslint-disable no-param-reassign */
 import { when } from "lit/directives/when.js";
 import { css, html, HTMLTemplateResult } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import AbstractSmartElement from "./AbstractSmartElement.js";
 import { InputType } from "../InputType.js";
 
@@ -8,58 +9,130 @@ import { InputType } from "../InputType.js";
 export default class SmartDate extends AbstractSmartElement {
 
   protected inputType: InputType = "date";
-  private year?: string;
-  private month?: string;
-  private day?: string;
+  @property() private year?: string;
+  @property() private month?: string;
+  @property() private day?: string;
 
   protected handleInput(event: InputEvent): void {
     const part = event.target as HTMLInputElement;
     part.value = part.value.replace(/\D/g, '')
-    let numVal = Number(part.value);
+    const partLength = Number(part.getAttribute('maxLength'));
+
     switch(part.getAttribute('id')?.split('_').pop()) {
       case 'year':
         this.year = part.value;
+        if(part.value.length === partLength) {
+          if(this.checkYearFormat()) {
+            this.focusNextSubfield(part);
+          } else {
+            this.highlightDatePart(part);
+            this.updateComplete.then(() => part.select());
+          }
+        }
         break;
       case 'month':
-        if(numVal > 12) {
-          numVal = 12;
-          this.highlightDatePart(part);
-          part.value = numVal.toString();
+        this.month = part.value;
+        if(part.value.length === partLength) {
+          if(this.checkMonthFormat()) {
+            this.focusNextSubfield(part);
+          } else {
+            this.highlightDatePart(part);
+            this.updateComplete.then(() => part.select());
+          }
         }
-        if(numVal < 1) {
-          numVal = 1;
-          this.highlightDatePart(part);
-          part.value = numVal.toString();
-        }
-        this.month = part.value.padStart(2, '0');
         break;
       case 'day':
-        if(numVal > 31) {
-          numVal = 31;
-          this.highlightDatePart(part);
-          part.value = numVal.toString();
+        this.day = part.value;
+        if(part.value.length === partLength) {
+          if(this.checkDayFormat()) {
+            this.focusNextSubfield(part);
+          } else {
+            this.highlightDatePart(part);
+            this.updateComplete.then(() => part.select());
+          }
         }
-        if(numVal < 1) {
-          numVal = 1;
-          this.highlightDatePart(part);
-          part.value = numVal.toString();
-        }
-        this.day = part.value.padStart(2, '0');
         break;
       default: break;
     }
-    if([this.year, this.month, this.day].every(val => val !== undefined)) {
-      this.value = `${this.year}-${this.month!}-${this.day}`;
+    if(this.checkYearFormat() && this.checkMonthFormat() && this.checkDayFormat()) {
+      this.value = `${this.year!.padStart(2, '0')}-${this.month!.padStart(2, '0')}-${this.day!.padStart(2, '0')}`;
     }
-    const partLength = Number(part.getAttribute('maxLength'));
-    if(part.value.length === partLength) {
-      const allInputs = Array.from(this.shadowRoot!.querySelectorAll('input'));
-      const index = allInputs.indexOf(part);
+  }
+
+  private focusNextSubfield(currentField: HTMLInputElement) {
+    const allInputs = Array.from(this.shadowRoot!.querySelectorAll('input'));
+      const index = allInputs.indexOf(currentField);
       const nextInput = allInputs[index + 1];
       if (nextInput) {
         nextInput.focus();
         nextInput.select();
       }
+  }
+
+  private checkMonthFormat(): boolean {
+    const numVal = Number(this.month);
+    if(!this.month) {
+      return false;
+    }
+    if(numVal > 12) {
+      this.month = "12";
+      return false;
+    }
+    if(numVal < 1) {
+      this.month = "01";
+      return false;
+    }
+    return true;
+  }
+
+  private checkDayFormat(): boolean {
+    const numVal = Number(this.day);
+    if(!this.day) {
+      return false;
+    }
+    if(numVal > 31) {
+      this.day = "31";
+      return false;
+    }
+    if(numVal < 1) {
+      this.day = "01";
+      return false;
+    }
+    return true;
+  }
+
+  private checkYearFormat(): boolean {
+    const numVal = Number(this.year);
+    if(!this.year || numVal === 0) {
+      return false;
+    }
+    return true;
+  }
+
+  private blurMonthHandler(e: FocusEvent): void {
+    const part = e.target as HTMLInputElement;
+    if(this.checkMonthFormat()) {
+      part.value = Number(part.value).toString().padStart(2, '0')
+    } else {
+      this.highlightDatePart(part);
+    }
+  }
+
+  private blurDayHandler(e: FocusEvent): void {
+    const part = e.target as HTMLInputElement;
+    if(this.checkDayFormat()) {
+      part.value = Number(part.value).toString().padStart(2, '0')
+    } else {
+      this.highlightDatePart(part);
+    }
+  }
+
+  private blurYearHandler(e: FocusEvent): void {
+    const part = e.target as HTMLInputElement;
+    if(this.checkYearFormat()) {
+      part.value = Number(part.value).toString().padStart(4, '0')
+    } else {
+      this.highlightDatePart(part);
     }
   }
 
@@ -168,37 +241,40 @@ export default class SmartDate extends AbstractSmartElement {
 
   protected override inputHTML(): HTMLTemplateResult {
     return html`
-      ${when(!this.required,
+      ${when(this.required,
         () => html`
           <div class="date-wrapper material">
             <md-outlined-select required ?error=${this._error} class="year-input" label="Year" id="${this.id}_year" @input=${this.handleInput}>
-            ${Array.from({ length: 100 }, (_, i) => i + 1925).map((option) => html`
-              <md-select-option ?selected=${this.year === option.toString()} value=${option}><div slot="headline">${option}</div></md-select-option>`)}
+            ${Array.from({ length: 150 }, (_, i) => i + (new Date().getFullYear()+1-100)).map((option) => html`
+              <md-select-option ?selected=${this.year === option.toString()} value=${option}><div slot="headline">${option}</div></md-select-option>
+              `)}
             </md-outlined-select>
             <md-outlined-select required ?error=${this._error} class="month-input" label="Month" id="${this.id}_month" @input=${this.handleInput}>
             ${Array.from({ length: 12 }, (_, i) => i + 1).map((option) => html`
-              <md-select-option ?selected=${this.month === option.toString().padStart(2, '0')} value=${option}><div slot="headline">${option}</div></md-select-option>`)}
+              <md-select-option ?selected=${this.month === option.toString().padStart(2, '0')} value=${option}><div slot="headline">${option}</div></md-select-option>
+              `)}
             </md-outlined-select>
             <md-outlined-select required ?error=${this._error} class="day-input" label="Day" id="${this.id}_day" @input=${this.handleInput}>
             ${Array.from({ length: 31 }, (_, i) => i + 1).map((option) => html`
-              <md-select-option ?selected=${this.day === option.toString().padStart(2, '0')} value=${option}><div slot="headline">${option}</div></md-select-option>`)}
+              <md-select-option ?selected=${this.day === option.toString().padStart(2, '0')} value=${option}><div slot="headline">${option}</div></md-select-option>
+              `)}
             </md-outlined-select>
           </div>
         `,
         () => html`
           <div class="date-wrapper">
             <div class="date-part">
-              <input @input=${this.handleInput} id="${this.id}_year" type="text" class="year-input" maxlength="4" minlength="4" .value=${this.year ?? ''}>
+              <input @input=${this.handleInput} @blur=${this.blurYearHandler} id="${this.id}_year" type="text" class="year-input" maxlength="4" minlength="4" .value=${this.year ?? ''}>
               <label class="format-restriction" for="${this.id}_year">YYYY</label>
             </div>
             <div class="dash">-</div>
             <div class="date-part">
-              <input @input=${this.handleInput} id="${this.id}_month" type="text" class="month-input" maxlength="2" minlength="2" .value=${this.month ?? ''}>
+              <input @input=${this.handleInput} @blur=${this.blurMonthHandler} id="${this.id}_month" type="text" class="month-input" maxlength="2" minlength="2" .value=${this.month ?? ''}>
               <label class="format-restriction" for="${this.id}_month">MM</label>
             </div>
             <div class="dash">-</div>
             <div class="date-part">
-              <input @input=${this.handleInput} id="${this.id}_day" type="text" class="day-input" maxlength="2" minlength="2" .value=${this.day ?? ''}>
+              <input @input=${this.handleInput} @blur=${this.blurDayHandler} id="${this.id}_day" type="text" class="day-input" maxlength="2" minlength="2" .value=${this.day ?? ''}>
               <label class="format-restriction" for="${this.id}_day">DD</label>
             </div>
           </div>
