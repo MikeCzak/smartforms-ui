@@ -132,7 +132,12 @@ export default class SmartInputs {
     color: var(--required);
   }
 
-  .info {
+  .info-text {
+    font-size: smaller;
+    padding: 4px 12px 0 12px;
+  }
+
+  .constraint-info {
     display: flex;
     justify-content: space-between;
     padding-bottom: 0;
@@ -151,7 +156,7 @@ export default class SmartInputs {
     display: none;
     bottom: calc(100% + 12px);
     right: 12px;
-    font-size: 14px;
+    font-size: smaller;
 
     & md-elevated-card {
       padding: 12px 24px;

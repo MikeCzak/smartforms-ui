@@ -124,7 +124,7 @@ export default class Colors {
   .white-text {
     color: var(--md-ref-palette-white);
   }
-  .smart-container {
+  .section.smart-container {
     background-color: var(--smart-container-background-color);
   }
   `

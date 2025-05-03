@@ -64,7 +64,9 @@ export class SmartformsUiFrontend extends LitElement {
       z-index: 100;
     }
     #personal-info {
-      /* display: none; */
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
       position: fixed;
       bottom: 132px;
       right: 16px;
@@ -73,13 +75,13 @@ export class SmartformsUiFrontend extends LitElement {
       padding: 16px;
       padding-top: 6px;
       border-radius: var(--smart-border-radius);
-      opacity: 0;
       z-index: 100;
-      transition: opacity .3s ease-in-out;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
 
       &.open {
-        display: block;
         opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
       }
 
       & .headline {
@@ -87,6 +89,13 @@ export class SmartformsUiFrontend extends LitElement {
         justify-content: space-between;
         align-items: center;
         margin-top: 0;
+      }
+
+      & .content {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
       }
     }
 
@@ -119,8 +128,14 @@ export class SmartformsUiFrontend extends LitElement {
           </h3>
 
           <div class="content">
-            Your Birthday: 20.10.2000<br>
-            Your IBAN: AT23 1234 5678 1234 5678
+            <h3>Personal Info</h3>
+            Birthday: 20.10.2000<br>
+            IBAN: AT23 0400 9855 1607 1442<br>
+
+            <h3>Device Data</h3>
+            MAC-Address: 8E:4A:C3:7B:92:F1<br>
+            Serial Number: 48372-10945-76283-59410<br>
+            License Number: A7F3-KD92-Q1LM-48ZN-XR5B
           </div>
         </div>
       `) || html`<pre>loading form data...</pre>`;

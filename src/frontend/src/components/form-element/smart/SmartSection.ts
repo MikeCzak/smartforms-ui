@@ -29,8 +29,10 @@ export default class SmartSection extends AbstractSection {
 public override render(): HTMLTemplateResult {
   return html`
   <div class="section smart-container">
-  <h2>${this.label}</h2>
-  ${this.info && html`<p>${this.info}</p>`}
+    <div class="section-header">
+      <h2>${this.label}</h2>
+      ${this.info && html`<p>${this.info}</p>`}
+    </div>
     <slot></slot>
   </div>
   `;
