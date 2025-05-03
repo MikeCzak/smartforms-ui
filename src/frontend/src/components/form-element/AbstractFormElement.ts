@@ -105,8 +105,13 @@ export default abstract class AbstractFormElement extends LitElement implements 
     md-filled-text-field, md-filled-select {
       display: block;
     }
-    md-filled-text-field {
-      white-space: pre-line
+
+    .choice {
+      display: block;
+    }
+
+    .info-text {
+      margin-bottom: 12px;
     }
   `]
 
@@ -208,7 +213,6 @@ export default abstract class AbstractFormElement extends LitElement implements 
 
   connectedCallback(): void {
     super.connectedCallback()
-    // this.setAttribute('tabindex', '0');
     this.addEventListener('focus', this.focusHandler);
     this.addEventListener('blur', this.blurHandler);
   }

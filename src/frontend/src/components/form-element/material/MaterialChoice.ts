@@ -1,6 +1,7 @@
 import { HTMLTemplateResult, css, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import AbstractChoice from "../base-class/AbstractChoice.js";
+import AbstractFormElement from "../AbstractFormElement.js";
 
 @customElement('material-choice')
 export default class MaterialChoice extends AbstractChoice {
@@ -32,7 +33,8 @@ export default class MaterialChoice extends AbstractChoice {
 
   private radio(): HTMLTemplateResult {
     return html`
-      ${this.info && html`<p>${this.info}</p>`}
+    <h4 class="label ${this._error ? 'error' : ''}">${this.label}${this.required?'*':''}</h4>
+      ${this.info && html`<p class="info-text">${this.info}</p>`}
       ${(this.options as string[]).map((option, index) => html`
         <div class="choice">
           <label for=${this.getOptionId(index)}>
@@ -54,7 +56,8 @@ export default class MaterialChoice extends AbstractChoice {
 
   private checkbox(): HTMLTemplateResult {
     return html`
-      ${this.info && html`<p>${this.info}</p>`}
+    <h4 class="label ${this._error ? 'error' : ''}">${this.label}${this.required?'*':''}</h4>
+      ${this.info && html`<p class="info-text">${this.info}</p>`}
       ${(this.options as string[]).map((option, index) => html`
         <div class="choice">
           <label for=${this.getOptionId(index)}>
@@ -77,37 +80,37 @@ export default class MaterialChoice extends AbstractChoice {
 
   private dropdownFlat(): HTMLTemplateResult {
     return html`
-      <div class="choice">
-          <md-filled-select
-          class="material-field"
-          ?required=${this.required}
-          ?error=${this._error}
-          label=${this.label}
-          .name=${this.id}
-          @input=${this.handleInput}>
-            ${(this.options as string[]).map((option) => html`
-              <md-select-option value=${option}>
-                <div slot="headline">${option}</div>
-              </md-select-option>
-                `)}
-          </md-filled-select>
-      </div>
+      ${this.info && html`<p class="info-text">${this.info}</p>`}
+      <md-filled-select
+        class="material-field"
+        ?required=${this.required}
+        ?error=${this._error}
+        label=${this.label}
+        .name=${this.id}
+        @input=${this.handleInput}>
+          ${(this.options as string[]).map((option) => html`
+            <md-select-option value=${option}>
+              <div slot="headline">${option}</div>
+            </md-select-option>
+          `)}
+      </md-filled-select>
+      ${this._errorText && html`<p class="error-text">${this._errorText}</p>`}
     `
   };
 
   private dropdownGrouped(): HTMLTemplateResult {
     return html`
-      <div class="choice">
-        <md-filled-select
-          class="material-field"
-          ?required=${this.required}
-          ?error=${this._error}
-          label=${this.label}
-          .name=${this.id}
-          @input=${this.handleInput}>
-          ${(
-        this.options as { groupName: string; entries: string[] }[]
-      )
+    ${this.info && html`<p class="info-text">${this.info}</p>`}
+      <md-filled-select
+        class="material-field"
+        ?required=${this.required}
+        ?error=${this._error}
+        label=${this.label}
+        .name=${this.id}
+        @input=${this.handleInput}>
+        ${(
+          this.options as { groupName: string; entries: string[] }[]
+        )
         .slice()
         .sort((a, b) => a.groupName.localeCompare(b.groupName))
         .map(group => {
@@ -124,8 +127,8 @@ export default class MaterialChoice extends AbstractChoice {
             `)}
           `;
         })}
-        </md-filled-select>
-      </div>
+      </md-filled-select>
+      ${this._errorText && html`<p class="error-text">${this._errorText}</p>`}
     `;
   }
 
@@ -142,7 +145,11 @@ export default class MaterialChoice extends AbstractChoice {
     if (this.required && (!this.value || this.value.length === 0)) {
       // eslint-disable-next-line no-param-reassign
       errors.valueMissing = true;
-      errorMessages.push('Select at least one option.');
+      if(this.choiceType === "single") {
+        errorMessages.push('Please select an option.');
+      } else {
+        errorMessages.push('Please select at least one option.');
+      }
     }
   }
 
@@ -151,11 +158,13 @@ export default class MaterialChoice extends AbstractChoice {
     this.value = mdField.value;
   }
 
-  static styles = css`
+  static styles = [
+    AbstractFormElement.styles,
+    css`
   md-filled-select { display: block}
   md-checkbox, md-radio {
-      margin-bottom: 14px;
-    }
+    margin-bottom: 14px;
+  }
   .label.error {
     color: var(--md-sys-color-error);
   }
@@ -163,16 +172,16 @@ export default class MaterialChoice extends AbstractChoice {
     margin-top: 4px;
     font-size: 12px;
     color: var(--md-sys-color-error);
+    padding-inline-start: 16px;
   }
   md-select-option[disabled] {
       text-align: center;
       background-color: white;
     }
-  `
+  `]
 
   render(): HTMLTemplateResult {
     return html`
-    <h4 class="label ${this._error ? 'error' : ''}">${this.label}${this.required?'*':''}</h4>
       ${this.selectChoiceType()}
     `
   }

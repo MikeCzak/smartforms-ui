@@ -8,10 +8,10 @@
         {
           "name": "first_name",
           "type": "text",
-          "info": "Must be between 2 and 50 characters.",
           "label": "First Name",
           "required": true,
           "constraints": {
+            "info": "Must be between 2 and 50 characters (letters only).",
             "minLength": 2,
             "maxLength": 50,
             "pattern": "^[A-Za-z]+$"
@@ -20,10 +20,10 @@
         {
           "name": "last_name",
           "type": "text",
-          "info": "Must be between 2 and 50 characters.",
           "label": "Last Name",
           "required": true,
           "constraints": {
+            "info": "Must be between 2 and 50 characters (letters only).",
             "minLength": 2,
             "maxLength": 50,
             "pattern": "^[A-Za-z]+$"
@@ -47,10 +47,10 @@
         {
           "name": "phone",
           "type": "tel",
-          "info": "Can start with optional +, then one non-zero digit, then digits",
           "label": "Phone Number",
           "required": false,
           "constraints": {
+            "info": "Can start with optional +, then one non-zero digit, then digits",
             "pattern": "^\\+?[1-9]\\d{1,15}$",
             "maxLength": 16
           }
@@ -60,8 +60,8 @@
           "type": "email",
           "label": "Email",
           "required": true,
-          "info": "Must be a valid email address",
           "constraints": {
+            "info": "Must be a valid email address",
             "pattern": "^\\S+@\\S+\\.\\S+$"
           }
         },
@@ -114,10 +114,11 @@
         {
           "name": "username",
           "type": "text",
-          "info": "Must be between 5 and 20 characters, no spaces.",
           "label": "Username",
+          "info": "Other users will recognize you by this name.",
           "required": true,
           "constraints": {
+            "info": "Must be between 5 and 20 characters, no spaces.",
             "minLength": 5,
             "maxLength": 20,
             "pattern": "^\\S+$"
@@ -126,10 +127,10 @@
         {
           "name": "password",
           "type": "password",
-          "info": "Must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.",
           "label": "Password",
           "required": true,
           "constraints": {
+            "info": "Must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.",
             "minLength": 8,
             "maxLength": 100,
             "pattern": "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%&*])[A-Za-z\\d!@#$%&*]{8,}$"
@@ -151,7 +152,7 @@
         {
           "name": "topics",
           "type": "choice",
-            "info": "Select one or more topics that interest you:",
+          "info": "Select one or more topics that interest you:",
           "label": "Interested Topics",
           "options": ["Technology", "Sports", "Music", "Movies", "Science"],
           "required": true,
@@ -165,6 +166,7 @@
         {
           "name": "payment_method",
           "type": "choice",
+          "info": "How would you like your payment to be refunded?",
           "label": "Payment Method",
           "options": ["Credit Card", "PayPal", "Bank Transfer"],
           "required": true,
@@ -173,10 +175,10 @@
         {
           "name": "iban",
           "type": "text",
-          "info": "Must be a valid IBAN format (e.g., DE89370400440532013000).",
           "label": "IBAN",
           "required": true,
           "constraints": {
+            "info": "Must be a valid IBAN format (e.g., DE89370400440532013000).",
             "pattern": "^[A-Z]{2}\\d{2}[A-Z0-9]{11,30}$",
             "maxLength": 34
           },
@@ -188,10 +190,10 @@
         {
           "name": "credit_card_number",
           "type": "text",
-          "info": "Must be a 16-digit credit card number.",
           "label": "Credit Card Number",
           "required": true,
           "constraints": {
+            "info": "Must be a 16-digit credit card number.",
             "pattern": "^[0-9]{16}$"
           },
           "dependsOn": {
@@ -219,10 +221,10 @@
           {
           "name": "contact_phone",
           "type": "tel",
-          "info": "Must be a valid phone number (e.g., +123456789).",
           "label": "Contact Phone",
           "required": false,
           "constraints": {
+            "info": "Must be a valid phone number (e.g., +123456789).",
             "pattern": "^\\+?[1-9]\\d{1,15}$"
           }
           },
@@ -239,11 +241,12 @@
     },
     {
       "title": "Device Details",
-      "info": "Find your MAC Address and license number on the back of your device.",
+      "info": "Find your MAC Address and license number in your dummy data.",
       "fields": [
       {
         "name": "device_name",
         "type": "choice",
+        "info": "Currently supported models:",
         "choiceType": "single",
         "options": [
           {
@@ -421,6 +424,7 @@
         "name": "mac_address",
         "type": "text",
         "label": "MAC Address",
+        "info": "The MAC Address consists of 12 characters (letters and numbers), typically grouped in 2, divided by a colon or dash.",
         "required": true,
         "grouping": {
           "chunkSize": 2,

@@ -59,7 +59,7 @@ export default abstract class AbstractSection extends LitElement {
   .section {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 24px;
   }
 
   `;

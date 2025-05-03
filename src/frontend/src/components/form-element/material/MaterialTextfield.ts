@@ -8,10 +8,11 @@ export default class MaterialTextfield extends AbstractFormElement {
 
   public render(): HTMLTemplateResult {
     return html`
+      ${this.info && html`<p class="info-text">${this.info}</p>`}
       <md-filled-text-field
         class="material-field"
         type="text"
-        .supportingText=${this._errorText ?? this.info}
+        .supportingText=${this._errorText ?? this.constraints?.info}
         ?error=${this._error}
         @input=${this.handleInput}
         ?required=${this.required}
