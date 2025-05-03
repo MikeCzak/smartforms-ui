@@ -5,13 +5,12 @@ export default class SmartInputs {
   static styles = css`
 
   :host {
-    --smart-border-radius: 12px;
     position: relative;
     max-width: 100%;
   }
 
   .left, .right {
-    border-top: 2px solid var(--md-sys-color-outline);
+    border-top: var(--smart-border-width) solid var(--md-sys-color-outline);
     height: 12px;
   }
 
@@ -43,58 +42,58 @@ export default class SmartInputs {
   .wrapper {
     display: flex;
     flex-direction: column;
-    border: 2px solid var(--md-sys-color-outline);
+    border: var(--smart-border-width) solid var(--md-sys-color-outline);
     border-top: transparent;
     border-radius: var(--smart-border-radius);
     background-color: transparent;
   }
 
   .wrapper:focus-within {
-    outline: 1px solid var(--md-sys-color-outline);
+    outline: var(--smart-outline-width) solid var(--md-sys-color-outline);
     & .label {
       font-weight: bold;
     }
   }
 
   .wrapper.required:focus-within {
-    outline: 1px solid var(--required);
+    outline: var(--smart-outline-width) solid var(--required);
   }
 
   .wrapper.invalid:focus-within {
-    outline: 1px solid var(--error) !important;
+    outline: var(--smart-outline-width) solid var(--error) !important;
   }
 
   .wrapper.required.valid:focus-within {
-    outline: 1px solid var(--success);
+    outline: var(--smart-outline-width) solid var(--success);
   }
 
   .wrapper:has(.required) {
-    border: 2px solid var(--required);
+    border: var(--smart-border-width) solid var(--required);
     border-top: transparent;
     background: linear-gradient(340deg, rgba(var(--required-rgb), .4) 0%, transparent 70px);
   }
 
   .wrapper.required .left, .wrapper.required  .right {
-    border-top: 2px solid var(--required);
+    border-top: var(--smart-border-width) solid var(--required);
     height: 12px;
   }
 
   .wrapper.required.valid .left, .wrapper.required.valid  .right {
-    border-top: 2px solid var(--success);
+    border-top: var(--smart-border-width) solid var(--success);
   }
 
   .wrapper.required.valid {
-    border: 2px solid var(--success);
+    border: var(--smart-border-width) solid var(--success);
     border-top: transparent;
     background: linear-gradient(340deg, rgba(var(--success-rgb), .4) 0%, transparent 70px);
   }
 
   .wrapper.required.invalid .left, .wrapper.required.invalid  .right {
-    border-top: 2px solid var(--error);
+    border-top: var(--smart-border-width) solid var(--error);
   }
 
   .wrapper.required.invalid {
-    border: 2px solid var(--error);
+    border: var(--smart-border-width) solid var(--error);
     border-top: transparent;
     background: linear-gradient(340deg, rgba(var(--error-rgb), .4) 0%, transparent 70px);
   }

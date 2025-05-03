@@ -1,5 +1,7 @@
 :root {
-  --smart-border-radius: 16px;
+  --smart-border-radius: 8px;
+  --smart-border-width: 1px;
+  --smart-outline-width: 1px;
 }
 
 html,
