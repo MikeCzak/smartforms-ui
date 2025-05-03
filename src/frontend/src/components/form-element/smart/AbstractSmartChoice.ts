@@ -40,15 +40,14 @@ export default abstract class AbstractSmartChoice extends AbstractSmartElement {
 
   protected focusDelegation(e: FocusEvent) {
     const inputCheckbox = this.mdCheckbox?.shadowRoot?.querySelector('input') as HTMLInputElement;
-    const inputSelect = this.mdSelect?.shadowRoot?.querySelector('select') as HTMLSelectElement;
     if(inputCheckbox) {
       inputCheckbox.focus();
     }
     if(this.mdRadio) {
       this.mdRadio.focus();
     }
-    if(inputSelect) {
-      inputSelect.focus();
+    if(this.mdSelect) {
+      this.mdSelect.focus();
     }
   }
 }
