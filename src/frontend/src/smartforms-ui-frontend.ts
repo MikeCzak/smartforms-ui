@@ -77,11 +77,16 @@ export class SmartformsUiFrontend extends LitElement {
       border-radius: var(--smart-border-radius);
       z-index: 100;
       transition: opacity 0.3s ease, visibility 0.3s ease;
+      box-shadow: 0 0 6px rgba(0,0,0,.5);
 
       &.open {
-        opacity: 1;
+        opacity: .75;
         visibility: visible;
         pointer-events: auto;
+
+        &:hover {
+          opacity: 1;
+        }
       }
 
       & .headline {
@@ -96,6 +101,10 @@ export class SmartformsUiFrontend extends LitElement {
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+
+        & h3 {
+          margin-block-end: .25em;
+        }
       }
     }
 
@@ -120,12 +129,12 @@ export class SmartformsUiFrontend extends LitElement {
           <my-icon slot="icon" icon="arrow_back"></my-icon>
         </md-fab>`)}
         <div id="personal-info" class="${this._showPersonalInfo ? 'open': ''}">
-          <h3 class="headline">
-            Your personal data
+          <h2 class="headline">
+            Your Dummy Data
             <md-icon-button @click=${this.hidePersonalData} aria-label="Close dialog">
               <my-icon icon="close"></my-icon>
             </md-icon-button>
-          </h3>
+          </h2>
 
           <div class="content">
             <h3>Personal Info</h3>
