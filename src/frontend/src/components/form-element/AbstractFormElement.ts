@@ -112,6 +112,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
 
     .info-text {
       margin-bottom: 12px;
+      margin-top: 0;
     }
   `]
 
