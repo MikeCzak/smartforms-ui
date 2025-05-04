@@ -18,6 +18,7 @@ export default class SmartChoice extends AbstractSmartChoice {
   protected inputType: InputType = null;
   private _searchFilter: (element: string) => boolean = (element: string) => element.toLowerCase().includes(this.query.toLowerCase());
   private _focusedIndex: number = -1;
+  private _checkBoxesTabbable = false;
 
   protected radio(): HTMLTemplateResult {
     return html`
@@ -55,7 +56,7 @@ export default class SmartChoice extends AbstractSmartChoice {
                   <h3 class="group-header">${group.groupName}</h3>
                   ${sortedEntries.map((option, index) => html`
                     <label for=${this.getOptionId(index)}>
-                      <md-checkbox tabindex="0" class="material-field" ?required=${this.required} ?checked=${this.value.includes(option)} ?error=${this._error}
+                      <md-checkbox tabindex=${this._checkBoxesTabbable ? '0' : '-1'} class="material-field" ?required=${this.required} ?checked=${this.value.includes(option)} ?error=${this._error}
                         id=${this.getOptionId(index)} .name=${this.id} value=${option} @change=${(event: Event) => this.handleCheckboxChange(event, option)}
                       ></md-checkbox>
                       ${option}
@@ -70,7 +71,7 @@ export default class SmartChoice extends AbstractSmartChoice {
           ${(this.options as string[]).map((option, index) => html`
             <label for=${this.getOptionId(index)}>
               <md-checkbox
-                tabindex="0"
+                tabindex=${this._checkBoxesTabbable ? '0' : '-1'}
                 class="material-field"
                 ?required=${this.required}
                 ?checked=${this.value.includes(option)}
@@ -195,6 +196,7 @@ export default class SmartChoice extends AbstractSmartChoice {
   }
 
   private dropdownNavHandler(e: KeyboardEvent): void {
+    e.stopPropagation();
     const items = Array.from(this._listItems);
     if (e.key === 'ArrowDown') {
       this.showDropdown();
@@ -210,6 +212,8 @@ export default class SmartChoice extends AbstractSmartChoice {
       e.preventDefault();
       items[this._focusedIndex].click();
       this._searchField.value = items[this._focusedIndex].innerText;
+    } else if (e.key ==='Escape') {
+      this.hideDropdown();
     }
   }
 
@@ -397,7 +401,7 @@ export default class SmartChoice extends AbstractSmartChoice {
 
   render(): HTMLTemplateResult {
     return html`
-    <div tabindex="0" class="wrapper ${this.required ? 'required' : ''}  ${this._error ? 'invalid' : ''}">
+    <div class="wrapper ${this.required ? 'required' : ''}  ${this._error ? 'invalid' : ''}">
       <div class="top">
         <div class="left"></div>
           ${this.labelHTML()}

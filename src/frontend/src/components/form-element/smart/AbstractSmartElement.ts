@@ -113,8 +113,6 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
       this.style.setProperty('--max-length-bottom-border','1px dashed rgba(0, 0, 0, .3)')
     }
     this.addEventListener('click', this.delegateFocusToInput);
-    this.addEventListener('focus', this.focusHandler);
-    this.addEventListener('blur', this.blurHandler);
     this.addEventListener('blur', this.hideValidationHandler);
     this.setCustomEventListeners();
     this.customInitializer();
@@ -147,8 +145,6 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.removeEventListener('click', this.delegateFocusToInput)
-    this.removeEventListener('focus', this.focusHandler);
-    this.removeEventListener('blur', this.blurHandler);
     this.removeEventListener('blur', this.hideValidationHandler);
     this.removeCustomEventListeners();
   }
@@ -183,7 +179,7 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
       firstInput?.focus();
     }
   }
-
+  // TODO: override in non-input elements for validation focus
   override focus(options?: {preventScroll: boolean, focusVisible: boolean}): void {
     const firstInput = this.shadowRoot?.querySelector('input');
     if (firstInput) {

@@ -187,6 +187,21 @@ export default class SmartDate extends AbstractSmartElement {
     }
   }
 
+  protected delegateFocusToInput(e: Event) {
+    const path = e.composedPath() as HTMLElement[];
+
+    const clickedInput = path.find(el => el.tagName === 'INPUT');
+    let firstInput;
+    if (!clickedInput) {
+      if (this.required) {
+        firstInput = this.shadowRoot?.querySelector('md-outlined-select');
+      } else {
+        firstInput = this.shadowRoot?.querySelector('input');
+      }
+      firstInput?.focus();
+    }
+  }
+
   static styles = [
     AbstractSmartElement.styles,
     css`

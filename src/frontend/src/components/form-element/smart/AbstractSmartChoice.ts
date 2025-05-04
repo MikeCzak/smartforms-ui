@@ -43,6 +43,13 @@ export default abstract class AbstractSmartChoice extends AbstractSmartElement {
       throw new Error("Error parsing options array");
     }
     this.setRenderType();
+    if(this.renderType === "checkbox") {
+      this.setAttribute('tabindex', '0');
+    }
+  }
+
+  protected override _attachShadow(): void {
+    this.attachShadow({ mode: 'open', delegatesFocus: false });
   }
 
   get options(): Array<string> | { groupName: string; entries: string[] }[] {
@@ -60,15 +67,18 @@ export default abstract class AbstractSmartChoice extends AbstractSmartElement {
   protected setRenderType() {
     if (this._numOptions === 1) {
       this.renderType = "checkbox";
+      return;
     }
     switch(this.choiceType) {
       case "single":
         if(this._numOptions < 5) {
           this.renderType = "radio";
           this._grouped = false;
+          return;
         }
         if(this._numOptions < 15) {
           this.renderType = "dropdown";
+          return;
         }
         this.renderType = "searchableDropdown";
         break;
@@ -88,11 +98,16 @@ export default abstract class AbstractSmartChoice extends AbstractSmartElement {
   }
 
   protected override setCustomEventListeners() {
-    this.addEventListener('focus', this.focusDelegation);
     if(this.renderType === "searchableDropdown") {
       this.addEventListener('focus', this.showDropdown);
       this.addEventListener('click', this.showDropdown);
       this.addEventListener('blur', this.hideDropdown);
+    } else if(this.renderType === "checkbox") {
+      this.addEventListener('focus', this.checkboxFocusDelegation);
+      this.updateComplete.then(() => {
+        this.mdCheckbox?.addEventListener('focus', this.checkboxFocusDelegation);
+        this.mdCheckbox?.addEventListener('blur', this.setTabIndex);
+      })
     }
   };
 
@@ -101,20 +116,43 @@ export default abstract class AbstractSmartChoice extends AbstractSmartElement {
       this.removeEventListener('focus', this.showDropdown);
       this.removeEventListener('click', this.showDropdown);
       this.removeEventListener('blur', this.hideDropdown);
+    } else if(this.renderType === "checkbox") {
+      this.mdCheckbox?.removeEventListener('focus', this.checkboxFocusDelegation);
+      this.mdCheckbox?.removeEventListener('blur', this.setTabIndex);
+      this.removeEventListener('focus', this.checkboxFocusDelegation);
     }
   }
 
-  protected focusDelegation(e: FocusEvent) {
-    const inputCheckbox = this.mdCheckbox?.shadowRoot?.querySelector('input') as HTMLInputElement;
-    if(inputCheckbox) {
-      inputCheckbox.focus();
+  // delegates click only
+  protected delegateFocusToInput(e: Event) {
+    const path = e.composedPath() as HTMLElement[];
+
+    let inputElement;
+    switch(this.renderType) {
+      case "checkbox": inputElement = "MD-CHECKBOX"; break;
+      case "radio": inputElement = "MD-RADIO"; break;
+      case "dropdown": inputElement = "MD-OUTLINED-SELECT"; break;
+      case "searchableDropdown": inputElement = "INPUT"; break;
+      default: inputElement = "INPUT";
     }
-    if(this.mdRadio) {
-      this.mdRadio.focus();
+    const clickedInput = path.find(el => el.tagName === inputElement);
+    const firstInput = this.mdCheckbox ?? this.mdRadio ?? this.mdSelect ?? this.shadowRoot?.querySelector('input');
+    if (!clickedInput) {
+      firstInput?.focus({preventScroll: true});
     }
-    if(this.mdSelect) {
-      this.mdSelect.focus();
+  }
+
+  protected checkboxFocusDelegation(e: FocusEvent) {
+    e.stopImmediatePropagation();
+    if (this.shadowRoot?.activeElement !== this.mdCheckbox) {
+      this.removeAttribute('tabindex');
+      this.mdCheckbox?.focus();
     }
+  }
+
+
+  protected setTabIndex(e: FocusEvent): void {
+    this.setAttribute('tabindex', '0');
   }
 
   protected abstract checkbox(grouped: boolean): HTMLTemplateResult;

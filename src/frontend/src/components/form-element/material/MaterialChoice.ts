@@ -66,7 +66,7 @@ export default class MaterialChoice extends AbstractChoice {
                   <h3 class="group-header">${group.groupName}</h3>
                   ${sortedEntries.map((option, index) => html`
                     <label for=${this.getOptionId(index)}>
-                      <md-checkbox tabindex="0" class="material-field" ?required=${this.required} ?checked=${this.value.includes(option)} ?error=${this._error}
+                      <md-checkbox class="material-field" ?required=${this.required} ?checked=${this.value.includes(option)} ?error=${this._error}
                         id=${this.getOptionId(index)} .name=${this.id} value=${option} @change=${(event: Event) => this.handleCheckboxChange(event, option)}
                       ></md-checkbox>
                       ${option}
@@ -81,7 +81,6 @@ export default class MaterialChoice extends AbstractChoice {
           ${(this.options as string[]).map((option, index) => html`
             <label for=${this.getOptionId(index)}>
               <md-checkbox
-                tabindex="0"
                 class="material-field"
                 ?required=${this.required}
                 ?checked=${this.value.includes(option)}
