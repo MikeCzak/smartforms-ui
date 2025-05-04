@@ -1,5 +1,6 @@
 import { HTMLTemplateResult } from "lit";
 import AbstractSection from "./base-class/AbstractSection.js";
+import INavigator from "../../util/INavigator.js";
 
 export default interface IFormElement extends HTMLElement {
   readonly id: string;
@@ -11,6 +12,8 @@ export default interface IFormElement extends HTMLElement {
   readonly info?: string;
   addDependingField(element: IFormElement|AbstractSection): IFormElement;
   readonly metaData: Map<string, any>;
+  willBlockArrowNavigation: () => boolean;
+  setNavigator(navigator: INavigator | null): void
   /**
    * Returns the element if validation fails, null otherwise.
    */

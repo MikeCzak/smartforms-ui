@@ -30,6 +30,7 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
   protected maxLength?: number;
   protected formattedMaxLength?: number;
 
+
   constructor(params: IBaseFormElementParams) {
     super(params);
     if (params.constraints) {

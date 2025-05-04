@@ -4,6 +4,7 @@ import { property, state } from 'lit/decorators.js';
 import IFormElement from './IFormElement.js';
 import AbstractSection from './base-class/AbstractSection.js';
 import IBaseFormElementParams from './IBaseFormElementParams.js';
+import INavigator from '../../util/INavigator.js';
 
 export default abstract class AbstractFormElement extends LitElement implements IFormElement {
 
@@ -24,6 +25,9 @@ export default abstract class AbstractFormElement extends LitElement implements 
   private _dependingFields: Array<IFormElement|AbstractSection> = [];
   private _metaData: Map<string, any> = new Map<string, any>([['focusTime', 0], ['validationErrors', []]]);
   private _startTime: number|null = null;
+  protected navigator: INavigator | null = null;
+  // eslint-disable-next-line class-methods-use-this
+  public willBlockArrowNavigation: () => boolean = () => false;
   public internals_;
 
 
@@ -100,6 +104,11 @@ export default abstract class AbstractFormElement extends LitElement implements 
     return this;
   }
 
+  public setNavigator(navigator: INavigator): void {
+    console.log("navigator set:", navigator, "on", this)
+    this.navigator = navigator;
+  }
+
   static styles: CSSResultGroup = [
     css`
     md-filled-text-field, md-filled-select {
@@ -115,7 +124,6 @@ export default abstract class AbstractFormElement extends LitElement implements 
       margin-top: 0;
     }
   `]
-
 
   updated(changedProperties: Map<string, any>) {
     if (changedProperties.has('value')) {

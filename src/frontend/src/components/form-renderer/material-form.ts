@@ -38,9 +38,5 @@ export default class MaterialForm extends AbstractBaseForm {
   connectedCallback(): void {
     // eslint-disable-next-line wc/guard-super-call
     super.connectedCallback();
-
-    // for (const el in this.rawForm) {
-    //   console.log(el)
-    // }
   }
 }

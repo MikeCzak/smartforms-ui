@@ -8,6 +8,7 @@ import { InputType } from "../InputType.js";
 @customElement('smart-date')
 export default class SmartDate extends AbstractSmartElement {
 
+  public willBlockArrowNavigation = () => this.required;
   protected inputType: InputType = "date";
   @property() private year?: string;
   @property() private month?: string;
@@ -28,6 +29,19 @@ export default class SmartDate extends AbstractSmartElement {
       }
     }
   };
+
+  protected override setCustomEventListeners(): void {
+    this.addEventListener('blur', this.resumeNavigation)
+    this.addEventListener('keydown', this.resumeNavigation)
+  }
+
+  private resumeNavigation(e: FocusEvent | KeyboardEvent): void {
+    if (e instanceof KeyboardEvent && e.key !== 'Escape') {
+      return;
+    }
+    this.blur();
+    this.navigator?.resumeNavigation(this);
+  }
 
   protected handleInput(event: InputEvent): void {
     const part = event.target as HTMLInputElement;
