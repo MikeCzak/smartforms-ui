@@ -137,6 +137,7 @@ export default class SmartChoice extends AbstractSmartChoice {
       <input
         type="text"
         class="search-field"
+        autocomplete="off"
         @input=${this.handleQueryChange}
         @keydown=${this.dropdownNavHandler}
         ?required=${this.required}
@@ -248,6 +249,7 @@ export default class SmartChoice extends AbstractSmartChoice {
   }
 
   protected showDropdown(e?: FocusEvent | MouseEvent): void {
+    e?.preventDefault();
     this._searchDropdown.classList.add('open');
     this._searchField.select();
   }

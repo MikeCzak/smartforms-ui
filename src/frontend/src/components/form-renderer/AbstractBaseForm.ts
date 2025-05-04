@@ -167,7 +167,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
     event.preventDefault();
     const isValid = this.validateForm();
 
-    if (!isValid) { // TODO: remove debug not
+    if (isValid) { // TODO: remove debug not
       const form = event.target as HTMLFormElement;
       const formData = new FormData(form);
       const jsonData: { [key: string]: any } = {};
