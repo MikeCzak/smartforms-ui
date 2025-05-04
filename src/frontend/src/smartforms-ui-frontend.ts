@@ -155,6 +155,17 @@ export class SmartformsUiFrontend extends LitElement {
     super.connectedCallback();
     this.addEventListener('formSubmitted', this.submissionHandler)
     this.loadFormData();
+    if (isDev) { // TODO: remove this
+      document.addEventListener('keydown', this.getDeepActiveElement)
+    }
+  }
+
+  getDeepActiveElement(e: KeyboardEvent): void { // TODO: remove this
+    let active = document.activeElement;
+    while (active?.shadowRoot && active.shadowRoot.activeElement) {
+      active = active.shadowRoot.activeElement;
+    }
+    console.log(active);
   }
 
   disconnectedCallback(): void {
