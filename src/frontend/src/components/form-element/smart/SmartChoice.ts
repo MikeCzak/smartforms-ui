@@ -11,10 +11,12 @@ import AbstractSmartChoice from "./AbstractSmartChoice.js";
 export default class SmartChoice extends AbstractSmartChoice {
 
   @query('.search-dropdown') private _searchDropdown!: HTMLElement;
+  @query('.search-field') private _searchField!: HTMLInputElement;
 
   protected inputType: InputType = null;
   @state() private _query: string = '';
   private _searchFilter: (element: string) => boolean = (element: string) => element.toLowerCase().includes(this._query.toLowerCase());
+  private _focusedIndex: number = -1;
 
   protected radio(): HTMLTemplateResult {
     return html`
@@ -136,6 +138,7 @@ export default class SmartChoice extends AbstractSmartChoice {
         type="text"
         class="search-field"
         @input=${this.handleQueryChange}
+        @keydown=${this.dropdownNavHandler}
         ?required=${this.required}
         .value=${this.value}
         >
@@ -144,7 +147,7 @@ export default class SmartChoice extends AbstractSmartChoice {
 
           },
           () => html`
-            <ul class="search-dropdown">
+            <ul tabindex="-1" class="search-dropdown">
               ${(this.options as string[]).filter(this._searchFilter).map((option) => html`
                 <li tabindex="-1" @click=${this.handleSelection} @keydown=${this.handleSelection} class="selectable">${option}</li>
               `)}
@@ -157,12 +160,42 @@ export default class SmartChoice extends AbstractSmartChoice {
 
   private handleQueryChange(e: InputEvent): void {
     this._query = (e.target as HTMLInputElement).value;
+    this._focusedIndex = -1;
   }
 
   private handleSelection(e: MouseEvent | KeyboardEvent): void {
     e.stopPropagation()
     this.value = (e.target as HTMLElement).innerText;
     this.hideDropdown();
+  }
+
+  private dropdownNavHandler(e: KeyboardEvent): void {
+    const items = Array.from(this.renderRoot.querySelectorAll('li.selectable')) as HTMLLIElement[];
+    if (e.key === 'ArrowDown') {
+      this.showDropdown();
+      e.preventDefault();
+      this._focusedIndex = (this._focusedIndex + 1) % items.length;
+      this.updateFocus(items);
+    } else if (e.key === 'ArrowUp') {
+      this.showDropdown();
+      e.preventDefault();
+      this._focusedIndex = (this._focusedIndex - 1 + items.length) % items.length;
+      this.updateFocus(items);
+    } else if (e.key === 'Enter' && this._focusedIndex >= 0) {
+      e.preventDefault();
+      items[this._focusedIndex].click();
+    }
+  }
+
+  private updateFocus(items: HTMLLIElement[]): void {
+    items.forEach((el, i) => {
+      if (i === this._focusedIndex) {
+        el.classList.add('focused');
+        el.scrollIntoView({ block: 'nearest' });
+      } else {
+        el.classList.remove('focused');
+      }
+    });
   }
 
   private handleCheckboxChange(event: Event, option: string): void {
@@ -193,8 +226,9 @@ export default class SmartChoice extends AbstractSmartChoice {
     this.value = input.value;
   }
 
-  protected showDropdown(e: FocusEvent | MouseEvent): void {
+  protected showDropdown(e?: FocusEvent | MouseEvent): void {
     this._searchDropdown.classList.add('open');
+    this._searchField.select();
   }
 
   protected hideDropdown(e?: FocusEvent): void {
@@ -286,7 +320,7 @@ export default class SmartChoice extends AbstractSmartChoice {
 
     .search-dropdown {
       position: absolute;
-      width: calc(100% - 6px);
+      width: calc(100% + 26px);
       top: 100%;
       left: -12px;
       display: none;
@@ -302,6 +336,19 @@ export default class SmartChoice extends AbstractSmartChoice {
       &.open {
         display: block;
       }
+    }
+
+    .search-dropdown::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .search-dropdown::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .search-dropdown::-webkit-scrollbar-thumb {
+      background: rgba(var(--primary-rgb), .5);
+      border-radius: var(--smart-border-radius);
     }
 
     .selectable {

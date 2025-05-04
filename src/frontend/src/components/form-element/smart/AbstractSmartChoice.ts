@@ -116,6 +116,6 @@ export default abstract class AbstractSmartChoice extends AbstractSmartElement {
   protected abstract radio(): HTMLTemplateResult;
   protected abstract dropdown(grouped: boolean): HTMLTemplateResult;
   protected abstract searchableDropdown(grouped: boolean): HTMLTemplateResult;
-  protected abstract showDropdown(e: Event): void;
-  protected abstract hideDropdown(e: FocusEvent): void;
+  protected abstract showDropdown(e?: Event): void;
+  protected abstract hideDropdown(e?: FocusEvent): void;
 }
