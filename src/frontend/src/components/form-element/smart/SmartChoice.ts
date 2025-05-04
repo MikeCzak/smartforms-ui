@@ -1,6 +1,6 @@
 /* eslint-disable wc/guard-super-call */
 import { css, html, HTMLTemplateResult } from "lit";
-import { customElement, query, state } from "lit/decorators.js";
+import { customElement, query, queryAll } from "lit/decorators.js";
 import { when } from "lit/directives/when.js";
 import { InputType } from "../InputType.js";
 import Colors from "../../../styles/Colors.js";
@@ -12,10 +12,11 @@ export default class SmartChoice extends AbstractSmartChoice {
 
   @query('.search-dropdown') private _searchDropdown!: HTMLElement;
   @query('.search-field') private _searchField!: HTMLInputElement;
+  // eslint-disable-next-line no-undef
+  @queryAll('li.selectable') private _listItems!: NodeListOf<HTMLLIElement>
 
   protected inputType: InputType = null;
-  @state() private _query: string = '';
-  private _searchFilter: (element: string) => boolean = (element: string) => element.toLowerCase().includes(this._query.toLowerCase());
+  private _searchFilter: (element: string) => boolean = (element: string) => element.toLowerCase().includes(this.query.toLowerCase());
   private _focusedIndex: number = -1;
 
   protected radio(): HTMLTemplateResult {
@@ -181,8 +182,10 @@ export default class SmartChoice extends AbstractSmartChoice {
   }
 
   private handleQueryChange(e: InputEvent): void {
-    this._query = (e.target as HTMLInputElement).value;
+    this.showDropdown();
+    this.query = (e.target as HTMLInputElement).value;
     this._focusedIndex = -1;
+    this.updateFocus();
   }
 
   private handleSelection(e: MouseEvent | KeyboardEvent): void {
@@ -192,25 +195,26 @@ export default class SmartChoice extends AbstractSmartChoice {
   }
 
   private dropdownNavHandler(e: KeyboardEvent): void {
-    const items = Array.from(this.renderRoot.querySelectorAll('li.selectable')) as HTMLLIElement[];
+    const items = Array.from(this._listItems);
     if (e.key === 'ArrowDown') {
       this.showDropdown();
       e.preventDefault();
       this._focusedIndex = (this._focusedIndex + 1) % items.length;
-      this.updateFocus(items);
+      this.updateFocus();
     } else if (e.key === 'ArrowUp') {
       this.showDropdown();
       e.preventDefault();
       this._focusedIndex = (this._focusedIndex - 1 + items.length) % items.length;
-      this.updateFocus(items);
+      this.updateFocus();
     } else if (e.key === 'Enter' && this._focusedIndex >= 0) {
       e.preventDefault();
       items[this._focusedIndex].click();
+      this._searchField.value = items[this._focusedIndex].innerText;
     }
   }
 
-  private updateFocus(items: HTMLLIElement[]): void {
-    items.forEach((el, i) => {
+  private updateFocus(): void {
+    Array.from(this._listItems).forEach((el, i) => {
       if (i === this._focusedIndex) {
         el.classList.add('focused');
         el.scrollIntoView({ block: 'nearest' });
@@ -251,7 +255,6 @@ export default class SmartChoice extends AbstractSmartChoice {
   protected showDropdown(e?: FocusEvent | MouseEvent): void {
     e?.preventDefault();
     this._searchDropdown.classList.add('open');
-    this._searchField.select();
   }
 
   protected hideDropdown(e?: FocusEvent): void {

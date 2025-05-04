@@ -1,4 +1,4 @@
-import { query } from "lit/decorators.js";
+import { query, state } from "lit/decorators.js";
 import { HTMLTemplateResult } from "lit";
 import IChoiceElementParams from "../IChoiceElementParams.js";
 import AbstractSmartElement from "./AbstractSmartElement.js";
@@ -11,6 +11,7 @@ export default abstract class AbstractSmartChoice extends AbstractSmartElement {
   private _choiceType: "single"|"multiple";
   private _grouped: boolean;
   protected renderType!: "checkbox" | "radio" | "dropdown" | "searchableDropdown";
+  @state() protected query: string = this.value;
 
   protected renderMap: { [key: string]: (grouped: boolean) => HTMLTemplateResult } = {
     checkbox: (grouped: boolean) => this.checkbox(grouped),
@@ -80,6 +81,10 @@ export default abstract class AbstractSmartChoice extends AbstractSmartElement {
 
   protected getOptionId(index: number): string {
     return `${this.id}-${index}`;
+  }
+
+  protected override customInitializer() {
+    this.query = this.value;
   }
 
   protected override setCustomEventListeners() {

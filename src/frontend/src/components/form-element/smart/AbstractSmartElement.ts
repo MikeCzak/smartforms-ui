@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { HTMLTemplateResult, html, CSSResultGroup } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { query, state } from "lit/decorators.js";
@@ -116,10 +117,11 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     this.addEventListener('blur', this.blurHandler);
     this.addEventListener('blur', this.hideValidationHandler);
     this.setCustomEventListeners();
+    this.customInitializer();
   }
 
-  // eslint-disable-next-line class-methods-use-this
   protected setCustomEventListeners() {};
+  protected customInitializer() {};
 
   protected loadStoredData(): void {
     const stored = sessionStorage.getItem(this.id);
