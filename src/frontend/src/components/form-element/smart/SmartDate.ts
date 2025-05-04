@@ -216,6 +216,21 @@ export default class SmartDate extends AbstractSmartElement {
     }
   }
 
+  override focus(options?: {preventScroll: boolean, focusVisible: boolean}): void {
+    let firstInput;
+    if (this.required) {
+      firstInput = this.shadowRoot?.querySelector('md-outlined-select');
+    } else {
+      firstInput = this.shadowRoot?.querySelector('input');
+    }
+    if (firstInput) {
+      firstInput.focus({ preventScroll: true, ...options });
+      firstInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
   static styles = [
     AbstractSmartElement.styles,
     css`
