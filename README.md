@@ -23,7 +23,7 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 - [ ] mark erroneous fields after submit and provide said navigation
 ## Elements
 ### Choices
-- [ ] multiple
+- [x] multiple
   - <= 5 options: checkboxes
   - 5 - 15 options:
     - mobile: DL
@@ -38,7 +38,7 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
     - no default value:
       - mobile: DL
       - desktop: LB
-- [ ] both
+- [x] both
   - \> 15 options: Dropdown with search field (text input)
 ### Date entry
 - [x] dropdown for required
