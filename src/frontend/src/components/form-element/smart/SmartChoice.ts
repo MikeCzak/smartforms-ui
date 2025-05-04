@@ -143,9 +143,30 @@ export default class SmartChoice extends AbstractSmartChoice {
         .value=${this.value}
         >
         ${when(grouped,
-          () => {
+          () => html`
+            <ul tabindex="-1" class="search-dropdown">
+              ${(this.options as { groupName: string; entries: string[] }[])
+                .slice()
+                .sort((a, b) => a.groupName.localeCompare(b.groupName))
+                .map(group => {
+                  const sortedEntries = group.entries
+                  .slice()
+                  .sort((a, b) => a.localeCompare(b))
+                  .filter(this._searchFilter);
+                  if (sortedEntries.length === 0) return null;
 
-          },
+                  return html`
+                    <div class="choice-group">
+                      <li class="group-header"><strong>===== ${group.groupName} =====</strong></li>
+                      ${sortedEntries.map((option) => html`
+                        <li tabindex="-1" @click=${this.handleSelection} @keydown=${this.handleSelection} class="selectable">${option}</li>
+                      `)}
+                    </div>
+                  `;
+                })
+              }
+            </ul>
+          `,
           () => html`
             <ul tabindex="-1" class="search-dropdown">
               ${(this.options as string[]).filter(this._searchFilter).map((option) => html`
@@ -335,6 +356,13 @@ export default class SmartChoice extends AbstractSmartChoice {
 
       &.open {
         display: block;
+      }
+
+      & .group-header {
+        background-color: white;
+        text-align: center;
+        padding: 12px 0;
+        color: grey;
       }
     }
 
