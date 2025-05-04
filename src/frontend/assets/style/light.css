@@ -59,4 +59,7 @@
   --success-rgb: 31, 112, 56;
   --error: hsl(354, 66%, 37%);
   --error-rgb: 144, 11, 24;
+  --primary: rgb(26, 101, 133);
+  --primary-rgb: 26, 101, 133;
+  --dropdown-menu: hsl(199, 48%, 88%);
 }

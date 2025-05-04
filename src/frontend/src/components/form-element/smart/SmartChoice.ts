@@ -1,6 +1,6 @@
 /* eslint-disable wc/guard-super-call */
 import { css, html, HTMLTemplateResult } from "lit";
-import { customElement } from "lit/decorators.js";
+import { customElement, query, state } from "lit/decorators.js";
 import { when } from "lit/directives/when.js";
 import { InputType } from "../InputType.js";
 import Colors from "../../../styles/Colors.js";
@@ -10,26 +10,13 @@ import AbstractSmartChoice from "./AbstractSmartChoice.js";
 @customElement('smart-choice')
 export default class SmartChoice extends AbstractSmartChoice {
 
+  @query('.search-dropdown') private _searchDropdown!: HTMLElement;
+
   protected inputType: InputType = null;
-  private _grouped = !(typeof this.options[0] === 'string');
+  @state() private _query: string = '';
+  private _searchFilter: (element: string) => boolean = (element: string) => element.toLowerCase().includes(this._query.toLowerCase());
 
-  private selectChoiceType() {
-    if (this.numOptions === 1) {
-      return this.checkbox(false);
-    }
-    switch(this.choiceType) {
-      case "single":
-        if(this.numOptions < 5) {
-          return this.radio();
-        }
-        return this.dropdown(this._grouped);
-      case "multiple": return this.checkbox(this._grouped);
-
-      default: throw new Error(`Invalid choice type on Choice ${this.label}: ${this.choiceType}`);
-    }
-  }
-
-  private radio(): HTMLTemplateResult {
+  protected radio(): HTMLTemplateResult {
     return html`
       ${this.info && html`<p>${this.info}</p>`}
       ${(this.options as string[]).map((option, index) => html`
@@ -49,7 +36,7 @@ export default class SmartChoice extends AbstractSmartChoice {
       `
   };
 
-  private checkbox(grouped: boolean): HTMLTemplateResult {
+  protected checkbox(grouped: boolean): HTMLTemplateResult {
     return html`
       ${this.info && html`<p>${this.info}</p>`}
       ${when(grouped,
@@ -98,7 +85,7 @@ export default class SmartChoice extends AbstractSmartChoice {
     `
   };
 
-  private dropdown(grouped: boolean): HTMLTemplateResult {
+  protected dropdown(grouped: boolean): HTMLTemplateResult {
     return html`
       ${this.info && html`<p>${this.info}</p>`}
       <md-outlined-select
@@ -142,6 +129,42 @@ export default class SmartChoice extends AbstractSmartChoice {
     `
   }
 
+  protected searchableDropdown(grouped: boolean): HTMLTemplateResult {
+    return html`
+    <div class="searchable-dropdown">
+      <input
+        type="text"
+        class="search-field"
+        @input=${this.handleQueryChange}
+        ?required=${this.required}
+        .value=${this.value}
+        >
+        ${when(grouped,
+          () => {
+
+          },
+          () => html`
+            <ul class="search-dropdown">
+              ${(this.options as string[]).filter(this._searchFilter).map((option) => html`
+                <li tabindex="-1" @click=${this.handleSelection} @keydown=${this.handleSelection} class="selectable">${option}</li>
+              `)}
+            </ul>
+          `
+        )}
+      </div>
+    `
+  }
+
+  private handleQueryChange(e: InputEvent): void {
+    this._query = (e.target as HTMLInputElement).value;
+  }
+
+  private handleSelection(e: MouseEvent | KeyboardEvent): void {
+    e.stopPropagation()
+    this.value = (e.target as HTMLElement).innerText;
+    this.hideDropdown();
+  }
+
   private handleCheckboxChange(event: Event, option: string): void {
     const checkbox = event.target as HTMLInputElement;
     if (checkbox.checked) {
@@ -166,8 +189,16 @@ export default class SmartChoice extends AbstractSmartChoice {
   }
 
   protected override handleInput(event: InputEvent): void {
-    const mdField = event.target as any;
-    this.value = mdField.value;
+    const input = event.target as any;
+    this.value = input.value;
+  }
+
+  protected showDropdown(e: FocusEvent | MouseEvent): void {
+    this._searchDropdown.classList.add('open');
+  }
+
+  protected hideDropdown(e?: FocusEvent): void {
+    this._searchDropdown.classList.remove('open');
   }
 
   protected labelHTML(): HTMLTemplateResult {
@@ -177,8 +208,9 @@ export default class SmartChoice extends AbstractSmartChoice {
   }
 
   protected inputHTML(): HTMLTemplateResult {
+    const renderFunction = this.renderMap[this.renderType];
     return html`
-      ${this.selectChoiceType()}
+      ${renderFunction(this.grouped)}
     `
   }
 
@@ -246,6 +278,40 @@ export default class SmartChoice extends AbstractSmartChoice {
       border-image: linear-gradient(to right, var(--md-sys-color-outline), transparent);
       border-image-slice: 1;
     }
+
+    .searchable-dropdown {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-dropdown {
+      position: absolute;
+      width: calc(100% - 6px);
+      top: 100%;
+      left: -12px;
+      display: none;
+      background: var(--dropdown-menu);
+      z-index: 2;
+      padding: 16px 0;
+      list-style-type: none;
+      border-radius: var(--smart-border-radius);
+      max-height: 300px;
+      overflow-y: scroll;
+      box-shadow: 0 0 6px rgba(0, 0, 0, .5);
+
+      &.open {
+        display: block;
+      }
+    }
+
+    .selectable {
+      padding: 16px;
+      cursor: pointer;
+
+      &:hover, &.focused {
+        background-color: rgba(var(--primary-rgb), .5);
+      }
+    }
     `
   ]
 
@@ -265,3 +331,4 @@ export default class SmartChoice extends AbstractSmartChoice {
     `
   }
 }
+

@@ -115,11 +115,11 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     this.addEventListener('focus', this.focusHandler);
     this.addEventListener('blur', this.blurHandler);
     this.addEventListener('blur', this.hideValidationHandler);
-    this.setTabIndexForSafari();
+    this.setCustomEventListeners();
   }
 
   // eslint-disable-next-line class-methods-use-this
-  protected setTabIndexForSafari() {};
+  protected setCustomEventListeners() {};
 
   protected loadStoredData(): void {
     const stored = sessionStorage.getItem(this.id);
@@ -148,7 +148,11 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     this.removeEventListener('focus', this.focusHandler);
     this.removeEventListener('blur', this.blurHandler);
     this.removeEventListener('blur', this.hideValidationHandler);
+    this.removeCustomEventListeners();
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  protected removeCustomEventListeners() {};
 
   protected override focusHandler(e: FocusEvent): void {
     this.startTime = Date.now();
