@@ -15,6 +15,13 @@ export default class SmartChoice extends AbstractSmartChoice {
   // eslint-disable-next-line no-undef
   @queryAll('li.selectable') private _listItems!: NodeListOf<HTMLLIElement>
 
+  public willBlockArrowNavigation = () => {
+    switch(this.renderType) {
+      case "dropdown": return true;
+      case "searchableDropdown": return true;
+      default: return false;
+    }
+  };
   protected inputType: InputType = null;
   private _searchFilter: (element: string) => boolean = (element: string) => element.toLowerCase().includes(this.query.toLowerCase());
   private _focusedIndex: number = -1;
@@ -196,7 +203,7 @@ export default class SmartChoice extends AbstractSmartChoice {
   }
 
   private dropdownNavHandler(e: KeyboardEvent): void {
-    e.stopPropagation();
+    // e.stopPropagation();
     const items = Array.from(this._listItems);
     if (e.key === 'ArrowDown') {
       this.showDropdown();
@@ -249,6 +256,38 @@ export default class SmartChoice extends AbstractSmartChoice {
         errorMessages.push('Please select an option.');
       }
     }
+  }
+
+  override focus(options?: {preventScroll: boolean, focusVisible: boolean}): void {
+    let firstInput;
+    // eslint-disable-next-line default-case
+    switch(this.renderType) {
+      case "checkbox": firstInput = this.shadowRoot?.querySelector('md-checkbox'); break;
+      case "radio": firstInput = this.shadowRoot?.querySelector('md-radio'); break;
+      case "dropdown": firstInput = this.shadowRoot?.querySelector('md-outlined-select'); break;
+      case "searchableDropdown": firstInput = this.shadowRoot?.querySelector('input'); break;
+    }
+
+    if (firstInput) {
+      firstInput.focus({ preventScroll: true, ...options });
+      firstInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  protected override setCustomEventListeners(): void {
+    this.addEventListener('blur', this.resumeNavigation)
+    this.addEventListener('keydown', this.resumeNavigation)
+  }
+
+  private resumeNavigation(e: FocusEvent | KeyboardEvent): void {
+    if (e instanceof KeyboardEvent && e.key !== 'Escape') {
+      return;
+    }
+    console.log("resume")
+    this.blur();
+    this.navigator?.resumeNavigation(this);
   }
 
   protected override handleInput(event: InputEvent): void {
