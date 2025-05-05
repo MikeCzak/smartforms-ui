@@ -12,7 +12,7 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 # Functional
 ## Form
 ### Form Navigation
-- [ ] navigate erroneous fields with arrow keys up/down
+- [x] navigate erroneous fields with arrow keys up/down
 - [x] deactivate submit button on submission
 ### Required Fields
 - [x] use * and color
@@ -20,7 +20,7 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 - [x] put only above, not floating
 ### Validation and Feedback
 - [x] embedded instant validation
-- [ ] mark erroneous fields after submit and provide said navigation
+- [x] mark erroneous fields after submit and provide said navigation
 ## Elements
 ### Choices
 - [x] multiple
