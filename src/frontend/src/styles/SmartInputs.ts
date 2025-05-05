@@ -98,6 +98,10 @@ export default class SmartInputs {
     background: linear-gradient(340deg, rgba(var(--error-rgb), .4) 0%, transparent 70px);
   }
 
+  .wrapper.invalid .label {
+    color: var(--error);
+  }
+
   .content {
     display: flex;
     flex-direction: column;
@@ -180,7 +184,7 @@ export default class SmartInputs {
 
   .lock-state-marker {
     position: absolute;
-    border-color: red;
+    border-color: var(--error);
     border-width: 2px;
     width: 20px;
     height: 20px;

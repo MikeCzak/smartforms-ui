@@ -62,4 +62,5 @@
   --primary: rgb(26, 101, 133);
   --primary-rgb: 26, 101, 133;
   --dropdown-menu: hsl(199, 48%, 88%);
+  --lock-state-marker-color: rgb(146, 8, 8);
 }
