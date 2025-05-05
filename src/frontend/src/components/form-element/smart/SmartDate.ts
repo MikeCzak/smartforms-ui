@@ -40,7 +40,7 @@ export default class SmartDate extends AbstractSmartElement {
       return;
     }
     this.blur();
-    this.navigator?.resumeNavigation(this);
+    this._navigator?.resumeNavigation(this);
   }
 
   protected handleInput(event: InputEvent): void {

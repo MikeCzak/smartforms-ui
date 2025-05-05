@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable wc/guard-super-call */
 import { property, customElement } from 'lit/decorators.js';
 import { css, html } from 'lit';
@@ -23,14 +24,14 @@ export default class SmartForm extends AbstractBaseForm {
   public validateForm(): boolean {
     const invalidElements = [];
     for (const element of this._formElements) {
-      if (element.validate()) {
+      if (!element.isValid()) {
        invalidElements.push(element);
       }
     }
     if (invalidElements.length === 0) {
       return true;
     }
-    this._formNavigator = new InvalidFormNavigator(invalidElements);
+    this._formNavigator = new InvalidFormNavigator(this._formElements);
     this._formNavigator.activate();
     this._formNavigator.focusFirst();
     return false;
@@ -43,6 +44,14 @@ export default class SmartForm extends AbstractBaseForm {
   disconnectedCallback(): void {
     super.disconnectedCallback()
     this._formNavigator?.deactivate();
+  }
+
+  protected override postParsingHook(): void {
+    const len = this._formElements.length;
+    for(const [idx, el] of this._formElements.entries()) {
+      el.next = this._formElements[(idx + 1) % len]
+      el.prev = this._formElements[(idx - 1 + len) % len]
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this

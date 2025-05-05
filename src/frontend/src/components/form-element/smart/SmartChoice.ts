@@ -19,6 +19,7 @@ export default class SmartChoice extends AbstractSmartChoice {
     switch(this.renderType) {
       case "dropdown": return true;
       case "searchableDropdown": return true;
+      case "radio": return true;
       default: return false;
     }
   };
@@ -285,9 +286,8 @@ export default class SmartChoice extends AbstractSmartChoice {
     if (e instanceof KeyboardEvent && e.key !== 'Escape') {
       return;
     }
-    console.log("resume")
     this.blur();
-    this.navigator?.resumeNavigation(this);
+    this._navigator?.resumeNavigation(this);
   }
 
   protected override handleInput(event: InputEvent): void {

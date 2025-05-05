@@ -236,8 +236,10 @@ export default class SmartInputs {
     left: var(--marker-distance-n);
     border-top-style: solid;
     border-left-style: solid;
-    animation: lock-tl var(--lock-state-animation-duration) ease-in forwards;
-    animation-delay: var(--lock-state-animation-delay);
+    &.show {
+      animation: lock-tl var(--lock-state-animation-duration) ease-in forwards;
+      animation-delay: var(--lock-state-animation-delay);
+    }
     &.release {
       animation: release-tl var(--release-state-animation-duration) ease-out forwards;
       animation-delay: 0;
@@ -249,8 +251,10 @@ export default class SmartInputs {
     right: var(--marker-distance-n);
     border-top-style: solid;
     border-right-style: solid;
-    animation: lock-tr var(--lock-state-animation-duration) ease-in forwards;
-    animation-delay: var(--lock-state-animation-delay);
+    &.show {
+      animation: lock-tr var(--lock-state-animation-duration) ease-in forwards;
+      animation-delay: var(--lock-state-animation-delay);
+    }
     &.release {
       animation: release-tr var(--release-state-animation-duration) ease-out forwards;
       animation-delay: 0;
@@ -262,8 +266,10 @@ export default class SmartInputs {
     right: var(--marker-distance-n);
     border-bottom-style: solid;
     border-right-style: solid;
-    animation: lock-br var(--lock-state-animation-duration) ease-in forwards;
-    animation-delay: var(--lock-state-animation-delay);
+    &.show {
+      animation: lock-br var(--lock-state-animation-duration) ease-in forwards;
+      animation-delay: var(--lock-state-animation-delay);
+    }
     &.release {
       animation: release-br var(--release-state-animation-duration) ease-out forwards;
       animation-delay: 0;
@@ -275,8 +281,10 @@ export default class SmartInputs {
     left: var(--marker-distance-n);
     border-bottom-style: solid;
     border-left-style: solid;
-    animation: lock-bl var(--lock-state-animation-duration) ease-in forwards;
-    animation-delay: var(--lock-state-animation-delay);
+    &.show {
+      animation: lock-bl var(--lock-state-animation-duration) ease-in forwards;
+      animation-delay: var(--lock-state-animation-delay);
+    }
     &.release {
       animation: release-bl var(--release-state-animation-duration) ease-out forwards;
       animation-delay: 0;

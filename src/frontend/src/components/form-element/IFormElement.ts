@@ -10,13 +10,18 @@ export default interface IFormElement extends HTMLElement {
   readonly originalName: string;
   readonly label: string;
   readonly info?: string;
+  next: IFormElement;
+  prev: IFormElement
   addDependingField(element: IFormElement|AbstractSection): IFormElement;
   readonly metaData: Map<string, any>;
   willBlockArrowNavigation: () => boolean;
+  readonly navigator: INavigator | null;
   setNavigator(navigator: INavigator | null): void
+  readonly scrollTop: number;
   /**
    * Returns the element if validation fails, null otherwise.
    */
   validate(): IFormElement | null;
+  isValid(): boolean;
   render(): HTMLTemplateResult
 }

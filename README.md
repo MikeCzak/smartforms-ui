@@ -72,6 +72,7 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 > - [] include range input(s)
 > - [x] regex pattern for specific format restrictions
 > - [x] chunk size for long data
+> - [] FIX INVALID NAV SHAKING (tab problem)
 #### possible chunked data
 | Example | Group Length | Format Example |
 |-|-|-|
@@ -89,6 +90,6 @@ License Keys (generic) | Often 5 | ABCDE-FGHIJ-KLMNO-PQRST
 > - [x] provided personal data (<span style="color: red">improve!</span>)
 >
 > ### Helpers
-> - ~~generate unique id from label for html id~~
-> - visitor for "fields exist that depend on this field" for toggle decision (maybe array is enough since dependsOn is in the interface)
-> - invalidIterator for post-submit navigation
+> [x] generate unique id from label for html id
+> [] visitor for "fields exist that depend on this field" for toggle decision (maybe array is enough since dependsOn is in the interface)
+> [x] invalidIterator for post-submit navigation

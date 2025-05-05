@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { LitElement, html, css, HTMLTemplateResult, CSSResultGroup } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
 import { choose } from 'lit/directives/choose.js';
@@ -15,23 +16,15 @@ import '../submission-error.js';
 export default abstract class AbstractBaseForm extends LitElement implements IForm {
 
   @property({attribute: false}) public formData: { [key: string]: any } = {};
-
   @property() public abstract formType: string;
-
   @property() public formTitle: string = '';
-
   @property({attribute: false}) public internalFormId!: string;
-
   @query('#form #elements') form!: HTMLFormElement;
-
   @state() private _submissionSuccessful: boolean|null = null;
-
   @state() private _submitted: boolean = false;
 
   protected abstract _formElementFactory: AbstractFormElementFactory;
-
   protected _formSections: AbstractSection[] = [];
-
   protected _formElements: IFormElement[] = [];
 
 
@@ -92,6 +85,8 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
         throw new Error("Form element not found in the DOM");
       }
     }
+
+    this.postParsingHook();
   }
 
   static styles: CSSResultGroup = css`
@@ -198,7 +193,6 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
   protected postSubmitCallback(): void {
     this.dispatchEvent(new CustomEvent('formSubmitted', {bubbles: true, composed: true}));
     sessionStorage.clear();
@@ -217,4 +211,5 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
   abstract validateForm(): boolean;
 
   protected abstract getSubmissionOverlay(): HTMLTemplateResult;
+  protected postParsingHook():void {};
 }

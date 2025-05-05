@@ -25,7 +25,11 @@ export default abstract class AbstractFormElement extends LitElement implements 
   private _dependingFields: Array<IFormElement|AbstractSection> = [];
   private _metaData: Map<string, any> = new Map<string, any>([['focusTime', 0], ['validationErrors', []]]);
   private _startTime: number|null = null;
-  protected navigator: INavigator | null = null;
+  private _topOffset: number = this.scrollTop;
+  protected _navigator: INavigator | null = null;
+  public next!: IFormElement;
+  public prev!: IFormElement;
+
   // eslint-disable-next-line class-methods-use-this
   public willBlockArrowNavigation: () => boolean = () => false;
   public internals_;
@@ -104,9 +108,16 @@ export default abstract class AbstractFormElement extends LitElement implements 
     return this;
   }
 
+  get navigator(): INavigator | null {
+    return this._navigator;
+  }
+
   public setNavigator(navigator: INavigator): void {
-    console.log("navigator set:", navigator, "on", this)
-    this.navigator = navigator;
+    this._navigator = navigator;
+  }
+
+  get scrollTop(): number {
+    return this._topOffset;
   }
 
   static styles: CSSResultGroup = [
@@ -211,6 +222,10 @@ export default abstract class AbstractFormElement extends LitElement implements 
       return this;
     }
     return null;
+  }
+
+  public isValid(): boolean {
+    return this.validate() === null;
   }
 
   private static getValidityErrors(validity: ValidityState): string[] {
