@@ -39,7 +39,6 @@ export default class InvalidFormNavigator implements INavigator {
     }
 
     this._released = false;
-    e.preventDefault();
   }
 
   public focusFirst(): void {
