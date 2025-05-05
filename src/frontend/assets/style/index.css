@@ -2,6 +2,15 @@
   --smart-border-radius: 8px;
   --smart-border-width: 1px;
   --smart-outline-width: 1px;
+  --marker-distance-n: -20px;
+  --marker-distance-p: 20px;
+  --lock-state-animation-duration: .2s;
+  --lock-state-animation-delay: 0s;
+  --release-state-animation-duration: .4s;
+  --marker-animation-start-distance-n: -500px;
+  --marker-animation-start-distance-p: 500px;
+  --marker-animation-end-distance-n: -50px;
+  --marker-animation-end-distance-p: 50px;
 }
 
 html,

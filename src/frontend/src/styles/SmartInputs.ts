@@ -177,5 +177,106 @@ export default class SmartInputs {
     padding: 4px 12px 0 12px;
     height: 16px;
   }
+
+  .lock-state-marker {
+    position: absolute;
+    border-color: red;
+    border-width: 2px;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+  }
+
+  @keyframes lock-tl {
+    from {opacity: 0; transform: translate(var(--marker-animation-start-distance-n), var(--marker-animation-start-distance-n))}
+    to {opacity: 1; transform: translate(0, 0)}
+  }
+
+  @keyframes lock-tr {
+    from {opacity: 0; transform: translate(var(--marker-animation-start-distance-p), var(--marker-animation-start-distance-n))}
+    to {opacity: 1; transform: translate(0, 0)}
+  }
+
+  @keyframes lock-bl {
+    from {opacity: 0; transform: translate(var(--marker-animation-start-distance-n), var(--marker-animation-start-distance-p))}
+    to {opacity: 1; transform: translate(0, 0)}
+  }
+
+  @keyframes lock-br {
+    from {opacity: 0; transform: translate(var(--marker-animation-start-distance-p), var(--marker-animation-start-distance-p))}
+    to {opacity: 1; transform: translate(0, 0)}
+  }
+
+  @keyframes release-tl {
+    from {opacity: 1; transform: translate(0, 0)}
+    to {opacity: 0; transform: translate(var(--marker-animation-end-distance-n), var(--marker-animation-end-distance-n))}
+  }
+
+  @keyframes release-tr {
+    from {opacity: 1; transform: translate(0, 0)}
+    to {opacity: 0; transform: translate(var(--marker-animation-end-distance-p), var(--marker-animation-end-distance-n))}
+  }
+
+  @keyframes release-bl {
+    from {opacity: 1; transform: translate(0, 0)}
+    to {opacity: 0; transform: translate(var(--marker-animation-end-distance-n), var(--marker-animation-end-distance-p))}
+  }
+
+  @keyframes release-br {
+    from {opacity: 1; transform: translate(0, 0)}
+    to {opacity: 0; transform: translate(var(--marker-animation-end-distance-p), var(--marker-animation-end-distance-p))}
+  }
+
+  .lock-state-marker.tl {
+    top: var(--marker-distance-n);
+    left: var(--marker-distance-n);
+    border-top-style: solid;
+    border-left-style: solid;
+    animation: lock-tl var(--lock-state-animation-duration) ease-in forwards;
+    animation-delay: var(--lock-state-animation-delay);
+    &.release {
+      animation: release-tl var(--release-state-animation-duration) ease-out forwards;
+      animation-delay: 0;
+    }
+  }
+
+  .lock-state-marker.tr {
+    top: var(--marker-distance-n);
+    right: var(--marker-distance-n);
+    border-top-style: solid;
+    border-right-style: solid;
+    animation: lock-tr var(--lock-state-animation-duration) ease-in forwards;
+    animation-delay: var(--lock-state-animation-delay);
+    &.release {
+      animation: release-tr var(--release-state-animation-duration) ease-out forwards;
+      animation-delay: 0;
+    }
+  }
+
+  .lock-state-marker.br {
+    bottom: var(--marker-distance-n);
+    right: var(--marker-distance-n);
+    border-bottom-style: solid;
+    border-right-style: solid;
+    animation: lock-br var(--lock-state-animation-duration) ease-in forwards;
+    animation-delay: var(--lock-state-animation-delay);
+    &.release {
+      animation: release-br var(--release-state-animation-duration) ease-out forwards;
+      animation-delay: 0;
+    }
+  }
+
+  .lock-state-marker.bl {
+    bottom: var(--marker-distance-n);
+    left: var(--marker-distance-n);
+    border-bottom-style: solid;
+    border-left-style: solid;
+    animation: lock-bl var(--lock-state-animation-duration) ease-in forwards;
+    animation-delay: var(--lock-state-animation-delay);
+    &.release {
+      animation: release-bl var(--release-state-animation-duration) ease-out forwards;
+      animation-delay: 0;
+    }
+  }
   `
 }

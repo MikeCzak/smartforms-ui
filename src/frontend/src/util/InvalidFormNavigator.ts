@@ -50,7 +50,7 @@ export default class InvalidFormNavigator implements INavigator {
   private focusNext(): void {
     this._invalidItems[this._current].blur();
     this._current = (this._current + 1 + this._numItems) % this._numItems;
-    this._invalidItems[this._current].focus({ preventScroll: true})
+    this._invalidItems[this._current].focus({ preventScroll: false})
     if (this._invalidItems[this._current].willBlockArrowNavigation()) {
       this.pauseNavigation();
     }
@@ -59,7 +59,7 @@ export default class InvalidFormNavigator implements INavigator {
   private focusPrev(): void {
     this._invalidItems[this._current].blur();
     this._current = (this._current - 1 + this._numItems) % this._numItems;
-    this._invalidItems[this._current].focus({ preventScroll: true})
+    this._invalidItems[this._current].focus({ preventScroll: false})
     if (this._invalidItems[this._current].willBlockArrowNavigation()) {
       this.pauseNavigation();
     }
@@ -68,11 +68,38 @@ export default class InvalidFormNavigator implements INavigator {
   public resumeNavigation(releasingElement: IFormElement) {
     this._paused = false;
     releasingElement.setNavigator(null);
+    this.releaseLockState(releasingElement);
   }
 
   private pauseNavigation() {
     this._paused = true;
     this._invalidItems[this._current].setNavigator(this);
+    this.highlightLockState(this._invalidItems[this._current]);
+  }
+
+  private highlightLockState(element: IFormElement): void {
+    const markerTL = document.createElement('div');
+    const markerTR = document.createElement('div');
+    const markerBR = document.createElement('div');
+    const markerBL = document.createElement('div');
+    markerTL.classList.add("tl");
+    markerTR.classList.add("tr");
+    markerBL.classList.add("bl");
+    markerBR.classList.add("br");
+    [markerTL, markerTR, markerBR, markerBL].forEach(el => {
+      el.classList.add("lock-state-marker");
+      element.shadowRoot?.appendChild(el);
+    });
+  }
+
+  private releaseLockState(element: IFormElement) { // TODO: fix this
+    const markers = element.shadowRoot?.querySelectorAll('.lock-state-marker');
+    markers?.forEach(marker => {
+      marker.classList.add("release");
+      setTimeout(() => {
+        element.shadowRoot?.removeChild(marker)
+      }, 500);
+    });
   }
 
 }
