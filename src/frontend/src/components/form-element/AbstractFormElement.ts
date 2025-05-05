@@ -169,7 +169,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
   }
 
   protected validateMinLength(errors: { [key: string]: boolean; }, errorMessages: string[]) {
-    if (this.constraints?.minLength !== undefined && this.value.length < this.constraints.minLength) {
+    if (this.constraints?.minLength !== undefined && this.value.length > 0 && this.value.length < this.constraints.minLength) {
       errors.tooShort = true;
       errorMessages.push(`Value must be at least ${this.constraints.minLength} characters long.`);
     }
