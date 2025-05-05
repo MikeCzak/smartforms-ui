@@ -8,7 +8,6 @@ export default class InvalidFormNavigator implements INavigator {
   private _first: IFormElement;
   private _current: number = 0;
   private _paused = false;
-  private _released: boolean = false;
 
   constructor(invalidItems: IFormElement[]) {
     this._invalidItems = invalidItems;
@@ -38,7 +37,6 @@ export default class InvalidFormNavigator implements INavigator {
       this.focusPrev();
     }
 
-    this._released = false;
   }
 
   public focusFirst(): void {
