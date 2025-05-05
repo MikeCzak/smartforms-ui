@@ -204,7 +204,7 @@ export default class SmartDate extends AbstractSmartElement {
   protected delegateFocusToInput(e: Event) {
     const path = e.composedPath() as HTMLElement[];
 
-    const clickedInput = path.find(el => el.tagName === 'INPUT');
+    const clickedInput = path.find(el => el.tagName === 'MD-OUTLINED-SELECT');
     let firstInput;
     if (!clickedInput) {
       if (this.required) {
