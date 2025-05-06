@@ -17,6 +17,7 @@ export default class InvalidFormNavigator implements INavigator {
       el.setNavigator(this);
       el.addEventListener('focus', el.navigator!.handleElementFocus.bind(this), true);
       this.attachMarkers(el);
+      console.log(el.tagName, el.yPos)
     });
   }
 

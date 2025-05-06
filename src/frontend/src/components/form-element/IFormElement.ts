@@ -17,7 +17,7 @@ export default interface IFormElement extends HTMLElement {
   willBlockArrowNavigation: () => boolean;
   readonly navigator: INavigator | null;
   setNavigator(navigator: INavigator | null): void
-  readonly scrollTop: number;
+  readonly yPos: number | undefined;
   /**
    * Returns the element if validation fails, null otherwise.
    */

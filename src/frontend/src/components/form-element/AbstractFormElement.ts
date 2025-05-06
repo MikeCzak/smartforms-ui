@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { css, CSSResultGroup, HTMLTemplateResult, LitElement } from 'lit';
+import { css, CSSResultGroup, HTMLTemplateResult, LitElement, PropertyValues } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import IFormElement from './IFormElement.js';
 import AbstractSection from './base-class/AbstractSection.js';
@@ -25,7 +25,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
   private _dependingFields: Array<IFormElement|AbstractSection> = [];
   private _metaData: Map<string, any> = new Map<string, any>([['focusTime', 0], ['validationErrors', []]]);
   private _startTime: number|null = null;
-  private _topOffset: number = this.scrollTop;
+  protected _yPos?: number;
   protected _navigator: INavigator | null = null;
   public next!: IFormElement;
   public prev!: IFormElement;
@@ -52,6 +52,10 @@ export default abstract class AbstractFormElement extends LitElement implements 
 
   protected _attachShadow(): void {
     this.attachShadow({ mode: 'open', delegatesFocus: true });
+  }
+
+  protected firstUpdated(_changedProperties: PropertyValues): void {
+    this._yPos = this.getYPosition();
   }
 
   public get id(): string {
@@ -116,8 +120,8 @@ export default abstract class AbstractFormElement extends LitElement implements 
     this._navigator = navigator;
   }
 
-  get scrollTop(): number {
-    return this._topOffset;
+  get yPos(): number | undefined {
+    return this._yPos;
   }
 
   static styles: CSSResultGroup = [
@@ -235,7 +239,6 @@ export default abstract class AbstractFormElement extends LitElement implements 
     return keys.filter(k => validity[k as keyof ValidityState] === true);
   }
 
-
   protected reportValidity(validationMessage: string) {
     this._error = true;
     this._errorText = validationMessage;
@@ -269,6 +272,12 @@ export default abstract class AbstractFormElement extends LitElement implements 
       const newTime = prevTime + Date.now() - this._startTime;
       this._metaData.set('focusTime', newTime);
     }
+  }
+
+  protected getYPosition(): number | undefined {
+    const top = this.shadowRoot?.querySelector('input')?.getBoundingClientRect().top;
+    const scrollOffset = window.scrollY || document.documentElement.scrollTop;
+    return top! + scrollOffset;
   }
 
   abstract render(): HTMLTemplateResult
