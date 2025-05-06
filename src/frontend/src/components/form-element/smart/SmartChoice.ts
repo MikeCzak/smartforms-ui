@@ -27,6 +27,7 @@ export default class SmartChoice extends AbstractSmartChoice {
   private _searchFilter: (element: string) => boolean = (element: string) => element.toLowerCase().includes(this.query.toLowerCase());
   private _focusedIndex: number = -1;
   private _checkBoxesTabbable = false;
+  private _isFocusingInternally = false;
 
   protected radio(): HTMLTemplateResult {
     return html`
@@ -278,16 +279,30 @@ export default class SmartChoice extends AbstractSmartChoice {
   }
 
   protected override setCustomEventListeners(): void {
-    this.addEventListener('blur', this.resumeNavigation)
+    this.addEventListener('blur', this.resumeNavigation, true)
+    this.addEventListener('focusin', this.onFocusIn, true);
     this.addEventListener('keydown', this.resumeNavigation)
   }
 
-  private resumeNavigation(e: FocusEvent | KeyboardEvent): void {
-    if (e instanceof KeyboardEvent && e.key !== 'Escape') {
-      return;
+  private onFocusIn(e: FocusEvent): void {
+    this._isFocusingInternally = true;
+  }
+
+  private resumeNavigation(e: UIEvent): void {
+    if (e instanceof KeyboardEvent && e.key === 'Escape') {
+      this.blur();
+      this._navigator?.resumeNavigation(this);
+    } else if (e instanceof FocusEvent) {
+      this._isFocusingInternally = false;
+
+      setTimeout(() => {
+        const root = this.shadowRoot;
+        const active = root!.activeElement;
+        if (!this.shadowRoot!.contains(active)) {
+          this._navigator?.resumeNavigation(this);
+        }
+      }, 0);
     }
-    this.blur();
-    this._navigator?.resumeNavigation(this);
   }
 
   protected override handleInput(event: InputEvent): void {

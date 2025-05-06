@@ -15,9 +15,10 @@ export default class InvalidFormNavigator implements INavigator {
     this._current = this._first;
     this._elements.forEach(el => {
       el.setNavigator(this);
-      el.addEventListener('focus', el.navigator!.handleElementFocus.bind(this), true);
+      el.addEventListener('focus', this.handleElementFocus.bind(this), true);
       this.attachMarkers(el);
       console.log(el.tagName, el.yPos)
+      // TODO: nav-blocking elements still buggy
     });
   }
 
@@ -45,41 +46,44 @@ export default class InvalidFormNavigator implements INavigator {
   }
 
   public focusFirst(): void {
-    this._current = this._first;
-    this._first.focus({ preventScroll: this._preventScroll });
-    if (this._current.willBlockArrowNavigation()) {
+    let current = this._first;
+    current = this._first;
+    while (current.isValid()) { current = current.next };
+    current.focus({ preventScroll: this._preventScroll });
+    if (current.willBlockArrowNavigation()) {
       this.pauseNavigation();
     }
   }
 
   private focusNext(): void {
-    this._current.blur();
-    do { this._current = this._current.next } while (this._current.isValid());
-    this._current.focus({ preventScroll: this._preventScroll})
-    if (this._current.willBlockArrowNavigation()) {
+    let current = this._current;
+    current.blur();
+    do { current = current.next } while (current.isValid());
+    current.focus({ preventScroll: this._preventScroll})
+    if (current.willBlockArrowNavigation()) {
       this.pauseNavigation();
     }
-    console.log(this._current, "after focusNext")
   }
 
   private focusPrev(): void {
-    this._current.blur();
-    do { this._current = this._current.prev } while (this._current.isValid());
-    this._current.focus({ preventScroll: this._preventScroll})
-    if (this._current.willBlockArrowNavigation()) {
+    let current = this._current;
+    current.blur();
+    do { current = current.prev } while (current.isValid());
+    current.focus({ preventScroll: this._preventScroll})
+    if (current.willBlockArrowNavigation()) {
       this.pauseNavigation();
     }
-    console.log(this._current, "after focusPrev")
   }
 
   public resumeNavigation(releasingElement: IFormElement) {
     this._paused = false;
-    this.releaseLockState(releasingElement);
+    if (releasingElement.willBlockArrowNavigation()) {
+      this.releaseLockState(releasingElement);
+    }
   }
 
   private pauseNavigation() {
     this._paused = true;
-    this.highlightLockState(this._current);
   }
 
   public handleElementFocus(e: FocusEvent): void {
@@ -88,11 +92,13 @@ export default class InvalidFormNavigator implements INavigator {
   }
 
   public setCurrent(element: IFormElement): void {
-    console.log(element, "sets current")
-    this._current = element;
-    if (this._current.willBlockArrowNavigation()) {
+    if (element.willBlockArrowNavigation()) {
       this.pauseNavigation();
+      if (this._current !== element) {
+        this.highlightLockState(element);
+      };
     }
+    this._current = element;
   }
 
   private attachMarkers(element: IFormElement): void {
