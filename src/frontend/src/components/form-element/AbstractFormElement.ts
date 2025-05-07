@@ -275,7 +275,7 @@ export default abstract class AbstractFormElement extends LitElement implements 
   }
 
   protected getYPosition(): number | undefined {
-    const top = this.shadowRoot?.querySelector('input')?.getBoundingClientRect().top;
+    const {top} = this.getBoundingClientRect();
     const scrollOffset = window.scrollY || document.documentElement.scrollTop;
     return top! + scrollOffset;
   }

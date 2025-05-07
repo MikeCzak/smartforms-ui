@@ -291,6 +291,7 @@ export default class SmartChoice extends AbstractSmartChoice {
   private resumeNavigation(e: UIEvent): void {
     if (e instanceof KeyboardEvent && e.key === 'Escape') {
       this.blur();
+      setTimeout(() => document.body.focus(), 0);
       this._navigator?.resumeNavigation(this);
     } else if (e instanceof FocusEvent) {
       this._isFocusingInternally = false;

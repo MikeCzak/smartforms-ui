@@ -145,9 +145,12 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
         [true, () => html`<thank-you .internalFormId=${this.internalFormId}></thank-you>`],
         [false, () => html`<submission-error></submission-error>`],
       ])}
+      ${this.customFormComponents()}
     `
     ;
   }
+
+  protected customFormComponents() {};
 
   connectedCallback(): void {
     super.connectedCallback();
