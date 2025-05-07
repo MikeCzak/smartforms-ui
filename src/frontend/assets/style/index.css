@@ -7,8 +7,8 @@
   --lock-state-animation-duration: .2s;
   --lock-state-animation-delay: 0s;
   --release-state-animation-duration: .4s;
-  --marker-animation-start-distance-n: -500px;
-  --marker-animation-start-distance-p: 500px;
+  --marker-animation-start-distance-n: -200px;
+  --marker-animation-start-distance-p: 200px;
   --marker-animation-end-distance-n: -50px;
   --marker-animation-end-distance-p: 50px;
 }

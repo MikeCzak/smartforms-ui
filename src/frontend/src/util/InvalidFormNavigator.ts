@@ -17,8 +17,7 @@ export default class InvalidFormNavigator implements INavigator {
       el.setNavigator(this);
       el.addEventListener('focus', this.handleElementFocus.bind(this), true);
       this.attachMarkers(el);
-      console.log(el.tagName, el.yPos)
-      // TODO: nav-blocking elements still buggy
+      // TODO: nav-blocking elements still buggy in firefox
     });
   }
 
@@ -31,8 +30,6 @@ export default class InvalidFormNavigator implements INavigator {
   }
 
   private handleKeydown = (e: KeyboardEvent): void => {
-    if (e.key === 'Escape') return;
-    if (e.key === 'Tab') return;
 
     if (this._paused) return;
 
