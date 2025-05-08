@@ -164,34 +164,45 @@ export default class SmartChoice extends AbstractSmartChoice {
         ${when(grouped,
           () => html`
             <ul tabindex="-1" class="search-dropdown">
-              ${(this.options as { groupName: string; entries: string[] }[])
-                .slice()
-                .sort((a, b) => a.groupName.localeCompare(b.groupName))
-                .map(group => {
+              ${(() => {
+                const groups = (this.options as { groupName: string; entries: string[] }[])
+                  .slice()
+                  .sort((a, b) => a.groupName.localeCompare(b.groupName));
+
+                const renderedGroups = groups.map(group => {
                   const allEntriesSorted = group.entries.slice().sort((a, b) => a.localeCompare(b));
                   const filteredEntries = allEntriesSorted.filter(entry => this.groupEntryFilter(group.groupName, entry));
-
                   if (filteredEntries.length === 0) return null;
-
                   return html`
                     <div class="choice-group">
                       <li class="group-header"><strong>===== ${group.groupName} =====</strong></li>
-                      ${filteredEntries.map((option) => html`
+                      ${filteredEntries.map(option => html`
                         <li tabindex="-1" @click=${this.handleSelection} @keydown=${this.handleSelection} class="selectable">${option}</li>
                       `)}
                     </div>
                   `;
-                })
-              }
+                }).filter(Boolean);
+
+                return renderedGroups.length > 0
+                  ? renderedGroups
+                  : html`<li class="no-matches">No matching entries found</li>`;
+              })()}
             </ul>
           `,
-          () => html`
-            <ul tabindex="-1" class="search-dropdown">
-              ${(this.options as string[]).filter(this._searchFilter).map((option) => html`
-                <li tabindex="-1" @click=${this.handleSelection} @keydown=${this.handleSelection} class="selectable">${option}</li>
-              `)}
-            </ul>
-          `
+          () => {
+            const filteredOptions = (this.options as string[]).filter(this._searchFilter);
+            return html`
+              <ul tabindex="-1" class="search-dropdown">
+                ${
+                  filteredOptions.length === 0 ?
+                  html`<li class="no-matches">No matching entries found</li>` :
+                  filteredOptions.filter(this._searchFilter).map((option) => html`
+                      <li tabindex="-1" @click=${this.handleSelection} @keydown=${this.handleSelection} class="selectable">${option}</li>
+                    `
+                  )
+                }
+              </ul>
+          `}
         )}
       </div>
     `
@@ -510,6 +521,8 @@ export default class SmartChoice extends AbstractSmartChoice {
 
       & .no-matches {
         color: grey;
+        padding: 16px;
+        cursor: default;
       }
     }
 
