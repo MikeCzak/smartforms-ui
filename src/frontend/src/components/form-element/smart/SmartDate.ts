@@ -270,7 +270,7 @@ export default class SmartDate extends AbstractSmartElement {
       }
       label.format-restriction {
         font-size: 12px;
-        color: #666;
+        color: #888;
       }
       label.format-restriction.highlight {
         color: red;
