@@ -31,7 +31,7 @@ export default class SmartMiniMap extends LitElement {
     #minimap {
       position: relative;
       display: block;
-      background-color: var(--smart-minimap-background, rgba(0, 0, 0, .5));
+      background-color: var(--smart-minimap-background);
       border-radius: var(--smart-border-radius);
       width: 150px;
       height: ${SmartMiniMap.mapHeight}vh;
@@ -44,8 +44,8 @@ export default class SmartMiniMap extends LitElement {
       display: block;
       left: 20%;
       right: 20%;
-      border-radius: 2px;
-      border: 2px solid #fff;
+      border-radius: 3px;
+      border: 1px solid #fff;
       box-sizing: border-box;
 
     }
@@ -95,7 +95,7 @@ export default class SmartMiniMap extends LitElement {
 
     .map-entry-submit {
       position: absolute;
-      bottom: 2px;
+      bottom: 4px;
       right: 20%;
       background-color: #ccc;
       height: 4px;
@@ -120,7 +120,7 @@ export default class SmartMiniMap extends LitElement {
                 <rect x="0" y="${this.scrollPosition}" width="200" height="${this.maskHeight}" fill="black" pointer-events="all" style="cursor: grab;"/>
               </mask>
             </defs>
-            <rect rx="10" ry="10" id="mosk" width="100%" height="100%" fill="rgba(0,0,0,0.5)" mask="url(#mask)"/>
+            <rect rx="10" ry="10" width="100%" height="100%" fill="rgba(0, 0, 0, .5)" mask="url(#mask)"/>
             <rect
             id="mask-window"
             x="0"
