@@ -20,7 +20,6 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
   @state() protected validationResults: Array<{ rule: string; valid: boolean }> = [];
   @state() protected overallValid: boolean | null = null;
 
-  @query('input') protected inputElement!: HTMLInputElement;
   @query('.real-time-validation') protected realTimeValidation!: HTMLElement;
 
   protected patternValidator?: PatternValidator;

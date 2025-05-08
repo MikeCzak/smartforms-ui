@@ -26,26 +26,31 @@ export default class SmartChoice extends AbstractSmartChoice {
   protected inputType: InputType = null;
   private _searchFilter: (element: string) => boolean = (element: string) => element.toLowerCase().includes(this.query.toLowerCase());
   private _focusedIndex: number = -1;
-  private _checkBoxesTabbable = false;
+  private _checkBoxesTabbable = true;
   private _isFocusingInternally = false;
 
   protected radio(): HTMLTemplateResult {
     return html`
       ${this.info && html`<p>${this.info}</p>`}
-      ${(this.options as string[]).map((option, index) => html`
-        <label for=${this.getOptionId(index)}>
-          <md-radio
-          class="material-field"
-          ?required=${this.required}
-          ?checked=${this.value.includes(option)}
-          ?error=${this._error}
-          id=${this.getOptionId(index)}
-          .name=${this.id}
-          .value=${option}
-          @input=${this.handleInput}></md-radio>
-          ${option}
-        </label>
-      `)}
+      <div class="radio-group">
+        ${(this.options as string[]).map((option, index) => html`
+          <label for=${this.getOptionId(index)}>
+            <div class="radio">
+              <input type="radio"
+                ?required=${this.required}
+                ?checked=${this.value.includes(option)}
+                id=${this.getOptionId(index)}
+                .name=${this.id}
+                .value=${option}
+                @input=${this.handleInput}
+              >
+              ${option}
+              <span class="radio-checkmark"></span>
+              <div class="target-area"></div>
+            </div>
+          </label>
+        `)}
+      </div>
       `
   };
 
@@ -151,6 +156,8 @@ export default class SmartChoice extends AbstractSmartChoice {
         autocomplete="off"
         @input=${this.handleQueryChange}
         @keydown=${this.dropdownNavHandler}
+        @focus=${this.showDropdown}
+        @blur=${this.hideDropdown}
         ?required=${this.required}
         .value=${this.value}
         >
@@ -265,7 +272,7 @@ export default class SmartChoice extends AbstractSmartChoice {
     // eslint-disable-next-line default-case
     switch(this.renderType) {
       case "checkbox": firstInput = this.shadowRoot?.querySelector('md-checkbox'); break;
-      case "radio": firstInput = this.shadowRoot?.querySelector('md-radio'); break;
+      case "radio": firstInput = this.shadowRoot?.querySelector('input'); break;
       case "dropdown": firstInput = this.shadowRoot?.querySelector('md-outlined-select'); break;
       case "searchableDropdown": firstInput = this.shadowRoot?.querySelector('input'); break;
     }
@@ -372,6 +379,58 @@ export default class SmartChoice extends AbstractSmartChoice {
     md-select-option.group-header {
       text-align: center;
       background-color: white;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 12px;
+    }
+
+    .radio {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      gap: 6px;
+      cursor: pointer;
+      & input {
+        width: 20px;
+        height: 20px;
+        margin: 0;
+      }
+      & .radio-checkmark {
+        position: absolute;
+        opacity: 0;
+        top: 50%;
+        left: 3px;
+        transform: translate(0, -50%);
+        background-color: var(--primary, red);
+        width: 14px;
+        height: 14px;
+        border-radius: 100%;
+      }
+      & input:checked ~ .radio-checkmark {
+        opacity: 1;
+      }
+      & .target-area {
+        position: absolute;
+        opacity: 0;
+        top: 50%;
+        left: -10px;
+        transform: translate(0, -50%);
+        background-color: rgba(0, 0, 0, .1);
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+      }
+      &:hover .target-area {
+        opacity: 1;
+      }
     }
 
     .checkbox-group {

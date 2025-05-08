@@ -21,7 +21,7 @@ export default abstract class AbstractSmartChoice extends AbstractSmartElement {
   }
 
   @query('md-checkbox') protected mdCheckbox?: HTMLElement;
-  @query('md-radio') protected mdRadio?: HTMLElement;
+  @query('input[type=radio checked]') protected smartRadio?: HTMLElement;
   @query('md-outlined-select') protected mdSelect?: HTMLElement;
 
 
@@ -62,6 +62,28 @@ export default abstract class AbstractSmartChoice extends AbstractSmartElement {
 
   get choiceType() {
     return this._choiceType;
+  }
+
+  get inputElement(): HTMLElement {
+    let targetInput;
+    switch(this.renderType) {
+      case "checkbox": targetInput = this.mdCheckbox; break;
+      case "radio": targetInput = this.shadowRoot?.querySelector('input[type=radio]:checked'); break;
+      case "dropdown": targetInput = this.mdSelect; break;
+      default: targetInput = this.shadowRoot?.querySelector('input');
+    }
+
+    return targetInput as HTMLInputElement;
+  }
+
+  get inputElementTagName(): string {
+    let inputElementTagName;
+    switch(this.renderType) {
+      case "checkbox": inputElementTagName = "MD-CHECKBOX" ;break;
+      case "dropdown": inputElementTagName = "MD-OUTLINED-SELECT" ;break;
+      default: inputElementTagName = "INPUT";
+    }
+    return inputElementTagName;
   }
 
   protected setRenderType() {
@@ -126,19 +148,9 @@ export default abstract class AbstractSmartChoice extends AbstractSmartElement {
   // delegates click only
   protected delegateFocusToInput(e: Event) {
     const path = e.composedPath() as HTMLElement[];
-
-    let inputElement;
-    switch(this.renderType) {
-      case "checkbox": inputElement = "MD-CHECKBOX"; break;
-      case "radio": inputElement = "MD-RADIO"; break;
-      case "dropdown": inputElement = "MD-OUTLINED-SELECT"; break;
-      case "searchableDropdown": inputElement = "INPUT"; break;
-      default: inputElement = "INPUT";
-    }
-    const clickedInput = path.find(el => el.tagName === inputElement);
-    const firstInput = this.mdCheckbox ?? this.mdRadio ?? this.mdSelect ?? this.shadowRoot?.querySelector('input');
+    const clickedInput = path.find(el => el.tagName === this.inputElementTagName);
     if (!clickedInput) {
-      firstInput?.focus({preventScroll: true});
+      this.inputElement.focus({preventScroll: true});
     }
   }
 
@@ -147,6 +159,17 @@ export default abstract class AbstractSmartChoice extends AbstractSmartElement {
     if (this.shadowRoot?.activeElement !== this.mdCheckbox) {
       this.removeAttribute('tabindex');
       this.mdCheckbox?.focus();
+    }
+  }
+
+  // delegates programmatic focus
+  override focus(options?: {preventScroll: boolean, focusVisible: boolean}): void {
+    const firstInput = this.shadowRoot?.querySelector('input');
+    if (firstInput) {
+      firstInput.focus({ preventScroll: true, ...options });
+      firstInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      this.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
 
