@@ -22,11 +22,11 @@ export default class InvalidFormNavigator implements INavigator {
   }
 
   public activate(): void {
-    document.addEventListener('keydown', this.handleKeydown);
+    document.addEventListener('keydown', this.handleKeydown, true);
   }
 
   public deactivate(): void {
-    document.removeEventListener('keydown', this.handleKeydown);
+    document.removeEventListener('keydown', this.handleKeydown, true);
   }
 
   private handleKeydown = (e: KeyboardEvent): void => {
