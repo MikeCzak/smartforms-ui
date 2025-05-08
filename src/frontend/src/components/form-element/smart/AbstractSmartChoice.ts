@@ -68,7 +68,7 @@ export default abstract class AbstractSmartChoice extends AbstractSmartElement {
     let targetInput;
     switch(this.renderType) {
       case "checkbox": targetInput = this.mdCheckbox; break;
-      case "radio": targetInput = this.shadowRoot?.querySelector('input[type=radio]:checked'); break;
+      case "radio": targetInput = this.shadowRoot?.querySelector('input[type=radio]:checked') ?? this.shadowRoot?.querySelector('input[type=radio]'); break;
       case "dropdown": targetInput = this.mdSelect; break;
       default: targetInput = this.shadowRoot?.querySelector('input');
     }
