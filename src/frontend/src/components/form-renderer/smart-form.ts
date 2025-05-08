@@ -87,7 +87,7 @@ export default class SmartForm extends AbstractBaseForm {
 
    protected override customFormComponents(): HTMLTemplateResult {
     return html`
-      ${when(this._renderedElements, () => html`<smart-minimap .formElements=${this._renderedElements}></smart-minimap>`)}
+      ${when(this._renderedElements, () => html`<smart-minimap .formElements=${this._renderedElements!}></smart-minimap>`)}
     `
    }
 }
