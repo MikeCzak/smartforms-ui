@@ -34,7 +34,7 @@
           "type": "date",
           "label": "Date of Birth",
           "constraints": {"max": "today"},
-          "required": true
+          "required": false
         },
         {
           "name": "gender",
@@ -217,6 +217,10 @@
             "info": "Must be a 16-digit credit card number.",
             "pattern": "^[0-9]{16}$"
           },
+          "grouping": {
+          "chunkSize": 4,
+          "delimiter": " "
+        },
           "dependsOn": {
             "field": "payment_method",
             "value": "Credit Card"

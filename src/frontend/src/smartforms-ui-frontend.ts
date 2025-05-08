@@ -141,8 +141,8 @@ export class SmartformsUiFrontend extends LitElement {
             Birthday: 20.10.2000<br>
             IBAN: AT23 0400 9855 1607 1442<br>
 
-            <h3>Device Data</h3>
-            Router Model: Tenda AX3000
+            <h3>Your Device Data</h3>
+            Router Model: Tenda AX3000<br>
             MAC-Address: 8E:4A:C3:7B:92:F1<br>
             Serial Number: 48372-10945-76283-59410<br>
             License Number: A7F3-KD92-Q1LM-48ZN-XR5B
