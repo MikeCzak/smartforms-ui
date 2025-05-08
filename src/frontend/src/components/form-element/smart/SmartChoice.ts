@@ -168,16 +168,16 @@ export default class SmartChoice extends AbstractSmartChoice {
                 .slice()
                 .sort((a, b) => a.groupName.localeCompare(b.groupName))
                 .map(group => {
-                  const sortedEntries = group.entries
-                  .slice()
-                  .sort((a, b) => a.localeCompare(b))
-                  .filter(this._searchFilter);
-                  if (sortedEntries.length === 0) return null;
+                  const groupNameMatches = this._searchFilter(group.groupName);
+                  const allEntriesSorted = group.entries.slice().sort((a, b) => a.localeCompare(b));
+                  const filteredEntries = groupNameMatches ? allEntriesSorted : allEntriesSorted.filter(this._searchFilter);
+
+                  if (filteredEntries.length === 0) return null;
 
                   return html`
                     <div class="choice-group">
                       <li class="group-header"><strong>===== ${group.groupName} =====</strong></li>
-                      ${sortedEntries.map((option) => html`
+                      ${filteredEntries.map((option) => html`
                         <li tabindex="-1" @click=${this.handleSelection} @keydown=${this.handleSelection} class="selectable">${option}</li>
                       `)}
                     </div>
