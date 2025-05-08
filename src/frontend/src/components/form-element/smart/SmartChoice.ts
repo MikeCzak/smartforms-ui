@@ -280,6 +280,9 @@ export default class SmartChoice extends AbstractSmartChoice {
     if (firstInput) {
       firstInput.focus({ preventScroll: true, ...options });
       firstInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (this.renderType === "searchableDropdown") {
+        this.showDropdown();
+      }
     } else {
       this.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
