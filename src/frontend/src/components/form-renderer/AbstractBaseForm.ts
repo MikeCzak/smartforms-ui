@@ -91,7 +91,8 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
 
   static styles: CSSResultGroup = css`
     :host {
-      max-width: 460px;
+      width: 460px;
+      max-width: 98vw;
     }
     .debug--formType {
       position: fixed;

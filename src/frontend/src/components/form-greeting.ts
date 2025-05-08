@@ -81,6 +81,7 @@ export default class FormGreeting extends LitElement {
     return html`
       <md-elevated-card>
         <h2>Welcome to SmartForms UI!</h2>
+        <p style="color: var(--required); font-weight: bold">This prototype focuses on keyboard interaction and is not optimized for mobile.</p>
         <p>
           Thank you in advance for participating in my study - you're helping me a bunch! <br>
           You will be presented a form that has been designed for test purposes, meaning its contents and

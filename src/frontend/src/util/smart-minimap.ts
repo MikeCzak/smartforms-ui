@@ -25,7 +25,29 @@ export default class SmartMiniMap extends LitElement {
       position: fixed;
       top: 100px;
       right: 20px;
+    }
 
+    @media (max-width: 950px) {
+      :host {
+        right: 10px;
+      }
+
+      #minimap, #mask, #mask-window {
+        width: 40px !important;
+        padding: 4px;
+      }
+
+      .map-entry {
+        left: 4px !important;
+        right: 4px !important;
+      }
+
+      .map-entry-submit {
+        right: 10%;
+        height: 3px;
+        width: 10px !important;
+        bottom: 2px;
+      }
     }
 
     #minimap {
@@ -128,8 +150,7 @@ export default class SmartMiniMap extends LitElement {
             width="200"
             height="${this.maskHeight}"
             fill="transparent"
-            stroke="black"
-            stroke-width="1"
+            stroke-width="0"
             pointer-events="all"
             style="cursor: grab;"
           />

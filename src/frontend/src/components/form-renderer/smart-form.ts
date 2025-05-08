@@ -75,7 +75,14 @@ export default class SmartForm extends AbstractBaseForm {
     AbstractBaseForm.styles,
     css`
       :host {
-        max-width: 600px;
+        width: 600px;
+        max-width: 98vw;
+      }
+
+      @media (max-width: 900px) {
+        :host {
+          margin-right: 50px;
+        }
       }
     `
    ]
