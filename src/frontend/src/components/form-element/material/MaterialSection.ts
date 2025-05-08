@@ -1,4 +1,3 @@
-import { HTMLTemplateResult, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
 import AbstractSection from "../base-class/AbstractSection.js";
 
