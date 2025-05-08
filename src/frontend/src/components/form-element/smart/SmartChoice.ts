@@ -24,7 +24,7 @@ export default class SmartChoice extends AbstractSmartChoice {
     }
   };
   protected inputType: InputType = null;
-  private _searchFilter: (element: string) => boolean = (element: string) => element.toLowerCase().includes(this.query.toLowerCase());
+
   private _focusedIndex: number = -1;
   private _checkBoxesTabbable = true;
   private _isFocusingInternally = false;
@@ -168,9 +168,8 @@ export default class SmartChoice extends AbstractSmartChoice {
                 .slice()
                 .sort((a, b) => a.groupName.localeCompare(b.groupName))
                 .map(group => {
-                  const groupNameMatches = this._searchFilter(group.groupName);
                   const allEntriesSorted = group.entries.slice().sort((a, b) => a.localeCompare(b));
-                  const filteredEntries = groupNameMatches ? allEntriesSorted : allEntriesSorted.filter(this._searchFilter);
+                  const filteredEntries = allEntriesSorted.filter(entry => this.groupEntryFilter(group.groupName, entry));
 
                   if (filteredEntries.length === 0) return null;
 
@@ -196,6 +195,24 @@ export default class SmartChoice extends AbstractSmartChoice {
         )}
       </div>
     `
+  }
+
+  private _searchFilter = (option: string): boolean => {
+  const terms = this.searchTerms;
+  return terms.every(term => option.toLowerCase().includes(term));
+};
+
+  private get searchTerms(): string[] {
+    return this.query.toLowerCase().trim().split(/\s+/);
+  }
+
+  private groupEntryFilter(groupName: string, entry: string): boolean {
+    const terms = this.searchTerms;
+
+    return terms.every(term =>
+      groupName.toLowerCase().includes(term) ||
+      entry.toLowerCase().includes(term)
+    );
   }
 
   private handleQueryChange(e: InputEvent): void {
@@ -488,6 +505,10 @@ export default class SmartChoice extends AbstractSmartChoice {
         background-color: white;
         text-align: center;
         padding: 12px 0;
+        color: grey;
+      }
+
+      & .no-matches {
         color: grey;
       }
     }
