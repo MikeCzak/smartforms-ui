@@ -412,7 +412,7 @@ export default class SmartChoice extends AbstractSmartChoice {
         top: 50%;
         left: 3px;
         transform: translate(0, -50%);
-        background-color: var(--primary, red);
+        background-color: var(--primary, darkblue);
         width: 14px;
         height: 14px;
         border-radius: 100%;
