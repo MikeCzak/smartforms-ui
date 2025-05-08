@@ -72,7 +72,7 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 > - [] include range input(s)
 > - [x] regex pattern for specific format restrictions
 > - [x] chunk size for long data
-> - [] FIX INVALID NAV SHAKING (tab problem)
+> - [x] FIX INVALID NAV SHAKING (tab problem)
 #### possible chunked data
 | Example | Group Length | Format Example |
 |-|-|-|
