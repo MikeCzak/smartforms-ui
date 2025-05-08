@@ -388,7 +388,7 @@ export default class SmartChoice extends AbstractSmartChoice {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      gap: 12px;
+      gap: 16px;
     }
 
     .radio {
@@ -426,7 +426,7 @@ export default class SmartChoice extends AbstractSmartChoice {
         top: 50%;
         left: -10px;
         transform: translate(0, -50%);
-        background-color: rgba(0, 0, 0, .1);
+        background-color: rgba(128, 128, 128, .2);
         width: 40px;
         height: 40px;
         border-radius: 100%;
