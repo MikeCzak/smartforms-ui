@@ -102,6 +102,17 @@ export default class SmartInputs {
     color: var(--error);
   }
 
+  .wrapper.invalid:before {
+    content:'\\2716';
+        color: var(--error);
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: -50px;
+        font-size: 16px;
+        color: var(--error);
+  }
+
   .content {
     display: flex;
     flex-direction: column;

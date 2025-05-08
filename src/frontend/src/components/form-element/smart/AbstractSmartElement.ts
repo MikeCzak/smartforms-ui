@@ -100,6 +100,7 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
       this._error = false;
       this._errorText = null;
       this.setValidity();
+      this.dispatchEvent(new CustomEvent('validate', { bubbles: true, composed: true, detail: this }));
     }
   }
 

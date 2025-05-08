@@ -55,7 +55,16 @@ export default class SmartMiniMap extends LitElement {
     }
 
     .map-entry.invalid {
-      border-color: var(--error, #f00) !important;
+      border-color: var(--error) !important;
+      &:before {
+        content:'❌';
+        color: var(--error);
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: -20px;
+        font-size: 4px;
+      }
     }
 
     .overlay {
@@ -142,16 +151,27 @@ export default class SmartMiniMap extends LitElement {
     this.scrollPosition = window.scrollY * this.mapScale;
   }
 
-private onValidate = (e: Event): void => {
-  this.formElements.forEach((el) => {
-    const miniMapElement = this.shadowRoot?.querySelector(`#${el.id}_minimap`);
-    if (el.isValid()) {
-      miniMapElement?.classList.remove('invalid');
-    } else {
-      miniMapElement?.classList.add('invalid');
-    }
-  });
-}
+  private onValidateAll = (e: Event): void => {
+    this.formElements.forEach((el) => {
+      const miniMapElement = this.shadowRoot?.querySelector(`#${el.id}_minimap`);
+      if (el.isValid()) {
+        miniMapElement?.classList.remove('invalid');
+      } else {
+        miniMapElement?.classList.add('invalid');
+      }
+    });
+  }
+
+  private onValidate = (e: Event): void => {
+      const el = (e as CustomEvent).detail;
+      const miniMapElement = this.shadowRoot?.querySelector(`#${el.id}_minimap`);
+      if (el.isValid()) {
+        miniMapElement?.classList.remove('invalid');
+      } else {
+        miniMapElement?.classList.add('invalid');
+      }
+
+  }
 
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
@@ -214,12 +234,14 @@ private onValidate = (e: Event): void => {
   connectedCallback(): void {
     super.connectedCallback();
     window.addEventListener('scroll', this.scrollHandler);
+    window.addEventListener('validateAll', this.onValidateAll);
     window.addEventListener('validate', this.onValidate);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
     window.removeEventListener('scroll', this.scrollHandler);
+    window.removeEventListener('validateAll', this.onValidateAll);
     window.removeEventListener('validate', this.onValidate);
   }
 }

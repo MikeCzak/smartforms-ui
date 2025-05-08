@@ -38,7 +38,7 @@ export default class SmartForm extends AbstractBaseForm {
     this._formNavigator = new InvalidFormNavigator(this._formElements);
     this._formNavigator.activate();
     this._formNavigator.focusFirst();
-    this.dispatchEvent(new CustomEvent('validate', { bubbles: true, composed: true }));
+    this.dispatchEvent(new CustomEvent('validateAll', { bubbles: true, composed: true }));
     return false;
   }
 
