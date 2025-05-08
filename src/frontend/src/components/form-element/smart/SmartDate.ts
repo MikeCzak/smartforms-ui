@@ -249,7 +249,7 @@ export default class SmartDate extends AbstractSmartElement {
       }
       input {
         display: block;
-        border: .1px solid black;
+        border: .1px solid var(--md-sys-color-outline);
         border-radius: 4px;
         padding: 6px;
         box-sizing: content-box;
