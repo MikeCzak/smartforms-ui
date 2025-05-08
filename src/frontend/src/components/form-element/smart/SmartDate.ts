@@ -108,7 +108,7 @@ export default class SmartDate extends AbstractSmartElement {
       this.month = "12";
       return false;
     }
-    if(numVal < 1) {
+    if(this.month.length === 2 && numVal < 1) {
       this.month = "01";
       return false;
     }
@@ -124,7 +124,7 @@ export default class SmartDate extends AbstractSmartElement {
       this.day = "31";
       return false;
     }
-    if(numVal < 1) {
+    if(this.day.length === 2 && numVal < 1) {
       this.day = "01";
       return false;
     }
