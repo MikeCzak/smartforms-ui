@@ -113,7 +113,7 @@ export default class SmartChoice extends AbstractSmartChoice {
         ?error=${this._error}
         .name=${this.id}
         value=${this.value}
-        @input=${this.handleInput}>
+        @change=${this.handleInput}>
         ${when(grouped,
           () => html`
             ${(this.options as { groupName: string; entries: string[] }[])
@@ -355,7 +355,7 @@ export default class SmartChoice extends AbstractSmartChoice {
   }
 
   protected hideDropdown(e?: FocusEvent): void {
-    this._searchDropdown.classList.remove('open');
+    setTimeout(() => {this._searchDropdown.classList.remove('open')}, 100);
   }
 
   protected labelHTML(): HTMLTemplateResult {
