@@ -36,7 +36,6 @@ export default class SmartInputs {
     padding: 0 6px;
     font-size: 16px;
     white-space: nowrap;
-    background-color: var(--smart-container-background-color);
   }
 
   .wrapper {
@@ -46,56 +45,43 @@ export default class SmartInputs {
     border-top: transparent;
     border-radius: var(--smart-border-radius);
     background-color: transparent;
+    margin: 1px;
   }
 
   .wrapper:focus-within {
-    outline: var(--smart-outline-width) solid var(--md-sys-color-outline);
+    border-width: var(--smart-border-width-focus);
+    margin: 0;
+    & .left, & .right {
+      border-width: var(--smart-border-width-focus);
+    }
     & .label {
       font-weight: bold;
+      margin-left: -1px;
     }
   }
 
-  .wrapper.required:focus-within {
-    outline: var(--smart-outline-width) solid var(--required);
-  }
-
-  .wrapper.invalid:focus-within {
-    outline: var(--smart-outline-width) solid var(--error) !important;
-  }
-
-  .wrapper.required.valid:focus-within {
-    outline: var(--smart-outline-width) solid var(--success);
-  }
-
-  .wrapper:has(.required) {
-    border: var(--smart-border-width) solid var(--required);
-    border-top: transparent;
+  .wrapper.required {
+    border-color: var(--required);
     background: linear-gradient(340deg, rgba(var(--required-rgb), .4) 0%, transparent 70px);
+    & .left, & .right {
+      border-color: var(--required);
+    }
   }
 
-  .wrapper.required .left, .wrapper.required  .right {
-    border-top: var(--smart-border-width) solid var(--required);
-    height: 12px;
-  }
-
-  .wrapper.required.valid .left, .wrapper.required.valid  .right {
-    border-top: var(--smart-border-width) solid var(--success);
+  .wrapper.invalid {
+    border-color: var(--error);
+    background: linear-gradient(340deg, rgba(var(--error-rgb), .4) 0%, transparent 70px);
+    & .left, & .right {
+      border-color: var(--error);
+    }
   }
 
   .wrapper.required.valid {
-    border: var(--smart-border-width) solid var(--success);
-    border-top: transparent;
+    border-color: var(--success);
     background: linear-gradient(340deg, rgba(var(--success-rgb), .4) 0%, transparent 70px);
-  }
-
-  .wrapper.required.invalid .left, .wrapper.required.invalid  .right {
-    border-top: var(--smart-border-width) solid var(--error);
-  }
-
-  .wrapper.required.invalid {
-    border: var(--smart-border-width) solid var(--error);
-    border-top: transparent;
-    background: linear-gradient(340deg, rgba(var(--error-rgb), .4) 0%, transparent 70px);
+    & .left, & .right {
+      border-color: var(--success);
+    }
   }
 
   .wrapper.invalid .label {
