@@ -98,7 +98,6 @@ export default class FormGreeting extends LitElement {
               Put yourself in a "C'mon man, I just wanna quickly sign up and get on with life!" mindset!
               Be mad at me for stealing your precious time with a f***ing web form!
             </li>
-            <li>avoid validation errors due to wrong data formats</li>
             <li>fill all required fields (marked <span style="color: var(--required);">orange</span> and with a <span style="color: var(--required);">*</span>), filling all fields would be appreciated but isn't necessary, and</li>
             <li>complete the form as quickly as possible.</li>
           </ul>
