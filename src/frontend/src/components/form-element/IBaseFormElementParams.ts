@@ -9,4 +9,5 @@ export default interface IBaseFormElementParams {
   constraints?: { [key: string]: any; };
   dependsOn?: IFormElement;
   grouping?: { chunkSize: number, delimiter?: string };
+  expected?: string;
 }

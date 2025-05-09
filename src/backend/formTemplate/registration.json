@@ -443,7 +443,8 @@
           }
         ],
         "label": "Device Name",
-        "required": true
+        "required": true,
+        "expected": "AX3000"
       },
       {
         "name": "mac_address",
@@ -454,7 +455,8 @@
         "grouping": {
           "chunkSize": 2,
           "delimiter": ":"
-        }
+        },
+        "expected": "8E4AC37B92F1"
       },
       {
         "name": "serial_no",
@@ -463,18 +465,19 @@
         "info": "The Serial Number consists of 20 characters (numbers only), grouped in 5, divided by a dash.",
         "required": true,
         "constraints": {
-          "pattern": "^\\d+$"
+          "pattern": "^[-\\d]+$"
         },
         "grouping": {
           "chunkSize": 5,
           "delimiter": "-"
-        }
+        },
+        "expected": "48372109457628359410"
       },
       {
         "name": "license_number",
         "type": "text",
         "label": "License Number",
-        "info": "The Serial Number consists of 20 characters (letters and numbers), grouped in 4, divided by a dash.",
+        "info": "The License Number consists of 20 characters (letters and numbers), grouped in 4, divided by a dash.",
         "required": true,
         "constraints": {
           "pattern": "^[A-Za-z0-9]+$"
@@ -482,7 +485,8 @@
         "grouping": {
           "chunkSize": 4,
           "delimiter": "-"
-        }
+        },
+        "expected": "A7F3KD92Q1LM48ZNXR5B"
       }
       ]
     }

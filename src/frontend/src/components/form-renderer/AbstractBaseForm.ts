@@ -178,6 +178,13 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
       jsonData.metaData = {};
 
       this._formElements.forEach((e) => {
+        if(e.expected) {
+          let {value} = e;
+          if(e.grouping?.delimiter) {
+            value = e.value.replace(e.grouping.delimiter, '');
+          }
+          e.metaData.set('expected', {expectedValue: e.expected, matchesValue: e.expected.toLocaleLowerCase() === (value as string).toLocaleLowerCase()})
+        }
         jsonData.metaData[e.id] = {}
         e.metaData.forEach((v, k) => {
           jsonData.metaData[e.id][k] = v;
@@ -187,8 +194,8 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
           totalFocusTime += elementFocusTime;
         }
       })
-      jsonData.metaData.totalFocusTime = totalFocusTime;
-      jsonData.internalFormId = {"internalFormId": this.internalFormId};
+      jsonData.totalFocusTime = totalFocusTime;
+      jsonData.internalFormId = this.internalFormId;
       this._submitted = true;
       ApiClient.saveForm(jsonData, this.formType).then(res => {
         this._submissionSuccessful = res;

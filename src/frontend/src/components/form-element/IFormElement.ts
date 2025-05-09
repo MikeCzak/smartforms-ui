@@ -18,6 +18,8 @@ export default interface IFormElement extends HTMLElement {
   readonly navigator: INavigator | null;
   setNavigator(navigator: INavigator | null): void
   readonly yPos: number | undefined;
+  readonly expected?: string;
+  readonly grouping?: {chunkSize: number, delimiter?: string}
   /**
    * Returns the element if validation fails, null otherwise.
    */

@@ -25,6 +25,8 @@ export default abstract class AbstractFormElement extends LitElement implements 
   private _dependingFields: Array<IFormElement|AbstractSection> = [];
   private _metaData: Map<string, any> = new Map<string, any>([['focusTime', 0], ['validationErrors', []]]);
   private _startTime: number|null = null;
+  private _expected?: string;
+  private _grouping?: {chunkSize: number, delimiter?: string}
   protected _yPos?: number;
   protected _navigator: INavigator | null = null;
   public next!: IFormElement;
@@ -48,6 +50,8 @@ export default abstract class AbstractFormElement extends LitElement implements 
     this._attachShadow();
     this.internals_ = this.attachInternals();
     this.internals_.setFormValue(this.value);
+    this._expected = params.expected;
+    this._grouping = params.grouping
   }
 
   protected _attachShadow(): void {
@@ -92,6 +96,14 @@ export default abstract class AbstractFormElement extends LitElement implements 
 
   public get metaData(): Map<string, any> {
     return this._metaData;
+  }
+
+  public get expected(): string | undefined {
+    return this._expected;
+  }
+
+  public get grouping(): {chunkSize: number, delimiter?: string} | undefined {
+    return this._grouping;
   }
 
   public get startTime(): number | null  {
