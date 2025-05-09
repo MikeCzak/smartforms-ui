@@ -10,6 +10,7 @@ import SmartFormElementFactory from '../form-element/SmartFormElementFactory.js'
 import InvalidFormNavigator from '../../util/InvalidFormNavigator.js';
 import '../../util/smart-minimap.js';
 import IFormElement from '../form-element/IFormElement.js';
+import '../../util/validation-nav-tutorial.js'
 
 @customElement('smart-form')
 export default class SmartForm extends AbstractBaseForm {
@@ -19,6 +20,7 @@ export default class SmartForm extends AbstractBaseForm {
 
   protected _formElementFactory: AbstractFormElementFactory;
   private _formNavigator?: InvalidFormNavigator;
+  @state() _hasBeenValidatedAtLeastOnce: boolean = false;
 
   constructor() {
     super();
@@ -28,7 +30,7 @@ export default class SmartForm extends AbstractBaseForm {
   public validateForm(): boolean {
     const invalidElements = [];
     for (const element of this._formElements) {
-      if (!element.isValid()) {
+      if (element.validate(true, true)) {
        invalidElements.push(element);
       }
     }
@@ -39,6 +41,7 @@ export default class SmartForm extends AbstractBaseForm {
     this._formNavigator.activate();
     this._formNavigator.focusFirst();
     this.dispatchEvent(new CustomEvent('validateAll', { bubbles: true, composed: true }));
+    this._hasBeenValidatedAtLeastOnce = true;
     return false;
   }
 
@@ -95,6 +98,7 @@ export default class SmartForm extends AbstractBaseForm {
    protected override customFormComponents(): HTMLTemplateResult {
     return html`
       ${when(this._renderedElements, () => html`<smart-minimap .formElements=${this._renderedElements!}></smart-minimap>`)}
+      ${when(this._hasBeenValidatedAtLeastOnce, () => html`<validation-nav-tutorial></validation-nav-tutorial>`)}
     `
    }
 }

@@ -68,12 +68,11 @@ export class SmartformsUiFrontend extends LitElement {
       visibility: hidden;
       pointer-events: none;
       position: fixed;
-      bottom: 132px;
-      right: 16px;
+      bottom: 56px;
+      right: 86px;
       max-width: 90vw;
       background-color: var(--md-sys-color-surface);
-      padding: 16px;
-      padding-top: 6px;
+      padding: 6px 32px 16px 16px;
       border-radius: var(--smart-border-radius);
       z-index: 100;
       transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -106,6 +105,11 @@ export class SmartformsUiFrontend extends LitElement {
           margin-block-end: .25em;
         }
       }
+      & #close-personal-info-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
     }
 
   `;
@@ -131,21 +135,21 @@ export class SmartformsUiFrontend extends LitElement {
         <div id="personal-info" class="${this._showPersonalInfo ? 'open': ''}">
           <h2 class="headline">
             Your Dummy Data
-            <md-icon-button @click=${this.hidePersonalData} aria-label="Close dialog">
+            <md-icon-button id="close-personal-info-button" @click=${this.hidePersonalData} aria-label="Close dialog">
               <my-icon icon="close"></my-icon>
             </md-icon-button>
           </h2>
 
           <div class="content">
             <h3>Personal Info</h3>
-            Birthday: 20.10.2000<br>
-            IBAN: AT23 0400 9855 1607 1442<br>
+            <p>Birthday:<br> 20.10.2000</p>
+            <p>IBAN:<br> AT23 0400 9855 1607 1442</p>
 
             <h3>Your Device Data</h3>
-            Router Model: Tenda AX3000<br>
-            MAC-Address: 8E:4A:C3:7B:92:F1<br>
-            Serial Number: 48372-10945-76283-59410<br>
-            License Number: A7F3-KD92-Q1LM-48ZN-XR5B
+            <p></p>Router Model: <br>Tenda AX3000</p>
+            <p>MAC-Address: <br>8E:4A:C3:7B:92:F1</p>
+            <p>Serial Number: <br>48372-10945-76283-59410</p>
+            <p>License Number: <br>A7F3-KD92-Q1LM-48ZN-XR5B</p>
           </div>
         </div>
       `) || html`<pre>loading form data...</pre>`;
