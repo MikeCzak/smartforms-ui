@@ -23,7 +23,7 @@ export default interface IFormElement extends HTMLElement {
   /**
    * Returns the element if validation fails, null otherwise.
    */
-  validate(): IFormElement | null;
+  validate(updateValidationErrors: boolean, reportValidity: boolean): IFormElement | null;
   isValid(): boolean;
   render(): HTMLTemplateResult
 }

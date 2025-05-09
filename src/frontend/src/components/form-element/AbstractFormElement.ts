@@ -223,14 +223,16 @@ export default abstract class AbstractFormElement extends LitElement implements 
     }
   }
 
-  public validate(reportValidity: boolean = true): IFormElement | null {
+  public validate(updateValidationErrors: boolean = false, reportValidity: boolean = true): IFormElement | null {
     const isValid = this.internals_.checkValidity();
     const { validationMessage } = this.internals_;
     if (!isValid) {
-      const currentErrors = AbstractFormElement.getValidityErrors(this.internals_.validity).filter(validity => validity !== 'valid');
-      const pastErrors = this._metaData.get('validationErrors');
-      pastErrors.push(currentErrors);
-      this._metaData.set('validationErrors', pastErrors);
+      if (updateValidationErrors) {
+        const currentErrors = AbstractFormElement.getValidityErrors(this.internals_.validity).filter(validity => validity !== 'valid');
+        const pastErrors = this._metaData.get('validationErrors');
+        pastErrors.push(currentErrors);
+        this._metaData.set('validationErrors', pastErrors);
+      }
       if (reportValidity) {
         this.reportValidity(validationMessage);
       }
