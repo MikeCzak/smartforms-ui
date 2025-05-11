@@ -16,7 +16,7 @@ export class SmartformsUiFrontend extends LitElement {
 
   @property({ type: Boolean, attribute: false }) _greetingRead: boolean = JSON.parse(sessionStorage.greetingRead || 'false');
 
-  @property({type: Object}) private _rawForm: Object = {};
+  @property({type: Object}) private _rawForm: Object | null = null;
 
   @property({attribute: false}) private _formType: string|null = localStorage.getItem('formType');
 
@@ -79,7 +79,7 @@ export class SmartformsUiFrontend extends LitElement {
       box-shadow: 0 0 6px rgba(0,0,0,.5);
 
       &.open {
-        opacity: .75;
+        opacity: .85;
         visibility: visible;
         pointer-events: auto;
 
@@ -115,15 +115,15 @@ export class SmartformsUiFrontend extends LitElement {
   `;
 
   render() {
-      return ((Object.keys(this._rawForm).length > 0 && this._formType !== null && this._internalFormId !== null) && html`
+      return ((this._rawForm !== null && this._formType !== null && this._internalFormId !== null) && html`
         ${!this._greetingRead ? html`
           <main>
             <form-greeting @submit=${this.handleGreetingSubmit}></form-greeting>
           </main>
         ` :
         choose(this._formType, [
-          ['material', () => html`<material-form .formData=${this._rawForm} .internalFormId=${this._internalFormId!}></material-form>`],
-          ['smart', () => html`<smart-form .formData=${this._rawForm} .internalFormId=${this._internalFormId!}></smart-form>`],
+          ['material', () => html`<material-form .formData=${this._rawForm!} .internalFormId=${this._internalFormId!}></material-form>`],
+          ['smart', () => html`<smart-form .formData=${this._rawForm!} .internalFormId=${this._internalFormId!}></smart-form>`],
         ]
         )}
         ${when(!this._formSubmitted, () => html`<md-fab @click=${this.showPersonalData} id="personal-info-button" class="highlighted" aria-label="Your personal data">
@@ -152,7 +152,7 @@ export class SmartformsUiFrontend extends LitElement {
             <p>License Number: <br>A7F3-KD92-Q1LM-48ZN-XR5B</p>
           </div>
         </div>
-      `) || html`<pre>loading form data...</pre>`;
+      `) || html`<pre>loading form data...</pre><md-circular-progress indeterminate></md-circular-progress>`;
   }
 
   connectedCallback(): void {
@@ -201,6 +201,7 @@ export class SmartformsUiFrontend extends LitElement {
         this._internalFormId = uuid;
         sessionStorage.setItem('internalFormId', uuid);
         localStorage.setItem('formType', this._formType!)
+        this.requestUpdate()
       }
     }
   }
