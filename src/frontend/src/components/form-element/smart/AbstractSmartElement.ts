@@ -44,7 +44,7 @@ export default abstract class AbstractSmartElement extends AbstractFormElement {
     if (params.grouping !== undefined) {
       this.valueFormatter = new ChunkFormatter(params.grouping.chunkSize, params.grouping.delimiter);
       if (params.grouping.chunkSize && params.grouping.delimiter) {
-        this.info += ` Enter alphanumeric characters only. "${params.grouping.delimiter}" will be added automatically.`
+        this.info = `Enter letter/number characters only. "${params.grouping.delimiter}" will be added automatically. ${ this.info || ''}`;
       }
     } else if (this.label.toLowerCase().includes("iban")) {
       this.valueFormatter = new IbanFormatter();
