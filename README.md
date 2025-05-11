@@ -58,8 +58,9 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 # Additional Guidelines
 - [x] don't clear fields on erroneous submit
 # Further improvement ideas
-- [x] don't clear fields on reload (save every input in local storage except password data)
+- [x] don't clear fields on reload (save every input in session storage except password data) and clear after submit
 - [x] parse custom chunks/groupings with arbitrary delimiter
+- provide a click- and draggable "minimap" with accurate form field position, size and required state for a better overview
 
 ---
 
