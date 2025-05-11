@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import IFormElement from "../components/form-element/IFormElement.js";
 import INavigator from "./INavigator.js";
 
@@ -17,7 +18,6 @@ export default class InvalidFormNavigator implements INavigator {
       el.setNavigator(this);
       el.addEventListener('focus', this.handleElementFocus.bind(this), true);
       this.attachMarkers(el);
-      // TODO: nav-blocking elements still buggy in firefox
     });
   }
 

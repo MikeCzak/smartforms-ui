@@ -1,18 +1,26 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-param-reassign */
 import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
-import { customElement, query, state } from "lit/decorators.js";
+import { customElement, query, queryAll, state } from "lit/decorators.js";
 import SmartInputs from "../styles/SmartInputs.js";
 import ValidationNavDemo from "../styles/ValidationNavDemo.js";
 
 @customElement('validation-nav-tutorial')
 export default class ValidationNavTutorial extends LitElement {
 
-  @state() _showHelp: boolean = true;
+  @state() _showHelp: boolean = false;
   @query('#demo-element-1') demoField1!: HTMLElement;
   @query('#demo-element-2') demoField2!: HTMLElement;
   @query('#demo-element-3') demoField3!: HTMLElement;
+  @queryAll('.demo-element') demoElements!: HTMLElement[];
   @query('#up-key') upKey!: HTMLElement;
   @query('#down-key') downKey!: HTMLElement;
   @query('#esc-key') escKey!: HTMLElement;
+
+  private animationAbortController?: AbortController;
+
 
   static styles?: CSSResultGroup =
   [
@@ -35,7 +43,7 @@ export default class ValidationNavTutorial extends LitElement {
             You can navigate to the next/previous <span style="color: var(--error)">\u2716 invalid field</span> with the arrow keys <span class="key arrow up"></span><span class="key arrow down"></span>.
             <br>
             When you focus a field that would normally use the arrow keys for interaction (like a dropdown or a group of radio buttons), the input element will enter a
-            navigation-locked state indicated by four little markers around it (see example below). While in locked state, you can use the arrow keys to interact with the field as expected.
+            navigation-locked state indicated by four little markers around it (see demo below). While in locked state, you can use the arrow keys to interact with the field as expected.
             Press <span class="key esc"><span class="key-label">esc</span></span> when you're done with that field and the arrow keys will return to navigating between invalid fields.
           </p>
           <div class="lock-demo">
@@ -99,7 +107,7 @@ export default class ValidationNavTutorial extends LitElement {
           </p>
         </md-elevated-card>
       </div>
-      <md-fab id="help-button" @click=${() => { this._showHelp = !this._showHelp; }}>
+      <md-fab id="help-button" @click=${this.showHelp}>
         <my-icon slot="icon" icon="help"></my-icon>
       </md-fab>
     `
@@ -141,19 +149,149 @@ export default class ValidationNavTutorial extends LitElement {
     ValidationNavTutorial.attachMarkers(this.demoField1);
     ValidationNavTutorial.attachMarkers(this.demoField2);
     ValidationNavTutorial.attachMarkers(this.demoField3);
-    this.startAnimation();
+    this.showHelp();
   }
 
-  private startAnimation(): void {
-    this.highlightLockState(this.demoField1!);
-    this.pressUp();
-    setTimeout(() => {this.pressUp();}, 600);
+  private showHelp() {
+    if(!this._showHelp) {
+      this._showHelp = true;
+      this.startAnimation();
+    }
   }
 
-  private pressUp(): void {
-    this.upKey.classList.add('animated');
-    setTimeout(() => {
-      this.upKey.classList.remove('animated');
-    }, 500);
+  private async startAnimation(): Promise<void> {
+    this.animationAbortController?.abort();
+    this.animationAbortController = new AbortController();
+    const {signal} = this.animationAbortController;
+
+    this.resetAnimation();
+
+    try {
+      while (this._showHelp) {
+        this.demoFocus(this.demoField1!);
+        await this.animateCSS(this.downKey, 'animated', signal, 1000, 0);
+        this.demoFocus(this.demoField2!);
+
+        await this.animateCSS(this.upKey, 'animated', signal, 700, 0);
+        this.demoFocus(this.demoField1!);
+
+        await this.animateCSS(this.downKey, 'animated', signal, 300, 0);
+        this.demoFocus(this.demoField2!);
+
+        await this.animateCSS(this.downKey, 'animated', signal, 700, 50);
+        this.demoFocus(this.demoField3!);
+        this.highlightLockState(this.demoField3!);
+        this.selectDropdownOption(1);
+
+        await this.animateCSS(this.downKey, 'animated', signal, 1000, 0);
+        this.selectDropdownOption(2);
+
+        await this.animateCSS(this.downKey, 'animated', signal, 200, 0);
+        this.selectDropdownOption(3);
+
+        await this.animateCSS(this.upKey, 'animated', signal, 200, 0);
+        this.selectDropdownOption(2);
+
+        await this.animateCSS(this.downKey, 'animated', signal, 400, 0);
+        this.selectDropdownOption(3);
+
+        await this.animateCSS(this.escKey, 'animated', signal, 700, 0);
+        (this.demoField3.querySelector('#dropdown')! as HTMLElement).style.visibility = 'hidden';
+        this.selectDropdownOption(0);
+        this.releaseLockState(this.demoField3);
+
+        await this.animateCSS(this.upKey, 'animated', signal, 1000, 0);
+        this.demoFocus(this.demoField2!);
+
+        await this.animateCSS(this.upKey, 'animated', signal, 300, 0);
+        this.demoFocus(this.demoField1!);
+
+
+      }
+    } catch (err) {
+      if ((err as DOMException).name !== 'AbortError') {
+        console.error('Unexpected animation error:', err);
+      }
+    }
   }
+
+  private resetAnimation() {
+    this.selectDropdownOption(0);
+    this.demoElements.forEach(element => {
+      const markers = element.querySelectorAll('.lock-state-marker');
+      markers?.forEach(marker => {
+        marker.classList.remove("show");
+        (marker as HTMLElement).style.opacity = '0';
+      });
+    });
+  }
+
+  private demoFocus(element: HTMLElement): void {
+    this.demoElements.forEach(el => {
+      el.classList.remove('focused');
+      if(element !== this.demoField3) {
+        (this.demoField3.querySelector('#dropdown')! as HTMLElement).style.visibility = 'hidden';
+      }
+    })
+    element.classList.add('focused');
+    if(element === this.demoField3) {
+      (element.querySelector('#dropdown')! as HTMLElement).style.visibility = 'visible';
+    }
+  }
+
+  private selectDropdownOption(option: number): void {
+    this.demoField3.querySelectorAll('.option').forEach(o => {
+      if(o.id === `option${option}`) {
+        o.classList.add('selected');
+      } else {
+        o.classList.remove('selected');
+      }
+    })
+  }
+
+  private async animateCSS(
+    element: HTMLElement,
+    animationClass: string,
+    signal?: AbortSignal,
+    preDelayMs = 0,
+    postDelayMs = 0
+  ): Promise<void> {
+    const delay = (ms: number): Promise<void> =>
+       new Promise((resolve, reject) => {
+        const timeout = setTimeout(resolve, ms);
+        signal?.addEventListener('abort', () => {
+          clearTimeout(timeout);
+          reject(new DOMException('Aborted', 'AbortError'));
+        }, { once: true });
+      });
+
+    if (preDelayMs > 0) {
+      await delay(preDelayMs);
+    }
+
+    await new Promise<void>((resolve, reject) => {
+      const handleAbort = () => {
+        element.classList.remove(animationClass);
+        element.removeEventListener('animationend', handleAnimationEnd);
+        reject(new DOMException('Aborted', 'AbortError'));
+      };
+
+      const handleAnimationEnd = () => {
+        element.classList.remove(animationClass);
+        element.removeEventListener('animationend', handleAnimationEnd);
+        signal?.removeEventListener('abort', handleAbort);
+        resolve();
+      };
+
+      signal?.addEventListener('abort', handleAbort, { once: true });
+      element.addEventListener('animationend', handleAnimationEnd, { once: true });
+      element.classList.add(animationClass);
+    });
+
+    if (postDelayMs > 0) {
+      await delay(postDelayMs);
+    }
+  }
+
+
 }

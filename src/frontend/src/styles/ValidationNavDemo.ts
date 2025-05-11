@@ -79,13 +79,14 @@ export default class ValidationNavDemo {
     margin: 0 2px;
     border-radius: 4px;
     background: linear-gradient(to bottom, #f3f3f3, #dcdcdc);
-    box-shadow: inset -3px -3px 1px #aaa, inset 3px 3px 1px #fff, 1px 1px 3px rgba(0, 0, 0, 0.4);
+    box-shadow: inset -3px -3px 1px #aaa, inset 3px 3px 1px #fff, 2px 2px 3px rgba(0, 0, 0, 0.3);
     font-family: monospace;
     font-size: 0.9rem;
     color: #333;
     text-align: center;
 
     &.esc {
+      margin-top: 10px;
       width: 35px;
       height: 25px;
       & .key-label {
@@ -95,12 +96,15 @@ export default class ValidationNavDemo {
     }
 
     &.animated {
-      animation: key-press .5s ease-in-out forwards;
+      animation: key-press .2s ease-in-out forwards;
     }
   }
 
   p .key {
     margin-bottom: -8px;
+    &.esc {
+      margin-top: 0;
+    }
   }
 
   @keyframes key-press {
@@ -189,16 +193,28 @@ export default class ValidationNavDemo {
       position: relative;
       margin-bottom: 16px;
 
-        & .wrapper.focused {
+        &.focused .wrapper {
           border-width: var(--smart-border-width-focus);
-          margin: 0;
+          margin-bottom: -1.5px;
+          margin-left: -.5px;
           & .left, & .right {
             border-width: var(--smart-border-width-focus);
           }
           & .label {
             font-weight: bold;
-            margin-left: -1px;
+            margin-left: 0;
+            margin-top: -5px;
           }
+        }
+
+        &.focused .text-field-dummy:before {
+          content: '|';
+          font-weight: 400;
+          position: absolute;
+          left: 0;
+          bottom: -5px;
+          animation: blink 1s steps(2, start) infinite;
+          opacity: 1;
         }
 
         & .label {
@@ -206,6 +222,7 @@ export default class ValidationNavDemo {
           margin-top: -6px;
         }
         & .text-field-dummy {
+          position: relative;
           display: block;
           width: 120px;
           height: 3px;
@@ -242,6 +259,9 @@ export default class ValidationNavDemo {
             & .option {
               font-size: 10px;
               padding-inline: 6px;
+              &.selected {
+                background-color: var(--primary);
+              }
             }
           }
         & .demo-content {
@@ -260,10 +280,16 @@ export default class ValidationNavDemo {
     & #buttons {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
+      margin-left: 20px;
       gap: 6px;
       width: 33%;
     }
   }
+
+  @keyframes blink {
+          0% { opacity: 1; }
+          100% { opacity: 0; }
+        }
 `
 }
