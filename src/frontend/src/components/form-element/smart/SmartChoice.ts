@@ -190,7 +190,7 @@ export default class SmartChoice extends AbstractSmartChoice {
             </ul>
           `,
           () => {
-            const filteredOptions = (this.options as string[]).filter(this._searchFilter);
+            const filteredOptions = (this.options as string[]).filter(this._searchFilter).sort((a, b) => a.localeCompare(b));
             return html`
               <ul tabindex="-1" class="search-dropdown">
                 ${
