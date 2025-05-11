@@ -355,6 +355,7 @@ export default class SmartChoice extends AbstractSmartChoice {
   }
 
   protected hideDropdown(e?: FocusEvent): void {
+    this._searchField.value = this.value;
     setTimeout(() => {this._searchDropdown.classList.remove('open')}, 100);
   }
 
