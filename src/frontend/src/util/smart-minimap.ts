@@ -144,13 +144,15 @@ export default class SmartMiniMap extends LitElement {
             </defs>
             <rect rx="10" ry="10" width="100%" height="100%" fill="rgba(0, 0, 0, .5)" mask="url(#mask)"/>
             <rect
+            stroke="grey"
             id="mask-window"
             x="0"
             y="${this.scrollPosition}"
-            width="200"
+            width="150"
             height="${this.maskHeight}"
             fill="transparent"
-            stroke-width="0"
+            stroke-width="2"
+
             pointer-events="all"
             style="cursor: grab;"
           />
