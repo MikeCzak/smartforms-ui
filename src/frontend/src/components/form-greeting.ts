@@ -32,6 +32,7 @@ export default class FormGreeting extends LitElement {
     }
 
     h2 {
+      margin-top: 0;
       font-size: var(--md-sys-typescale-display-medium);
       color: var(--md-sys-color-secondary);
     }
@@ -83,12 +84,15 @@ export default class FormGreeting extends LitElement {
         <h2>Welcome to SmartForms UI!</h2>
         <p style="color: var(--required); font-weight: bold">This prototype focuses on keyboard interaction and is not optimized for mobile - please use a desktop computer or laptop, not a phone!</p>
         <p>
-          Thank you in advance for participating in this user study (for my bachelor thesis) - your help is very much appreciated! <br>
+          Thank you in advance for participating in this user study (for my bachelor thesis) - your help is very much appreciated! 😊<br>
           You will be presented a form that has been designed for test purposes only, meaning its contents and
           requirements do not necessarily reflect a real-world situation (and might not make any sense in some cases), but cover all the aspects I need to test.<br>
           My study is not about the content you enter, but about the form filling process itself. I guarantee that your input is solely used for the empirical evaluation of the form filling process and
           none of it will be in any way made public or given to third parties.
-          <span style="font-weight: bold"> I emphasize this because in order to make the process as natural and the test as accurate as possible, it would be ideal if you used data you are familiar with and have typed often in the past.</span>
+          <span style="font-weight: bold"> I emphasize this because in order to make the process as natural and the test as accurate as possible,
+            it would be ideal if you used data you are familiar with and have typed often in the past.</span>
+        </p>
+        <p>
           <span style="color: var(--required); font-weight: bold">
             You will be provided dummy data for some fields which you can access anytime by clicking on the floating info button in the bottom-right corner. Try it now!
           </span>
@@ -102,7 +106,7 @@ export default class FormGreeting extends LitElement {
               Put yourself in a "C'mon man, I just wanna quickly sign up and get on with life!" mindset!
               Be mad at me for stealing your precious time with a f***ing web form!
             </li>
-            <li>fill all required fields (marked <span style="color: var(--required);">orange</span> and with a <span style="color: var(--required);">*</span>), filling all fields would be appreciated but isn't necessary, and</li>
+            <li>fill all required fields, filling all fields would be appreciated but isn't necessary, and</li>
             <li>complete the form as quickly as possible.</li>
           </ul>
 
