@@ -64,16 +64,6 @@
             "info": "Must be a valid email address",
             "pattern": "^\\S+@\\S+\\.\\S+$"
           }
-        },
-        {
-          "name": "children",
-          "type": "number",
-          "label": "Amount of children",
-          "required": true,
-          "constraints": {
-            "max": 10,
-            "min": 0
-          }
         }
       ]
     },
@@ -187,7 +177,7 @@
         {
           "name": "payment_method",
           "type": "choice",
-          "info": "How would you like your payment to be refunded?",
+          "info": "Please select your preferred payment method:",
           "label": "Payment Method",
           "options": ["Credit Card", "PayPal", "Bank Transfer"],
           "required": true,
@@ -229,14 +219,8 @@
       ]
     },
     {
-      "title": "Emergency Contact (Nested Subform)",
+      "title": "Emergency Contact Information",
       "fields": [
-      {
-        "name": "emergency_contact",
-        "type": "form",
-        "label": "Emergency Contact Information",
-        "subform": {
-        "fields": [
           {
           "name": "contact_name",
           "type": "text",
@@ -247,9 +231,9 @@
           "name": "contact_phone",
           "type": "tel",
           "label": "Contact Phone",
-          "required": false,
+          "required": true,
           "constraints": {
-            "info": "Must be a valid phone number (e.g., +123456789).",
+            "info": "Can start with optional +, then one non-zero digit, then digits",
             "pattern": "^\\+?[1-9]\\d{1,15}$"
           }
           },
@@ -257,12 +241,9 @@
           "name": "contact_relation",
           "type": "text",
           "label": "Relation",
-          "required": true
+          "required": false
           }
         ]
-        }
-      }
-      ]
     },
     {
       "title": "Device Details",
