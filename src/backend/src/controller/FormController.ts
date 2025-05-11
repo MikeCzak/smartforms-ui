@@ -45,7 +45,7 @@ export default class FormController {
         Logger.log(err.message);
         throw err;
       }
-      setTimeout(() => {res.send()}, 2000);
+      res.send();
       Logger.log(`...done. The file ${fileName} has been saved!`);
     });
   }
