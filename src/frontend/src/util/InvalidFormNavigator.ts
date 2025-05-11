@@ -21,6 +21,10 @@ export default class InvalidFormNavigator implements INavigator {
     });
   }
 
+  public get current(): IFormElement {
+    return this._current;
+  }
+
   public activate(): void {
     document.addEventListener('keydown', this.handleKeydown, true);
   }
@@ -95,6 +99,7 @@ export default class InvalidFormNavigator implements INavigator {
         this.highlightLockState(element);
       };
     }
+    element.dispatchEvent(new CustomEvent('activeElementUpdated', { bubbles: true, composed: true, detail: element }))
     this._current = element;
   }
 

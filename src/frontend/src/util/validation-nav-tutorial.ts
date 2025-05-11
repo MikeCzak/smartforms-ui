@@ -6,11 +6,13 @@ import { CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { customElement, query, queryAll, state } from "lit/decorators.js";
 import SmartInputs from "../styles/SmartInputs.js";
 import ValidationNavDemo from "../styles/ValidationNavDemo.js";
+import IFormElement from "../components/form-element/IFormElement.js";
 
 @customElement('validation-nav-tutorial')
 export default class ValidationNavTutorial extends LitElement {
 
   @state() _showHelp: boolean = false;
+  @state() lastFocus?: IFormElement;
   @query('#demo-element-1') demoField1!: HTMLElement;
   @query('#demo-element-2') demoField2!: HTMLElement;
   @query('#demo-element-3') demoField3!: HTMLElement;
@@ -18,8 +20,14 @@ export default class ValidationNavTutorial extends LitElement {
   @query('#up-key') upKey!: HTMLElement;
   @query('#down-key') downKey!: HTMLElement;
   @query('#esc-key') escKey!: HTMLElement;
+  @query('#got-it') gotIt!: HTMLElement;
+
 
   private animationAbortController?: AbortController;
+
+  public setLastFocus(el: IFormElement): void {
+    this.lastFocus = el;
+  }
 
 
   static styles?: CSSResultGroup =
@@ -32,7 +40,7 @@ export default class ValidationNavTutorial extends LitElement {
     return html`
       <div id="help" class="${this._showHelp ? ' show' : ''}">
         <md-elevated-card class="content">
-          <md-icon-button id="close-button" @click=${() => { this._showHelp = false; }} aria-label="close help">
+          <md-icon-button id="close-button" @click=${this.closeHelp} aria-label="close help">
             <my-icon icon="close"></my-icon>
           </md-icon-button>
           <h2>
@@ -103,7 +111,7 @@ export default class ValidationNavTutorial extends LitElement {
             </div>
           </div>
           <p style="align-self: flex-end">
-            <md-filled-button @click=${() => { this._showHelp = false; }}>Got it!</md-filled-button>
+            <md-filled-button id="got-it" @click=${this.closeHelp}>Got it!</md-filled-button>
           </p>
         </md-elevated-card>
       </div>
@@ -111,6 +119,11 @@ export default class ValidationNavTutorial extends LitElement {
         <my-icon slot="icon" icon="help"></my-icon>
       </md-fab>
     `
+  }
+
+  private closeHelp(): void {
+    this._showHelp = false;
+    this.lastFocus?.focus()
   }
 
   private static attachMarkers(element: HTMLElement): void {
@@ -155,6 +168,7 @@ export default class ValidationNavTutorial extends LitElement {
   private showHelp() {
     if(!this._showHelp) {
       this._showHelp = true;
+      requestAnimationFrame(() => {this.gotIt.focus();});
       this.startAnimation();
     }
   }
@@ -292,6 +306,4 @@ export default class ValidationNavTutorial extends LitElement {
       await delay(postDelayMs);
     }
   }
-
-
 }

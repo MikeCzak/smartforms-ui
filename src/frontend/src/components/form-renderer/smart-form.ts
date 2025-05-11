@@ -17,10 +17,12 @@ export default class SmartForm extends AbstractBaseForm {
 
   @property({type: String}) public formType: string = "smart_form";
   @state() _renderedElements?: IFormElement[];
+  @state() _hasBeenValidatedAtLeastOnce: boolean = false;
+  @state() _activeElement?: IFormElement;
 
   protected _formElementFactory: AbstractFormElementFactory;
   private _formNavigator?: InvalidFormNavigator;
-  @state() _hasBeenValidatedAtLeastOnce: boolean = false;
+
 
   constructor() {
     super();
@@ -40,6 +42,7 @@ export default class SmartForm extends AbstractBaseForm {
     this._formNavigator = new InvalidFormNavigator(this._formElements);
     this._formNavigator.activate();
     this._formNavigator.focusFirst();
+    this._activeElement = this._formNavigator.current;
     this.dispatchEvent(new CustomEvent('validateAll', { bubbles: true, composed: true }));
     this._hasBeenValidatedAtLeastOnce = true;
     return false;
@@ -47,11 +50,13 @@ export default class SmartForm extends AbstractBaseForm {
 
   connectedCallback(): void {
     super.connectedCallback();
+    this.addEventListener('activeElementUpdated', this.setActiveElement);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback()
     this._formNavigator?.deactivate();
+    this.removeEventListener('activeElementUpdated', this.setActiveElement);
   }
 
   protected override postParsingHook(): void {
@@ -99,8 +104,12 @@ export default class SmartForm extends AbstractBaseForm {
     return html`
     ${when(!this._submissionSuccessful, () => html`
       ${when(this._renderedElements, () => html`<smart-minimap .formElements=${this._renderedElements!}></smart-minimap>`)}
-      ${when(this._hasBeenValidatedAtLeastOnce, () => html`<validation-nav-tutorial></validation-nav-tutorial>`)}
+      ${when(this._hasBeenValidatedAtLeastOnce, () => html`<validation-nav-tutorial .lastFocus=${this._activeElement}></validation-nav-tutorial>`)}
         `)}
     `
+   }
+
+   private setActiveElement(e: Event) {
+    this._activeElement = (e as CustomEvent).detail;
    }
 }
