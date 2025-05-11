@@ -8,7 +8,6 @@ import IFormElement from '../form-element/IFormElement.js';
 import AbstractFormElementFactory from '../form-element/AbstractFormElementFactory.js';
 import AbstractSection from '../form-element/base-class/AbstractSection.js';
 import '../form-element/material/MaterialSection.js';
-import { isDev } from '../../smartforms-ui-frontend.js';
 import ApiClient from '../../util/ApiClient.js';
 import '../thank-you.js';
 import '../submission-error.js';
@@ -20,7 +19,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
   @property() public formTitle: string = '';
   @property({attribute: false}) public internalFormId!: string;
   @query('#form #elements') form!: HTMLFormElement;
-  @state() private _submissionSuccessful: boolean|null = null;
+  @state() protected _submissionSuccessful: boolean|null = null;
   @state() private _submitted: boolean = false;
 
   protected abstract _formElementFactory: AbstractFormElementFactory;
@@ -140,10 +139,9 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
               ${this._formElementFactory.getSubmit("Submit", this._submitted)}
             </div>
           </form>
-          ${(this._submitted && this.getSubmissionOverlay()) || ''}
-          ${isDev ? html`<div class="debug--formType">${this.formType}</div>` : ''}`
+          ${(this._submitted && this.getSubmissionOverlay()) || ''}`
         ],
-        [true, () => html`<thank-you .internalFormId=${this.internalFormId}></thank-you>`],
+        [true, () => html`<thank-you ?withFeedback=${this.formType === 'smart_form'} .internalFormId=${this.internalFormId}></thank-you>`],
         [false, () => html`<submission-error></submission-error>`],
       ])}
       ${this.customFormComponents()}

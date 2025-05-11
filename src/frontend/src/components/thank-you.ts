@@ -9,6 +9,7 @@ export default class ThankYou extends LitElement {
 
   @state() private _feedbackForm: Object = {};
   @property({type: String, attribute: false}) internalFormId!: string;
+  @property({type: Boolean, attribute: true}) withFeedback: boolean = false;
 
   static styles = css`
     .thank-you, .feedback {
@@ -32,27 +33,31 @@ export default class ThankYou extends LitElement {
 
   render() {
     return html`
-    <div class="thank-you">
-      <p><my-icon icon="task_alt" class="success"></my-icon> Form successfully submitted.</p>
-      <p>
-        Thank you SO MUCH for your time!<br>
-        You're almost there - please provide some feedback about the form
-        filling experience in the form below!
-      </p>
-    </div>
-    ${when(
-      !this._feedbackForm,
-      () => html`
-        <div class="feedback">
-          <h1>
-            <my-icon icon="chat" class="feedback-icon"></my-icon>
-            Feedback
-          </h1>
-          <smart-form .formData=${this._feedbackForm}></smart-form>
-        </div>
-      `,
-      () => html`<md-circular-progress indeterminate></md-circular-progress> loading feedback form...`
-    )}
+      <div class="thank-you">
+        <p><my-icon icon="task_alt" class="success"></my-icon> Form successfully submitted.</p>
+        <p>
+          Thank you SO MUCH for your time!
+        </p>
+      </div>
+      ${when(this.withFeedback, () => html`
+        <p>
+          You're almost there - please provide some feedback about the form
+          filling experience in the form below!
+        </p>
+        ${when(
+          !this._feedbackForm,
+          () => html`
+            <div class="feedback">
+              <h1>
+                <my-icon icon="chat" class="feedback-icon"></my-icon>
+                Feedback
+              </h1>
+              <smart-form .formData=${this._feedbackForm}></smart-form>
+            </div>
+          `,
+          () => html`<md-circular-progress indeterminate></md-circular-progress> loading feedback form...`
+        )}
+      `)}
     `;
   }
 
