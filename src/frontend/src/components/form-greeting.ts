@@ -81,15 +81,19 @@ export default class FormGreeting extends LitElement {
     return html`
       <md-elevated-card>
         <h2>Welcome to SmartForms UI!</h2>
-        <p style="color: var(--required); font-weight: bold">This prototype focuses on keyboard interaction and is not optimized for mobile.</p>
+        <p style="color: var(--required); font-weight: bold">This prototype focuses on keyboard interaction and is not optimized for mobile - please use a desktop computer or laptop, not a phone!</p>
         <p>
-          Thank you in advance for participating in my study - you're helping me a bunch! <br>
-          You will be presented a form that has been designed for test purposes, meaning its contents and
-          requirements do not necessarily reflect a real-world situation, but cover all the aspects I need to test.
-          You will be provided dummy data for fields regarding sensitive information (like account number) so that you don't have to enter any real data.
-          <span style="color: var(--required); font-weight: bold">You can access that dummy data anytime by clicking on the floating button in the bottom-right corner. Try it now!</span>
-          <br>You can use your real name, birthday, etc. but don't have to - I guarantee that your input is solely used for the empirical evaluation of the form filling process and
+          Thank you in advance for participating in this user study (for my bachelor thesis) - your help is very much appreciated! <br>
+          You will be presented a form that has been designed for test purposes only, meaning its contents and
+          requirements do not necessarily reflect a real-world situation (and might not make any sense in some cases), but cover all the aspects I need to test.<br>
+          My study is not about the content you enter, but about the form filling process itself. I guarantee that your input is solely used for the empirical evaluation of the form filling process and
           none of it will be in any way made public or given to third parties.
+          <span style="font-weight: bold"> I emphasize this because in order to make the process as natural and the test as accurate as possible, it would be ideal if you used data you are familiar with and have typed often in the past.</span>
+          <span style="color: var(--required); font-weight: bold">
+            You will be provided dummy data for some fields which you can access anytime by clicking on the floating info button in the bottom-right corner. Try it now!
+          </span>
+          The fields requiring dummy data will tell you so in the description.
+
           <br><br>Please try to
         </p>
 
@@ -109,7 +113,7 @@ export default class FormGreeting extends LitElement {
         </p>
         <label for="agreed">
           <md-checkbox id="agreed" aria-required="true" required @change=${this.handleCheck}></md-checkbox>
-          I have read the introduction above and am ready to start.
+          I know where to find my dummy data because I have read the introduction above and I am ready to start.
         </label>
         <form id="form" @submit=${this.handleSubmit}>
           <md-filled-button ?disabled=${!this._agreed} type=submit>Get started!</md-filled-button>
