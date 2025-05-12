@@ -110,8 +110,7 @@ export default class FormGreeting extends LitElement {
             <li>complete the form as quickly as possible.</li>
           </ul>
 
-          There is no time limit, but the completion time will be part of the measurements.
-        <p>
+        <p style="margin-bottom: 100px">
           When you're ready, please tick the checkbox below and then click the "Get started!" button.
           Thanks again - you rock! <span style="font-size:30px">&#x1F918;</span>
         </p>

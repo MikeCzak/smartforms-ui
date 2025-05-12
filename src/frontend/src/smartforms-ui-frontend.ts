@@ -141,9 +141,11 @@ export class SmartformsUiFrontend extends LitElement {
           </h2>
 
           <div class="content">
-            <h3>Personal Info</h3>
-            <p>Birthday:<br> 20.10.2000</p>
+            <h3>Payment Information</h3>
             <p>IBAN:<br> AT23 0400 9855 1607 1442</p>
+            <p>Master Card Number:<br>5273 8491 6638 9210</p>
+            <p>Expiry Date:<br>12/28</p>
+            <p>CVV:<br>738</p>
 
             <h3>Your Device Data</h3>
             <p></p>Router Model: <br>Tenda AX3000</p>

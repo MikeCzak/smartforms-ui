@@ -18,6 +18,16 @@
           }
         },
         {
+          "name": "middle_name",
+          "type": "text",
+          "label": "Middle Name",
+          "required": false,
+          "constraints": {
+            "info": "Must be letters only.",
+            "pattern": "^[A-Za-z]*$"
+          }
+        },
+        {
           "name": "last_name",
           "type": "text",
           "label": "Last Name",
@@ -27,6 +37,16 @@
             "minLength": 2,
             "maxLength": 50,
             "pattern": "^[A-Za-z]+$"
+          }
+        },
+        {
+          "name": "nickname",
+          "type": "text",
+          "label": "Nickname",
+          "required": false,
+          "constraints": {
+            "info": "Must be letters only.",
+            "pattern": "^[A-Za-z]*$"
           }
         },
         {
@@ -40,7 +60,7 @@
           "name": "gender",
           "type": "choice",
           "label": "Gender",
-          "options": ["Male", "Female", "Other"],
+          "options": ["Male", "Female", "Other", "Prefer not to say"],
           "required": true,
           "choiceType": "single"
         },
@@ -73,7 +93,13 @@
         {
           "name": "street",
           "type": "text",
-          "label": "Street Address",
+          "label": "Street",
+          "required": true
+        },
+        {
+          "name": "housenumber",
+          "type": "text",
+          "label": "House Number",
           "required": true
         },
         {
@@ -83,18 +109,24 @@
           "required": true
         },
         {
+          "name": "zipcode",
+          "type": "text",
+          "label": "ZIP/Postal Code",
+          "required": true
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "label": "State/Province",
+          "required": false
+        },
+        {
           "name": "country",
           "type": "choice",
           "label": "Country",
           "options": ["United States", "Canada", "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and/or Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Cook Islands", "Costa Rica", "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecudaor", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "France, Metropolitan", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard and Mc Donald Islands", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran (Islamic Republic of)", "Iraq", "Ireland", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, Democratic People's Republic of", "Korea, Republic of", "Kosovo", "Kuwait", "Kyrgyzstan", "Lao People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfork Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia South Sandwich Islands", "South Sudan", "Spain", "Sri Lanka", "St. Helena", "St. Pierre and Miquelon", "Sudan", "Suriname", "Svalbarn and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States minor outlying islands", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City State", "Venezuela", "Vietnam", "Virigan Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia", "Zaire", "Zambia", "Zimbabwe"],
           "required": true,
           "choiceType": "single"
-        },
-        {
-          "name": "zipcode",
-          "type": "text",
-          "label": "ZIP Code",
-          "required": true
         }
       ]
     },
@@ -135,8 +167,16 @@
           "name": "newsletter",
           "type": "choice",
           "label": "Subscribe to newsletter",
-          "options": ["Yes"],
+          "options": ["Yes", "No"],
           "required": true,
+          "choiceType": "single"
+        },
+        {
+          "name": "preferred_language",
+          "type": "choice",
+          "label": "Preferred Language",
+          "options": ["English", "Mandarin Chinese", "Hindi", "Spanish", "French", "Standard Arabic", "Bengali", "Russian", "Portuguese", "Urdu", "Indonesian", "German", "Japanese", "Swahili", "Marathi", "Telugu", "Turkish", "Tamil", "Punjabi", "Vietnamese", "Korean", "Wu Chinese", "Javanese", "Italian", "Egyptian Arabic", "Thai", "Gujarati", "Iranian Persian", "Kannada", "Polish", "Ukrainian", "Malayalam", "Hausa", "Oriya (Odia)", "Burmese", "Sundanese", "Romanian", "Hakka Chinese", "Yoruba", "Dutch", "Serbo-Croatian", "Amharic", "Fula", "Igbo", "Azerbaijani", "Maithili", "Uzbek", "Sindhi", "Nepali", "Tagalog", "Malay", "Pashto", "Xiang Chinese", "Saraiki", "Khmer", "Sinhalese", "Chhattisgarhi", "Magahi", "Madurese", "Assamese", "Marwari", "Hungarian", "Zulu", "Czech", "Greek", "Kazakh", "Kinyarwanda", "Dhundhari", "Swedish", "Haitian Creole", "Belarusian", "Hebrew", "Bulgarian", "Slovak", "Turkmen", "Finnish", "Norwegian", "Danish", "Lithuanian", "Latvian", "Slovenian", "Estonian", "Bosnian", "Albanian", "Georgian", "Armenian", "Macedonian", "Tatar", "Tajik", "Kurdish", "Chewa", "Mongolian", "Quechua", "Uyghur", "Basque", "Galician", "Welsh", "Irish", "Scottish Gaelic", "Catalan"],
+          "required": false,
           "choiceType": "single"
         },
         {
@@ -173,48 +213,56 @@
     },
     {
       "title": "Payment Information",
+      "info": "DUMMY DATA: Please find your IBAN and Credit Card information in \"Payment Information\"!",
       "fields": [
-        {
-          "name": "payment_method",
-          "type": "choice",
-          "info": "Please select your preferred payment method:",
-          "label": "Payment Method",
-          "options": ["Credit Card", "PayPal", "Bank Transfer"],
-          "required": true,
-          "choiceType": "single"
-        },
         {
           "name": "iban",
           "type": "text",
           "label": "IBAN",
           "required": true,
           "constraints": {
-            "info": "Must be a valid IBAN format (e.g., DE89370400440532013000).",
+            "info": "Must be a valid IBAN format: 2 letters, 2 digits, up to 30 alphanumeric (letter/number) characters, no spaces.",
             "pattern": "^[A-Z]{2}\\d{2}[A-Z0-9]{11,30}$",
             "maxLength": 34
           },
-          "dependsOn": {
-            "field": "payment_method",
-            "value": "Bank Transfer"
-          }
+          "expected": "AT230400985516071442"
         },
         {
-          "name": "credit_card_number",
+          "name": "master_card_number",
           "type": "text",
-          "label": "Credit Card Number",
+          "label": "Master Card Number",
           "required": true,
           "constraints": {
-            "info": "Must be a 16-digit credit card number.",
+            "info": "Must be a 16-digit Master Card number.",
             "pattern": "^[0-9]{16}$"
           },
           "grouping": {
-          "chunkSize": 4,
-          "delimiter": " "
+            "chunkSize": 4,
+            "delimiter": " "
+          },
+          "expected": "5273849166389210"
         },
-          "dependsOn": {
-            "field": "payment_method",
-            "value": "Credit Card"
-          }
+        {
+          "name": "mc_expiry_date",
+          "type": "text",
+          "label": "Expiry Date",
+          "required": true,
+          "constraints": {
+            "info": "Format: MM/YY",
+            "pattern": "^[0-9]{2}\/[0-9]{2}$"
+          },
+          "expected": "12/28"
+        },
+        {
+          "name": "mc_cvv",
+          "type": "text",
+          "label": "Card Verification Value (CVV)",
+          "required": true,
+          "constraints": {
+            "info": "Must be 3 digits",
+            "pattern": "^[0-9]{3}$"
+          },
+          "expected": "738"
         }
       ]
     },
@@ -446,7 +494,7 @@
         "info": "The Serial Number consists of 20 characters (numbers only), grouped in 5, divided by a dash.",
         "required": true,
         "constraints": {
-          "pattern": "^[-\\d]+$"
+          "pattern": "^[\\d\\-]+$"
         },
         "grouping": {
           "chunkSize": 5,
@@ -461,7 +509,7 @@
         "info": "The License Number consists of 20 characters (letters and numbers), grouped in 4, divided by a dash.",
         "required": true,
         "constraints": {
-          "pattern": "^[A-Za-z0-9]+$"
+          "pattern": "^[A-Za-z0-9\\-]+$"
         },
         "grouping": {
           "chunkSize": 4,
