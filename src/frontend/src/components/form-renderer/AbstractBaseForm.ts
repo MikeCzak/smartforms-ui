@@ -164,7 +164,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
     event.preventDefault();
     const isValid = this.validateForm();
 
-    if (isValid) { // TODO: remove debug not
+    if (isValid) {
       const form = event.target as HTMLFormElement;
       const formData = new FormData(form);
       const jsonData: { [key: string]: any } = {};
@@ -176,10 +176,10 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
       jsonData.metaData = {};
 
       this._formElements.forEach((e) => {
-        if(e.expected) {
+        if(e.expected !== undefined) {
           let {value} = e;
-          if(e.grouping?.delimiter) {
-            value = e.value.replace(e.grouping.delimiter, '');
+          if(e.grouping?.delimiter !== undefined) {
+            value = value.split(e.grouping.delimiter).join('');
           }
           e.metaData.set('expected', {expectedValue: e.expected, matchesValue: e.expected.toLocaleLowerCase() === (value as string).toLocaleLowerCase()})
         }
@@ -195,7 +195,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
       jsonData.totalFocusTime = totalFocusTime;
       jsonData.internalFormId = this.internalFormId;
       this._submitted = true;
-      ApiClient.saveForm(jsonData, this.formType).then(res => {
+      ApiClient.saveForm(jsonData, this.formType, this.internalFormId).then(res => {
         this._submissionSuccessful = res;
       })
       this.postSubmitCallback();
