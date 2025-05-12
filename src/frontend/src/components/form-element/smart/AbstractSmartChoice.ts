@@ -93,12 +93,12 @@ export default abstract class AbstractSmartChoice extends AbstractSmartElement {
     }
     switch(this.choiceType) {
       case "single":
-        if(this._numOptions < 5) {
+        if(this._numOptions <= 5) {
           this.renderType = "radio";
           this._grouped = false;
           return;
         }
-        if(this._numOptions < 15) {
+        if(this._numOptions <= 15) {
           this.renderType = "dropdown";
           return;
         }
