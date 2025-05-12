@@ -22,7 +22,7 @@
         {
           "name": "instant_validation_comment",
           "type": "textarea",
-          "label": "comment",
+          "label": "Comment",
           "info": "Additional feedback on instant validation",
           "required": false
         },
@@ -44,7 +44,7 @@
         {
           "name": "minimap_comment",
           "type": "textarea",
-          "label": "comment",
+          "label": "Comment",
           "info": "Additional feedback on the minimap",
           "required": false
         },
@@ -66,7 +66,7 @@
         {
           "name": "number_chunking_comment",
           "type": "textarea",
-          "label": "comment",
+          "label": "Comment",
           "info": "Additional feedback on number grouping",
           "required": false
         },
@@ -95,7 +95,7 @@
         {
           "name": "value_storage_comment",
           "type": "textarea",
-          "label": "comment",
+          "label": "Comment",
           "info": "Additional feedback on keeping the filled-in data in session storage",
           "required": false
         }
@@ -130,7 +130,7 @@
         {
           "name": "error_navigation_comment",
           "type": "textarea",
-          "label": "comment",
+          "label": "Comment",
           "info": "Additional feedback on navigating invalid fields",
           "required": false
         }
