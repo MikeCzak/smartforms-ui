@@ -30,8 +30,8 @@ app.get('/api/formtype/', (req, res, next) => {
   res.json({"formtype": smart ? 'smart' : 'material', "uuid": uuid});
 });
 
-app.post('/api/form/new/:formType', (req, res, next) => {
-  FormController.newForm(req.body, req.params.formType, res, next)
+app.post('/api/form/new/:formType/:formId', (req, res, next) => {
+  FormController.newForm(req.body, req.params.formType, req.params.formId, res, next)
 })
 
 

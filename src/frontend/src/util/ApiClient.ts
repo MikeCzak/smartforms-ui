@@ -36,9 +36,9 @@ export default class ApiClient {
     }
   }
 
-  public static async saveForm(jsonData: {[key: string]: any}, formType: string) {
+  public static async saveForm(jsonData: {[key: string]: any}, formType: string, formId: string) {
     try {
-      const response = await fetch(`${this.API_ROOT}/form/new/${formType}`, {
+      const response = await fetch(`${this.API_ROOT}/form/new/${formType}/${formId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

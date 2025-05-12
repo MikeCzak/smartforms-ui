@@ -29,10 +29,9 @@ export default class FormController {
     }
   }
 
-  public static async newForm(formData: string, formType: string, res: Response, next: NextFunction): Promise<void> {
+  public static async newForm(formData: string, formType: string, formId: string, res: Response, next: NextFunction): Promise<void> {
     const timestamp = new Date().toISOString();
-    const uuid = crypto.randomUUID();
-    const fileName = `${formType}_${timestamp}_${uuid}.json`;
+    const fileName = `${formType}_${timestamp}_${formId}.json`;
     const filePath = path.join(__dirname, '../../data', fileName);
     const dataToSave = {
       formType,
