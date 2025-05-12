@@ -14,7 +14,7 @@ import '../submission-error.js';
 
 export default abstract class AbstractBaseForm extends LitElement implements IForm {
 
-  @property({attribute: false}) public formData: { [key: string]: any } = {};
+  @property({attribute: false}) public formData!: { [key: string]: any };
   @property() public abstract formType: string;
   @property() public formTitle: string = '';
   @property({attribute: false}) public internalFormId!: string;

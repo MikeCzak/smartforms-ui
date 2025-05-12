@@ -7,7 +7,7 @@ import ApiClient from '../util/ApiClient.js';
 @customElement('thank-you')
 export default class ThankYou extends LitElement {
 
-  @state() private _feedbackForm: Object = {};
+  @state() private _feedbackForm: Object | null = null;
   @property({type: String, attribute: false}) internalFormId!: string;
   @property({type: Boolean, attribute: true}) withFeedback: boolean = false;
 
