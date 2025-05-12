@@ -108,7 +108,7 @@ export default class SmartInputs {
     padding: 6px 12px 12px 12px;
     box-sizing: border-box;
   }
-  input {
+  input, textarea {
     color: var(--md-sys-color-on-surface);
     font-family: monospace;
     display: block;
