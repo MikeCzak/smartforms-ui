@@ -130,23 +130,16 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
 
   render() {
     return html`
-      ${choose(this._submissionSuccessful, [
-        [null, () => html`
-          <h1>${this.formTitle}</h1>
-          <form @submit=${this.submitForm} id="form" novalidate>
-            <div id="elements"></div>
-            <div class="submit-button">
-              ${this._formElementFactory.getSubmit("Submit", this._submitted)}
-            </div>
-          </form>
-          ${(this._submitted && this.getSubmissionOverlay()) || ''}`
-        ],
-        [true, () => html`<thank-you ?withFeedback=${this.formType === 'smart_form'} .internalFormId=${this.internalFormId}></thank-you>`],
-        [false, () => html`<submission-error></submission-error>`],
-      ])}
+      <h1>${this.formTitle}</h1>
+      <form @submit=${this.submitForm} id="form" novalidate>
+        <div id="elements"></div>
+        <div class="submit-button">
+          ${this._formElementFactory.getSubmit("Submit", this._submitted)}
+        </div>
+      </form>
+      ${(this._submitted && this.getSubmissionOverlay()) || ''}
       ${this.customFormComponents()}
-    `
-    ;
+    `;
   }
 
   protected customFormComponents() {};
@@ -196,14 +189,13 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
       jsonData.internalFormId = this.internalFormId;
       this._submitted = true;
       ApiClient.saveForm(jsonData, this.formType, this.internalFormId).then(res => {
-        this._submissionSuccessful = res;
+        this.postSubmitCallback(res);
       })
-      this.postSubmitCallback();
     }
   }
 
-  protected postSubmitCallback(): void {
-    this.dispatchEvent(new CustomEvent('formSubmitted', {bubbles: true, composed: true}));
+  protected postSubmitCallback(submissionSuccessful: boolean): void {
+    this.dispatchEvent(new CustomEvent('formSubmitted', {bubbles: true, composed: true, detail: {"submissionSuccessful": submissionSuccessful, "formType": this.formType}}));
     sessionStorage.clear();
     localStorage.clear();
   };
