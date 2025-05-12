@@ -1,0 +1,152 @@
+{
+  "formTitle": "Feedback",
+  "sections": [
+    {
+      "title": "1. General Features",
+      "fields": [
+        {
+          "name": "instant_validation",
+          "type": "choice",
+          "choiceType": "single",
+          "label": "Instant Validation",
+          "info": "Did you find the instant format feedback while typing helpful (the format rules with ✅ and ❌ icons)?",
+          "required": false,
+          "options": [
+            "It made it way worse (-2)",
+            "It made it a little worse (-1)",
+            "It made no difference / I didn't notice it (0)",
+            "It was a little better (+1)",
+            "Very helpful (+2)"
+          ]
+        },
+        {
+          "name": "instant_validation_comment",
+          "type": "textarea",
+          "label": "comment",
+          "info": "Additional feedback on instant validation",
+          "required": false
+        },
+        {
+          "name": "minimap",
+          "type": "choice",
+          "choiceType": "single",
+          "label": "Minimap",
+          "info": "Did you find the minimap in the upper right corner helpful?",
+          "required": false,
+          "options": [
+            "It was annoying (-2)",
+            "It was a little distracting (-1)",
+            "It made no difference / I didn't notice it (0)",
+            "It helped a little (+1)",
+            "Very helpful (+2)"
+          ]
+        },
+        {
+          "name": "minimap_comment",
+          "type": "textarea",
+          "label": "comment",
+          "info": "Additional feedback on the minimap",
+          "required": false
+        },
+        {
+          "name": "number_chunking",
+          "type": "choice",
+          "choiceType": "single",
+          "label": "Grouping",
+          "info": "Did you find the automatically applied separators in large number fields like IBAN helpful?",
+          "required": false,
+          "options": [
+            "It was annoying (-2)",
+            "It was a little distracting (-1)",
+            "It made no difference / I didn't notice it (0)",
+            "It helped a little (+1)",
+            "Very helpful (+2)"
+          ]
+        },
+        {
+          "name": "number_chunking_comment",
+          "type": "textarea",
+          "label": "comment",
+          "info": "Additional feedback on number grouping",
+          "required": false
+        },
+        {
+          "name": "page_reload",
+          "type": "choice",
+          "choiceType": "single",
+          "label": "Page Reload",
+          "info": "Did you, at any point, (have to) reload the page?",
+          "required": false,
+          "options": ["Yes", "No"]
+        },
+        {
+          "name": "value_storage",
+          "type": "choice",
+          "choiceType": "single",
+          "label": "Input Storage",
+          "info": "If yes, did you find the fact that all values (except the password) were stored and re-filled upon reload helpful?",
+          "required": false,
+          "options": [
+            "It kinda worried me (-1)",
+            "It made no difference / I didn't notice it (0)",
+            "It was helpful (+1)"
+          ]
+        },
+        {
+          "name": "value_storage_comment",
+          "type": "textarea",
+          "label": "comment",
+          "info": "Additional feedback on keeping the filled-in data in session storage",
+          "required": false
+        }
+      ]
+    },
+    {
+      "title": "2. Form Validation and Navigation",
+      "fields": [
+        {
+          "name": "validation_errors",
+          "type": "choice",
+          "choiceType": "single",
+          "label": "Validation Errors",
+          "info": "Did you encounter any validation errors when clicking submit? If not, you can skip to section 3.",
+          "required": false,
+          "options": ["Yes", "No"]
+        },
+        {
+          "name": "error_navigation",
+          "type": "choice",
+          "choiceType": "single",
+          "label": "Error Navigation",
+          "info": "Did you find the navigation of invalid fields with the up/down arrows and esc helpful?",
+          "required": false,
+          "options": [
+            "It made it way worse (-2)",
+            "It made it a little worse (-1)",
+            "It made no difference / I didn't use it (0)",
+            "It was a little better (+1)",
+            "Very helpful (+2)"]
+        },
+        {
+          "name": "error_navigation_comment",
+          "type": "textarea",
+          "label": "comment",
+          "info": "Additional feedback on navigating invalid fields",
+          "required": false
+        }
+      ]
+    },
+    {
+      "title": "3. Final Thoughts",
+      "fields": [
+        {
+          "name": "miscellaneous",
+          "type": "textarea",
+          "label": "Additional Feedback",
+          "info": "Feel free to provide any comments, complaints, compliments, critique or anything else you can think of (starting with 'c').",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

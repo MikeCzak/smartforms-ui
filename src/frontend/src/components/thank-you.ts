@@ -45,14 +45,10 @@ export default class ThankYou extends LitElement {
           filling experience in the form below!
         </p>
         ${when(
-          !this._feedbackForm,
+          this._feedbackForm,
           () => html`
             <div class="feedback">
-              <h1>
-                <my-icon icon="chat" class="feedback-icon"></my-icon>
-                Feedback
-              </h1>
-              <smart-form .formData=${this._feedbackForm}></smart-form>
+              <smart-form .formType=${'feedback'} .formData=${this._feedbackForm!}></smart-form>
             </div>
           `,
           () => html`<md-circular-progress indeterminate></md-circular-progress> loading feedback form...`
