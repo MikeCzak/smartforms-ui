@@ -5,8 +5,10 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 
 # Note for future implementations
 - Read not only json but also XML, SQL-Schema, etc.
+- implement dependsOn logic
 - Use LLM for constraint pattern interpretation
 - Use LLM for reasonable date ranges depending on label
+- Use LLM to determine whether re-ordering required fields breaks logical sequence
 
 
 # Functional
@@ -28,16 +30,16 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
   - 5 - 15 options:
     - mobile: DL
     - desktop: LB
-- [ ] single
+- [x] single
   - 1 option:
-    - immediate effect (show/hide section): toggle
+    - ~~immediate effect (show/hide section): toggle~~
     - effect after submit: checkbox
   - <= 5 options: radio buttons
-  - 5 - 15 options:
-    - has default value: DL
+  - 6 - 15 options:
+    - ~~has default value: DL~~
     - no default value:
-      - mobile: DL
-      - desktop: LB
+      - ~~mobile: DL~~
+      - desktop: Searchable Dropdown
 - [x] both
   - \> 15 options: Dropdown with search field (text input)
 ### Date entry
@@ -60,7 +62,7 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 # Further improvement ideas
 - [x] don't clear fields on reload (save every input in session storage except password data) and clear after submit
 - [x] parse custom chunks/groupings with arbitrary delimiter
-- provide a click- and draggable "minimap" with accurate form field position, size and required state for a better overview
+- [x] provide a click- and draggable "minimap" with accurate form field position, size and required state for a better overview
 
 ---
 
@@ -70,7 +72,7 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 > ### Necessary Metadata:
 > - [x] section titles
 > - [x] min, max, minlength, maxlength
-> - [] include range input(s)
+> - [ ] ~~include range input(s)~~
 > - [x] regex pattern for specific format restrictions
 > - [x] chunk size for long data
 > - [x] FIX INVALID NAV SHAKING (tab problem)
@@ -87,10 +89,10 @@ Barcode Data | Depends on spec — but EAN-13 and Code128 often chunk digits for
 License Keys (generic) | Often 5 | ABCDE-FGHIJ-KLMNO-PQRST
 >
 > ### Inform User on Landing Page About
-> - [] erroneous form navigation
-> - [x] provided personal data (<span style="color: red">improve!</span>)
+> - [x] erroneous form navigation (added tutorial on first validation)
+> - [x] provided personal data
 >
 > ### Helpers
-> [x] generate unique id from label for html id
-> [] visitor for "fields exist that depend on this field" for toggle decision (maybe array is enough since dependsOn is in the interface)
-> [x] invalidIterator for post-submit navigation
+> - [x] generate unique id from label for html id
+> - [ ] ~~visitor for "fields exist that depend on this field" for toggle decision (maybe array is enough since dependsOn is in the interface)~~
+> - [x] invalidIterator for post-submit navigation
