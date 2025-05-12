@@ -147,8 +147,8 @@ export class SmartformsUiFrontend extends LitElement {
             <p>Expiry Date:<br>12/28</p>
             <p>CVV:<br>738</p>
 
-            <h3>Your Device Data</h3>
-            <p></p>Router Model: <br>Tenda AX3000</p>
+            <h3>Device Information</h3>
+            <p>Router Model: <br>Tenda AX3000</p>
             <p>MAC-Address: <br>8E:4A:C3:7B:92:F1</p>
             <p>Serial Number: <br>48372-10945-76283-59410</p>
             <p>License Number: <br>A7F3-KD92-Q1LM-48ZN-XR5B</p>

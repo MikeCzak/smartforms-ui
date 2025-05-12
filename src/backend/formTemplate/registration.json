@@ -295,7 +295,7 @@
     },
     {
       "title": "Device Details",
-      "info": "Find your device details in your dummy data.",
+      "info": "DUMMY DATA: Please find data regarding your device in \"Device Information\"!",
       "fields": [
       {
         "name": "device_name",
