@@ -20,6 +20,12 @@ export class PatternValidator {
         validate: input => input.length >= constraints.minLength
       })
     }
+    if(constraints.maxLength) {
+      this.rules.push({
+        description: `At most ${constraints.maxLength} characters`,
+        validate: input => input.length <= constraints.maxLength
+      })
+    }
     // TODO: improve parsed determination
     this.fullyParsed = this.rules.length > 0;
   }
@@ -108,11 +114,11 @@ export class PatternValidator {
       });
     }
 
-    if (pattern.includes("^[A-Za-z]+$")) {
+    if (pattern.includes("^[A-Za-zÄÖÜäöü]*$")) {
       recognized++;
       rules.push({
         description: "Only letters allowed",
-        validate: input => /^[A-Za-z]+$/.test(input),
+        validate: input => /^[A-Za-zÄÖÜäöü]*$/.test(input),
       });
     }
 
@@ -133,7 +139,7 @@ export class PatternValidator {
       });
     }
 
-
+    // TODO: expand on this:
     // Determine how many positive lookaheads (e.g. (?=...)) exist
     const patternParts = (pattern.match(/\(\?=/g) || []).length;
 

@@ -14,7 +14,7 @@
             "info": "Must be between 2 and 50 characters (letters only).",
             "minLength": 2,
             "maxLength": 50,
-            "pattern": "^[A-Za-z]+$"
+            "pattern": "^[A-Za-zÄÖÜäöü]*$"
           }
         },
         {
@@ -24,7 +24,7 @@
           "required": false,
           "constraints": {
             "info": "Must be letters only.",
-            "pattern": "^[A-Za-z]*$"
+            "pattern": "^[A-Za-zÄÖÜäöü]*$"
           }
         },
         {
@@ -36,7 +36,7 @@
             "info": "Must be between 2 and 50 characters (letters only).",
             "minLength": 2,
             "maxLength": 50,
-            "pattern": "^[A-Za-z]+$"
+            "pattern": "^[A-Za-zÄÖÜäöü]*$"
           }
         },
         {
@@ -46,7 +46,7 @@
           "required": false,
           "constraints": {
             "info": "Must be letters only.",
-            "pattern": "^[A-Za-z]*$"
+            "pattern": "^[A-Za-zÄÖÜäöü]*$"
           }
         },
         {
