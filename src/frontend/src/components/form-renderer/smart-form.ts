@@ -109,6 +109,10 @@ export default class SmartForm extends AbstractBaseForm {
     `
    }
 
+   protected postSubmitCallback(submissionSuccessful: boolean): void {
+    this.dispatchEvent(new CustomEvent('formSubmitted', {bubbles: true, composed: true, detail: {"submissionSuccessful": submissionSuccessful, "formType": this.formType}}));
+  };
+
    private setActiveElement(e: Event) {
     this._activeElement = (e as CustomEvent).detail;
    }

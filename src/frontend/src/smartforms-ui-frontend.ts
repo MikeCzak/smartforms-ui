@@ -7,6 +7,7 @@ import './components/form-greeting.js';
 import './components/theme-toggle.js';
 import './components/form-renderer/smart-form.js';
 import './components/form-renderer/material-form.js';
+import './components/form-renderer/feedback-form.js';
 import ApiClient from './util/ApiClient.js';
 
 export const isDev = document.location.hostname==='localhost';
@@ -19,9 +20,9 @@ export class SmartformsUiFrontend extends LitElement {
   @property({attribute: false}) private _formType: string|null = localStorage.getItem('formType');
 
   @state() private _showPersonalInfo: boolean = false;
-  @state() private _formSubmitted: boolean = false;
+  @state() private _formSubmitted: boolean = JSON.parse(sessionStorage.formSubmitted || 'false');
   @state() private _feedbackFormSubmitted: boolean = false;
-  @state() private _submissionSuccessful: boolean|null = null;
+  @state() private _submissionSuccessful: boolean|null = JSON.parse(sessionStorage.getItem('submissionSuccessful') || 'false') || null;
   @state() private _feedbackForm: Object | null = null;
 
   private _internalFormId: string | null = sessionStorage.getItem('internalFormId');
@@ -140,7 +141,7 @@ export class SmartformsUiFrontend extends LitElement {
                         <thank-you .formName=${'Feedback'}></thank-you>
                       `,
                       () => html`
-                        <smart-form .formType=${'feedback'} .formData=${this._feedbackForm!} .internalFormId=${this._internalFormId!}></smart-form>
+                        <feedback-form .formData=${this._feedbackForm!} .internalFormId=${this._internalFormId!}></feedback-form>
                        `)}
                   `,
                   () => html`<md-circular-progress indeterminate></md-circular-progress> loading feedback form...`
@@ -159,26 +160,28 @@ export class SmartformsUiFrontend extends LitElement {
           <my-icon slot="icon" icon="arrow_back"></my-icon>
         </md-fab>`)}
 
-        <div id="personal-info" class="${this._showPersonalInfo ? 'open': ''}">
-          <h2 class="headline">
-            Your Dummy Data
-            <md-icon-button id="close-personal-info-button" @click=${this.hidePersonalData} aria-label="Close dialog">
-              <my-icon icon="close"></my-icon>
-            </md-icon-button>
-          </h2>
-          <div class="content">
-            <h3>Payment Information</h3>
-            <p>IBAN:<br> AT23 0400 9855 1607 1442</p>
-            <p>Master Card Number:<br>5273 8491 6638 9210</p>
-            <p>Expiry Date:<br>12/28</p>
-            <p>CVV:<br>738</p>
-            <h3>Device Information</h3>
-            <p>Router Model: <br>Tenda AX3000</p>
-            <p>MAC-Address: <br>8E:4A:C3:7B:92:F1</p>
-            <p>Serial Number: <br>48372-10945-76283-59410</p>
-            <p>License Number: <br>A7F3-KD92-Q1LM-48ZN-XR5B</p>
+        ${when(!this._formSubmitted, () => html`
+          <div id="personal-info" class="${this._showPersonalInfo ? 'open': ''}">
+            <h2 class="headline">
+              Your Dummy Data
+              <md-icon-button id="close-personal-info-button" @click=${this.hidePersonalData} aria-label="Close dialog">
+                <my-icon icon="close"></my-icon>
+              </md-icon-button>
+            </h2>
+            <div class="content">
+              <h3>Payment Information</h3>
+              <p>IBAN:<br> AT23 0400 9855 1607 1442</p>
+              <p>Master Card Number:<br>5273 8491 6638 9210</p>
+              <p>Expiry Date:<br>12/28</p>
+              <p>CVV:<br>738</p>
+              <h3>Device Information</h3>
+              <p>Router Model: <br>Tenda AX3000</p>
+              <p>MAC-Address: <br>8E:4A:C3:7B:92:F1</p>
+              <p>Serial Number: <br>48372-10945-76283-59410</p>
+              <p>License Number: <br>A7F3-KD92-Q1LM-48ZN-XR5B</p>
+            </div>
           </div>
-        </div>
+        `)}
       `) || html`<pre>loading form data...</pre><md-circular-progress indeterminate></md-circular-progress>`;
   }
 
@@ -207,7 +210,9 @@ export class SmartformsUiFrontend extends LitElement {
   private submissionHandler(e: Event): void {
     const {submissionSuccessful, formType} = (e as CustomEvent).detail;
     this._formSubmitted = true;
+    sessionStorage.setItem('formSubmitted', "true");
     this._submissionSuccessful = submissionSuccessful;
+    sessionStorage.setItem('submissionSuccessful', submissionSuccessful);
     this._feedbackFormSubmitted = submissionSuccessful && formType === 'feedback';
     if(this._formType === 'smart') {
       this.loadFeedbackForm();
@@ -236,6 +241,9 @@ export class SmartformsUiFrontend extends LitElement {
         localStorage.setItem('formType', this._formType!)
         this.requestUpdate()
       }
+    }
+    if(this._submissionSuccessful) {
+      this.loadFeedbackForm();
     }
   }
 
