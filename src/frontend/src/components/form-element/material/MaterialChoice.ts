@@ -50,33 +50,45 @@ export default class MaterialChoice extends AbstractChoice {
   };
 
   private checkbox(grouped: boolean): HTMLTemplateResult {
+    let globalIndex = 0; // Initialize a global index
+
     return html`
-    <h4 class="label ${this._error ? 'error' : ''}">${this.label}${this.required?'*':''}</h4>
+      <h4 class="label ${this._error ? 'error' : ''}">${this.label}${this.required ? '*' : ''}</h4>
       ${this.info && html`<p class="info-text">${this.info}</p>`}
       ${when(grouped,
         () => html`
-        <div class="checkbox-group">
-          ${(this.options as { groupName: string; entries: string[] }[])
-            .slice()
-            .sort((a, b) => a.groupName.localeCompare(b.groupName))
-            .map(group => {
-              const sortedEntries = group.entries.slice().sort((a, b) => a.localeCompare(b));
-              return html`
-                <div class="choice-group">
-                  <h3 class="group-header">${group.groupName}</h3>
-                  ${sortedEntries.map((option, index) => html`
-                    <label for=${this.getOptionId(index)}>
-                      <md-checkbox class="material-field" ?required=${this.required} ?checked=${this.value.includes(option)} ?error=${this._error}
-                        id=${this.getOptionId(index)} .name=${this.id} value=${option} @change=${(event: Event) => this.handleCheckboxChange(event, option)}
-                      ></md-checkbox>
-                      ${option}
-                    </label>
-                  `)}
-                </div>
-              `;
-            })
-          }
-        </div>`,
+          <div class="checkbox-group">
+            ${(this.options as { groupName: string; entries: string[] }[])
+              .slice()
+              .sort((a, b) => a.groupName.localeCompare(b.groupName))
+              .map(group => {
+                const sortedEntries = group.entries.slice().sort((a, b) => a.localeCompare(b));
+                return html`
+                  <div class="choice-group">
+                    <h3 class="group-header">${group.groupName}</h3>
+                    ${sortedEntries.map(option => {
+                      const index = globalIndex ++; // Use and increment the global index
+                      return html`
+                        <label for=${this.getOptionId(index)}>
+                          <md-checkbox
+                            class="material-field"
+                            ?required=${this.required}
+                            ?checked=${this.value.includes(option)}
+                            ?error=${this._error}
+                            id=${this.getOptionId(index)}
+                            .name=${this.id}
+                            value=${option}
+                            @change=${(event: Event) => this.handleCheckboxChange(event, option)}
+                          ></md-checkbox>
+                          ${option}
+                        </label>
+                      `;
+                    })}
+                  </div>
+                `;
+              })}
+          </div>
+        `,
         () => html`
           ${(this.options as string[]).map((option, index) => html`
             <label for=${this.getOptionId(index)}>
@@ -96,8 +108,8 @@ export default class MaterialChoice extends AbstractChoice {
         `
       )}
       ${this._errorText && html`<p class="error-text">${this._errorText}</p>`}
-      `
-  };
+    `;
+  }
 
   private dropdown(grouped: boolean): HTMLTemplateResult {
     return html`

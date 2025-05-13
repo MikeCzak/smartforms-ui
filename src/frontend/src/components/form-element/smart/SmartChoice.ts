@@ -55,6 +55,8 @@ export default class SmartChoice extends AbstractSmartChoice {
   };
 
   protected checkbox(grouped: boolean): HTMLTemplateResult {
+    let globalIndex = 0;
+
     return html`
       ${this.info && html`<p>${this.info}</p>`}
       ${when(grouped,
@@ -68,14 +70,16 @@ export default class SmartChoice extends AbstractSmartChoice {
               return html`
                 <div class="choice-group">
                   <h3 class="group-header">${group.groupName}</h3>
-                  ${sortedEntries.map((option, index) => html`
+                  ${sortedEntries.map(option => {
+                  const index = globalIndex++;
+                  return html`
                     <label for=${this.getOptionId(index)}>
                       <md-checkbox tabindex=${this._checkBoxesTabbable ? '0' : '-1'} class="material-field" ?required=${this.required} ?checked=${this.value.includes(option)} ?error=${this._error}
                         id=${this.getOptionId(index)} .name=${this.id} value=${option} @change=${(event: Event) => this.handleCheckboxChange(event, option)}
                       ></md-checkbox>
                       ${option}
                     </label>
-                  `)}
+                  `})}
                 </div>
               `;
             })
