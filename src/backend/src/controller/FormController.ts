@@ -29,14 +29,25 @@ export default class FormController {
     }
   }
 
-  public static async newForm(formData: string, formType: string, formId: string, res: Response, next: NextFunction): Promise<void> {
+  public static async newForm(
+    formData: {submittedData: string, metaData?: string, totalFocusTime?: string, internalFormId?: string, feedback?: string, totalScore?: number},
+    formType: string,
+    formId: string,
+    res: Response, next: NextFunction
+  ): Promise<void>{
     const timestamp = new Date().toISOString();
     const fileName = `${formType}_${timestamp}_${formId}.json`;
     const filePath = path.join(__dirname, '../../data', fileName);
+    const {submittedData, metaData, totalFocusTime, internalFormId, feedback, totalScore} = formData;
     const dataToSave = {
       formType,
       timestamp,
-      formData: formData,
+      internalFormId,
+      totalFocusTime,
+      totalScore,
+      submittedData,
+      metaData,
+      feedback
     };
     Logger.log("Attempting to save form to file...")
     fs.writeFile(filePath, JSON.stringify(dataToSave, null, 2), 'utf-8', (err) => {

@@ -1,7 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { LitElement, html, css, HTMLTemplateResult, CSSResultGroup } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
-import { choose } from 'lit/directives/choose.js';
 import '@material/web/all.js';
 import IForm from './IForm.js';
 import IFormElement from '../form-element/IFormElement.js';
@@ -20,7 +19,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
   @property({attribute: false}) public internalFormId!: string;
   @query('#form #elements') form!: HTMLFormElement;
   @state() protected _submissionSuccessful: boolean|null = null;
-  @state() private _submitted: boolean = false;
+  @state() protected _submitted: boolean = false;
 
   protected abstract _formElementFactory: AbstractFormElementFactory;
   protected _formSections: AbstractSection[] = [];
@@ -153,7 +152,7 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
     this.parseData(this.formData);
   }
 
-  private async submitForm(event: SubmitEvent): Promise<void> {
+  protected submitForm(event: SubmitEvent): void {
     event.preventDefault();
     const isValid = this.validateForm();
 
@@ -161,10 +160,11 @@ export default abstract class AbstractBaseForm extends LitElement implements IFo
       const form = event.target as HTMLFormElement;
       const formData = new FormData(form);
       const jsonData: { [key: string]: any } = {};
+      jsonData.submittedData = {};
       let totalFocusTime = 0;
 
       formData.forEach((value, key) => {
-        jsonData[key] = value;
+        jsonData.submittedData[key] = value;
       });
       jsonData.metaData = {};
 
