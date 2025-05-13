@@ -101,6 +101,8 @@ export class SmartformsUiFrontend extends LitElement {
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        max-height: 50vh;
+        overflow-y: scroll;
 
         & h3 {
           margin-block-end: .25em;
@@ -169,11 +171,30 @@ export class SmartformsUiFrontend extends LitElement {
               </md-icon-button>
             </h2>
             <div class="content">
+
+
+              <h3>Personal Information</h3>
+              <p>Email:<br> alex.taylor78@example.com</p>
+              <p>Phone number:<br>+1 415 839 2047</p>
+
+              <h3>Address Data</h3>
+              <p>Street:<br> Maplewood Avenue</p>
+              <p>House Number:<br>327</p>
+              <p>ZIP/Postal Code:<br>94121</p>
+              <p>State/Province:<br>California</p>
+              <p>Country:<br>United States</p>
+
+              <h3>Emergency Contact</h3>
+              <p>Name:<br>Jamie Morgan</p>
+              <p>Phone number:<br>+43 660 126 48 62</p>
+              <p>Relation:<br>Brother</p>
+
               <h3>Payment Information</h3>
               <p>IBAN:<br> AT23 0400 9855 1607 1442</p>
               <p>Master Card Number:<br>5273 8491 6638 9210</p>
               <p>Expiry Date:<br>12/28</p>
               <p>CVV:<br>738</p>
+
               <h3>Device Information</h3>
               <p>Router Model: <br>Tenda AX3000</p>
               <p>MAC-Address: <br>8E:4A:C3:7B:92:F1</p>

@@ -130,6 +130,27 @@
             "Very helpful (+2)"]
         },
         {
+          "name": "tab_navigation",
+          "type": "choice",
+          "choiceType": "single",
+          "label": "Tab Navigation",
+          "info": "In case you used TAB to navigate between fields, did you find it helpful that the form automatically scrolled?",
+          "required": false,
+          "options": [
+            "It made it way worse (-2)",
+            "It made it a little worse (-1)",
+            "It made no difference / I didn't use it (0)",
+            "It was a little better (+1)",
+            "Very helpful (+2)"]
+        },
+        {
+          "name": "tab_navigation_comment",
+          "type": "textarea",
+          "label": "Comment",
+          "info": "Additional feedback on navigating with TAB",
+          "required": false
+        },
+        {
           "name": "error_navigation_comment",
           "type": "textarea",
           "label": "Comment",

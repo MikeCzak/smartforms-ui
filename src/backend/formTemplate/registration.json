@@ -3,7 +3,7 @@
   "sections": [
     {
       "title": "Personal Information",
-      "info": "Please provide personal information here",
+      "info": "DUMMY DATA: If you do not want to use your own phone number and email, please use the data in \"Personal Information\"!",
       "fields": [
         {
           "name": "first_name",
@@ -70,7 +70,7 @@
           "label": "Phone Number",
           "required": false,
           "constraints": {
-            "info": "Can start with optional +, then one non-zero digit, then digits",
+            "info": "Can start with optional +, then one non-zero digit, then digits, NO SPACES",
             "pattern": "^\\+?[1-9]\\d{1,15}$",
             "maxLength": 16
           }
@@ -89,6 +89,7 @@
     },
     {
       "title": "Address Details",
+      "info": "DUMMY DATA: If you do not want to use you own address, please use the data in \"Address Data\"!",
       "fields": [
         {
           "name": "street",
@@ -132,6 +133,7 @@
     },
     {
       "title": "Account Information",
+      "info": "You don't have to remember any of this - this test is about filling in specific fields and formats only. Just try to meet the format requirements! :)",
       "fields": [
         {
           "name": "username",
@@ -278,10 +280,11 @@
           {
           "name": "contact_phone",
           "type": "tel",
+          "info": "DUMMY DATA: If you do not want to use your own phone number, please use the data in \"Personal Information\"!",
           "label": "Contact Phone",
           "required": false,
           "constraints": {
-            "info": "Can start with optional +, then one non-zero digit, then digits",
+            "info": "Can start with optional +, then one non-zero digit, then digits, NO SPACES",
             "pattern": "^\\+?[1-9]\\d{1,15}$"
           }
           },
