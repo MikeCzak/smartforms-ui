@@ -9,6 +9,7 @@ The following is a list of rules, both already implemented ([x]) and planned ([ 
 - Use LLM for constraint pattern interpretation
 - Use LLM for reasonable date ranges depending on label
 - Use LLM to determine whether re-ordering required fields breaks logical sequence
+- Use LLM to determine a commonly known representation style and invoke a formatter based on that (e.g. uppercase MAC Address)
 
 
 # Functional
