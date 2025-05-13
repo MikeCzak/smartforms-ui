@@ -1,0 +1,200 @@
+{
+  "formType": "smart_form",
+  "timestamp": "2025-05-13T02:06:44.742Z",
+  "internalFormId": "4e601b32-8a4d-468f-bf63-80d9fb2e6bdf",
+  "totalFocusTime": 138457,
+  "submittedData": {
+    "first_name_1": "Michael",
+    "middle_name_1": "Kurt",
+    "last_name_1": "Czak",
+    "nickname_1": "Mike",
+    "dob_1": "1987-01-20",
+    "gender_1": "Male",
+    "phone_1": "",
+    "email_1": "mczak87@gmail.com",
+    "street_1": "Adriach-Rabenstein",
+    "housenumber_1": "83",
+    "city_1": "Frohnleiten",
+    "zipcode_1": "8130",
+    "state_1": "",
+    "country_1": "Austria",
+    "username_1": "MikeCzak",
+    "password_1": "asdfASDF234$%",
+    "newsletter_1": "Yes",
+    "preferred_language_1": "German",
+    "topics_1": "Action",
+    "iban_1": "AT230400985516071443",
+    "master_card_number_1": "5273849166389210",
+    "mc_expiry_date_1": "12/28",
+    "mc_cvv_1": "138",
+    "contact_name_1": "Sonja",
+    "contact_phone_1": "+4369917217555",
+    "contact_relation_1": "",
+    "device_name_1": "AX3000",
+    "mac_address_1": "8e4ac37b92f1",
+    "serial_no_1": "48372109457628359410",
+    "license_number_1": "a7f3kd92q1lm48znxr5b"
+  },
+  "metaData": {
+    "first_name_1": {
+      "focusTime": 5483,
+      "validationErrors": []
+    },
+    "middle_name_1": {
+      "focusTime": 2601,
+      "validationErrors": []
+    },
+    "last_name_1": {
+      "focusTime": 958,
+      "validationErrors": []
+    },
+    "nickname_1": {
+      "focusTime": 2131,
+      "validationErrors": []
+    },
+    "dob_1": {
+      "focusTime": 4754,
+      "validationErrors": []
+    },
+    "gender_1": {
+      "focusTime": 2135,
+      "validationErrors": []
+    },
+    "phone_1": {
+      "focusTime": 4761,
+      "validationErrors": []
+    },
+    "email_1": {
+      "focusTime": 3959,
+      "validationErrors": []
+    },
+    "street_1": {
+      "focusTime": 7241,
+      "validationErrors": []
+    },
+    "housenumber_1": {
+      "focusTime": 1326,
+      "validationErrors": []
+    },
+    "city_1": {
+      "focusTime": 8078,
+      "validationErrors": []
+    },
+    "zipcode_1": {
+      "focusTime": 2932,
+      "validationErrors": []
+    },
+    "state_1": {
+      "focusTime": 2156,
+      "validationErrors": []
+    },
+    "country_1": {
+      "focusTime": 2399,
+      "validationErrors": []
+    },
+    "username_1": {
+      "focusTime": 2780,
+      "validationErrors": []
+    },
+    "password_1": {
+      "focusTime": 4228,
+      "validationErrors": []
+    },
+    "newsletter_1": {
+      "focusTime": 2241,
+      "validationErrors": []
+    },
+    "preferred_language_1": {
+      "focusTime": 3343,
+      "validationErrors": []
+    },
+    "topics_1": {
+      "focusTime": 9470,
+      "validationErrors": []
+    },
+    "iban_1": {
+      "focusTime": 21876,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "AT230400985516071442",
+        "matchesValue": false
+      }
+    },
+    "master_card_number_1": {
+      "focusTime": 7491,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "5273849166389210",
+        "matchesValue": true
+      }
+    },
+    "mc_expiry_date_1": {
+      "focusTime": 2727,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "12/28",
+        "matchesValue": true
+      }
+    },
+    "mc_cvv_1": {
+      "focusTime": 1717,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "738",
+        "matchesValue": false
+      }
+    },
+    "contact_name_1": {
+      "focusTime": 9141,
+      "validationErrors": []
+    },
+    "contact_phone_1": {
+      "focusTime": 4439,
+      "validationErrors": []
+    },
+    "contact_relation_1": {
+      "focusTime": 1516,
+      "validationErrors": []
+    },
+    "device_name_1": {
+      "focusTime": 4990,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "AX3000",
+        "matchesValue": true
+      }
+    },
+    "mac_address_1": {
+      "focusTime": 11584,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "8E4AC37B92F1",
+        "matchesValue": true
+      }
+    },
+    "serial_no_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ],
+      "expected": {
+        "expectedValue": "48372109457628359410",
+        "matchesValue": true
+      }
+    },
+    "license_number_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ],
+      "expected": {
+        "expectedValue": "A7F3KD92Q1LM48ZNXR5B",
+        "matchesValue": true
+      }
+    }
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "formType": "smart_form",
+  "timestamp": "2025-05-13T09:25:36.478Z",
+  "internalFormId": "73bd0634-f8b5-4edf-bf35-d0f05412f52a",
+  "totalFocusTime": 263189,
+  "submittedData": {
+    "first_name_1": "Michael",
+    "middle_name_1": "Spassbremse",
+    "last_name_1": "Hirsch",
+    "nickname_1": "Hirschi",
+    "dob_1": "1984-08-09",
+    "gender_1": "Male",
+    "phone_1": "+4369919792161",
+    "email_1": "michael.hirsch84@gmx.at",
+    "street_1": "Schweidlgasse",
+    "housenumber_1": "19/64",
+    "city_1": "Wien",
+    "zipcode_1": "1020",
+    "state_1": "Vienna",
+    "country_1": "Austria",
+    "username_1": "Syphedias",
+    "password_1": "YourLordJesus1503!",
+    "newsletter_1": "Yes",
+    "preferred_language_1": "German",
+    "topics_1": "Action,Comedy,Documentary,Fantasy,Sci-Fi,Romance,Thriller,Drama,Electronic,Hip-Hop,Jazz,Pop,Rock,Classical,Astronomy,Ecology,Genetics,Mathematics,Physics,Athletics,Football,Baseball,AI,AR/VR,Big Data,Blockchain,Cloud Computing,Game Development,Cybersecurity,IoT,Quantum Computing,Web Development",
+    "iban_1": "AT230400985516071442",
+    "master_card_number_1": "5273849166389210",
+    "mc_expiry_date_1": "12/28",
+    "mc_cvv_1": "738",
+    "contact_name_1": "Tatjana",
+    "contact_phone_1": "+4365012345678",
+    "contact_relation_1": "better half",
+    "device_name_1": "AX3000",
+    "mac_address_1": "8E4AC37B92F1",
+    "serial_no_1": "48372109457628359410",
+    "license_number_1": "A7F3KD92Q1LM48ZNXR5B"
+  },
+  "metaData": {
+    "first_name_1": {
+      "focusTime": 2428,
+      "validationErrors": []
+    },
+    "middle_name_1": {
+      "focusTime": 13787,
+      "validationErrors": []
+    },
+    "last_name_1": {
+      "focusTime": 875,
+      "validationErrors": []
+    },
+    "nickname_1": {
+      "focusTime": 3423,
+      "validationErrors": []
+    },
+    "dob_1": {
+      "focusTime": 7539,
+      "validationErrors": []
+    },
+    "gender_1": {
+      "focusTime": 6946,
+      "validationErrors": []
+    },
+    "phone_1": {
+      "focusTime": 2925,
+      "validationErrors": []
+    },
+    "email_1": {
+      "focusTime": 0,
+      "validationErrors": []
+    },
+    "street_1": {
+      "focusTime": 1,
+      "validationErrors": []
+    },
+    "housenumber_1": {
+      "focusTime": 0,
+      "validationErrors": []
+    },
+    "city_1": {
+      "focusTime": 0,
+      "validationErrors": []
+    },
+    "zipcode_1": {
+      "focusTime": 0,
+      "validationErrors": []
+    },
+    "state_1": {
+      "focusTime": 2588,
+      "validationErrors": []
+    },
+    "country_1": {
+      "focusTime": 3952,
+      "validationErrors": []
+    },
+    "username_1": {
+      "focusTime": 14069,
+      "validationErrors": []
+    },
+    "password_1": {
+      "focusTime": 11796,
+      "validationErrors": []
+    },
+    "newsletter_1": {
+      "focusTime": 1253,
+      "validationErrors": []
+    },
+    "preferred_language_1": {
+      "focusTime": 2208,
+      "validationErrors": []
+    },
+    "topics_1": {
+      "focusTime": 58345,
+      "validationErrors": []
+    },
+    "iban_1": {
+      "focusTime": 10547,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "AT230400985516071442",
+        "matchesValue": true
+      }
+    },
+    "master_card_number_1": {
+      "focusTime": 6455,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "5273849166389210",
+        "matchesValue": true
+      }
+    },
+    "mc_expiry_date_1": {
+      "focusTime": 5208,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "12/28",
+        "matchesValue": true
+      }
+    },
+    "mc_cvv_1": {
+      "focusTime": 4510,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "738",
+        "matchesValue": true
+      }
+    },
+    "contact_name_1": {
+      "focusTime": 2784,
+      "validationErrors": []
+    },
+    "contact_phone_1": {
+      "focusTime": 9864,
+      "validationErrors": []
+    },
+    "contact_relation_1": {
+      "focusTime": 6352,
+      "validationErrors": []
+    },
+    "device_name_1": {
+      "focusTime": 22400,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "AX3000",
+        "matchesValue": true
+      }
+    },
+    "mac_address_1": {
+      "focusTime": 34723,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "8E4AC37B92F1",
+        "matchesValue": true
+      }
+    },
+    "serial_no_1": {
+      "focusTime": 10032,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "48372109457628359410",
+        "matchesValue": true
+      }
+    },
+    "license_number_1": {
+      "focusTime": 18179,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "A7F3KD92Q1LM48ZNXR5B",
+        "matchesValue": true
+      }
+    }
+  }
+}

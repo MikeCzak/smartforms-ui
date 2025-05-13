@@ -1,0 +1,192 @@
+{
+  "formType": "smart_form",
+  "timestamp": "2025-05-13T09:05:20.764Z",
+  "internalFormId": "40a33207-6294-4742-b4fb-654697b75df7",
+  "totalFocusTime": 418335,
+  "submittedData": {
+    "first_name_1": "Valerio",
+    "middle_name_1": "vale",
+    "last_name_1": "Zanini",
+    "nickname_1": "vale",
+    "dob_1": "1989-04-28",
+    "gender_1": "Male",
+    "phone_1": "+436606142714",
+    "email_1": "valeriozanini.vz@gmail.com",
+    "street_1": "Alte Poststraße ",
+    "housenumber_1": "58",
+    "city_1": "Graz",
+    "zipcode_1": "8020",
+    "state_1": "Styria",
+    "country_1": "Austria",
+    "username_1": "thisimypersonaluser",
+    "password_1": "TheBestPasswordof2025@",
+    "newsletter_1": "Yes",
+    "preferred_language_1": "English",
+    "topics_1": "Blues,Electronic,Jazz,Hip-Hop,Physics,Mathematics,Action,Thriller,Documentary,Basketball,Skiing,Tennis,Big Data,IoT,Web Development",
+    "iban_1": "AT230400985516071442",
+    "master_card_number_1": "5273849166389210",
+    "mc_expiry_date_1": "12/28",
+    "mc_cvv_1": "738",
+    "contact_name_1": "Marie",
+    "contact_phone_1": "+430011223355",
+    "contact_relation_1": "Partner",
+    "device_name_1": "AX3000",
+    "mac_address_1": "8E4AC37B92F1",
+    "serial_no_1": "48372109457628359410",
+    "license_number_1": "A7F3KD92Q1LM48ZNXR5B"
+  },
+  "metaData": {
+    "first_name_1": {
+      "focusTime": 7850,
+      "validationErrors": []
+    },
+    "middle_name_1": {
+      "focusTime": 1621,
+      "validationErrors": []
+    },
+    "last_name_1": {
+      "focusTime": 4732,
+      "validationErrors": []
+    },
+    "nickname_1": {
+      "focusTime": 3747,
+      "validationErrors": []
+    },
+    "dob_1": {
+      "focusTime": 7616,
+      "validationErrors": []
+    },
+    "gender_1": {
+      "focusTime": 1089,
+      "validationErrors": []
+    },
+    "phone_1": {
+      "focusTime": 8172,
+      "validationErrors": []
+    },
+    "email_1": {
+      "focusTime": 15576,
+      "validationErrors": []
+    },
+    "street_1": {
+      "focusTime": 9062,
+      "validationErrors": []
+    },
+    "housenumber_1": {
+      "focusTime": 2694,
+      "validationErrors": []
+    },
+    "city_1": {
+      "focusTime": 2507,
+      "validationErrors": []
+    },
+    "zipcode_1": {
+      "focusTime": 2101,
+      "validationErrors": []
+    },
+    "state_1": {
+      "focusTime": 9236,
+      "validationErrors": []
+    },
+    "country_1": {
+      "focusTime": 5603,
+      "validationErrors": []
+    },
+    "username_1": {
+      "focusTime": 17367,
+      "validationErrors": []
+    },
+    "password_1": {
+      "focusTime": 35649,
+      "validationErrors": []
+    },
+    "newsletter_1": {
+      "focusTime": 985,
+      "validationErrors": []
+    },
+    "preferred_language_1": {
+      "focusTime": 6954,
+      "validationErrors": []
+    },
+    "topics_1": {
+      "focusTime": 53848,
+      "validationErrors": []
+    },
+    "iban_1": {
+      "focusTime": 12949,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "AT230400985516071442",
+        "matchesValue": true
+      }
+    },
+    "master_card_number_1": {
+      "focusTime": 12821,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "5273849166389210",
+        "matchesValue": true
+      }
+    },
+    "mc_expiry_date_1": {
+      "focusTime": 11874,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "12/28",
+        "matchesValue": true
+      }
+    },
+    "mc_cvv_1": {
+      "focusTime": 4286,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "738",
+        "matchesValue": true
+      }
+    },
+    "contact_name_1": {
+      "focusTime": 23054,
+      "validationErrors": []
+    },
+    "contact_phone_1": {
+      "focusTime": 27902,
+      "validationErrors": []
+    },
+    "contact_relation_1": {
+      "focusTime": 16883,
+      "validationErrors": []
+    },
+    "device_name_1": {
+      "focusTime": 18578,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "AX3000",
+        "matchesValue": true
+      }
+    },
+    "mac_address_1": {
+      "focusTime": 20895,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "8E4AC37B92F1",
+        "matchesValue": true
+      }
+    },
+    "serial_no_1": {
+      "focusTime": 20653,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "48372109457628359410",
+        "matchesValue": true
+      }
+    },
+    "license_number_1": {
+      "focusTime": 52031,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "A7F3KD92Q1LM48ZNXR5B",
+        "matchesValue": true
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "formType": "feedback",
+  "timestamp": "2025-05-13T02:07:05.190Z",
+  "internalFormId": "4e601b32-8a4d-468f-bf63-80d9fb2e6bdf",
+  "totalScore": 9,
+  "feedback": {
+    "instant_validation_1": {
+      "answer": "Very helpful (+2)",
+      "score": 2
+    },
+    "instant_validation_comment_1": {
+      "answer": "",
+      "score": 0
+    },
+    "minimap_1": {
+      "answer": "Very helpful (+2)",
+      "score": 2
+    },
+    "minimap_comment_1": {
+      "answer": "",
+      "score": 0
+    },
+    "number_chunking_1": {
+      "answer": "Very helpful (+2)",
+      "score": 2
+    },
+    "number_chunking_comment_1": {
+      "answer": "",
+      "score": 0
+    },
+    "page_reload_1": {
+      "answer": "Yes",
+      "score": 0
+    },
+    "value_storage_1": {
+      "answer": "It was helpful (+1)",
+      "score": 1
+    },
+    "value_storage_comment_1": {
+      "answer": "",
+      "score": 0
+    },
+    "validation_errors_1": {
+      "answer": "Yes",
+      "score": 0
+    },
+    "error_navigation_1": {
+      "answer": "Very helpful (+2)",
+      "score": 2
+    },
+    "error_navigation_comment_1": {
+      "answer": "",
+      "score": 0
+    },
+    "miscellaneous_1": {
+      "answer": "",
+      "score": 0
+    }
+  }
+}
