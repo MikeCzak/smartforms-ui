@@ -11,10 +11,9 @@
           "label": "First Name",
           "required": true,
           "constraints": {
-            "info": "Must be between 2 and 50 characters (letters only).",
+            "info": "Must be between 2 and 50 characters.",
             "minLength": 2,
-            "maxLength": 50,
-            "pattern": "^[A-Za-zÄÖÜäöü]*$"
+            "maxLength": 50
           }
         },
         {
@@ -33,21 +32,16 @@
           "label": "Last Name",
           "required": true,
           "constraints": {
-            "info": "Must be between 2 and 50 characters (letters only).",
+            "info": "Must be between 2 and 50 characters.",
             "minLength": 2,
-            "maxLength": 50,
-            "pattern": "^[A-Za-zÄÖÜäöü]*$"
+            "maxLength": 50
           }
         },
         {
           "name": "nickname",
           "type": "text",
           "label": "Nickname",
-          "required": false,
-          "constraints": {
-            "info": "Must be letters only.",
-            "pattern": "^[A-Za-zÄÖÜäöü]*$"
-          }
+          "required": false
         },
         {
           "name": "dob",
