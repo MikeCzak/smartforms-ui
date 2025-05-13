@@ -7,6 +7,7 @@ import AbstractBaseForm from './AbstractBaseForm.js';
 import AbstractFormElementFactory from '../form-element/AbstractFormElementFactory.js';
 import SmartFormElementFactory from '../form-element/SmartFormElementFactory.js';
 import ApiClient from '../../util/ApiClient.js';
+import SmartChoice from '../form-element/smart/SmartChoice.js';
 
 
 @customElement('feedback-form')
@@ -28,28 +29,26 @@ export default class FeedbackForm extends AbstractBaseForm {
 
   protected override submitForm(event: SubmitEvent): void {
       event.preventDefault();
-
-
-
-        const form = event.target as HTMLFormElement;
-        const formData = new FormData(form);
         const jsonData: { [key: string]: any } = {};
         jsonData.feedback = {};
 
         let totalScore = 0;
-        formData.forEach((value, key) => {
-          let score = 0;
-
-          const stringScore = (value as string).split('(')[1]?.replace(')', '')
-          if(stringScore) {
-            try {
-              score = Number(stringScore);
-            } catch (e) {
-              console.error(e)
+        this._formElements.forEach(el => {
+          let score = null;
+          if(el instanceof SmartChoice) {
+            score = 0;
+            const stringScore = (el.value as string).split('(')[1]?.replace(')', '')
+            if(stringScore) {
+              try {
+                score = Number(stringScore);
+              } catch (e) {
+                score = 0
+                console.error(e)
+              }
             }
           }
-          jsonData.feedback[key] = {"answer": value, "score": score};
-          totalScore += score;
+          jsonData.feedback[el.name] = {"answer": el.value, "score": score};
+          totalScore += score ?? 0;
         });
         jsonData.totalScore = totalScore;
         jsonData.internalFormId = this.internalFormId;
