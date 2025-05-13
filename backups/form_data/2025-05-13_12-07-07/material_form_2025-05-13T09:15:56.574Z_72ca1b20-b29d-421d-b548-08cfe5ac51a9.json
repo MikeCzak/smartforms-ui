@@ -1,0 +1,207 @@
+{
+  "formType": "material_form",
+  "timestamp": "2025-05-13T09:15:56.574Z",
+  "internalFormId": "72ca1b20-b29d-421d-b548-08cfe5ac51a9",
+  "totalFocusTime": 335703,
+  "submittedData": {
+    "first_name_1": "Kilian",
+    "middle_name_1": "",
+    "last_name_1": "Prager",
+    "nickname_1": "",
+    "dob_1": "2002-07-18",
+    "gender_1": "Male",
+    "phone_1": "+43123123123",
+    "email_1": "test@test.de",
+    "street_1": "Härtehammer",
+    "housenumber_1": "2",
+    "city_1": "Gußwerk",
+    "zipcode_1": "8632",
+    "state_1": "Styria",
+    "country_1": "Austria",
+    "username_1": "kilianprager",
+    "password_1": "Test123!",
+    "newsletter_1": "No",
+    "preferred_language_1": "German",
+    "topics_1": "Documentary,Action,Comedy,Rock,Electronic,Mathematics,Cybersecurity,Cloud Computing,Football,Golf,Skiing,Swimming",
+    "iban_1": "AT230400985516071442",
+    "master_card_number_1": "5273849166389210",
+    "mc_expiry_date_1": "12/28",
+    "mc_cvv_1": "738",
+    "contact_name_1": "",
+    "contact_phone_1": "",
+    "contact_relation_1": "",
+    "device_name_1": "WRX560",
+    "mac_address_1": "8E:4A:C3:7B:92:F1",
+    "serial_no_1": "48372-10945-76283-59410",
+    "license_number_1": "A7F3-KD92-Q1LM-48ZN-XR5B"
+  },
+  "metaData": {
+    "first_name_1": {
+      "focusTime": 3590,
+      "validationErrors": []
+    },
+    "middle_name_1": {
+      "focusTime": 2471,
+      "validationErrors": []
+    },
+    "last_name_1": {
+      "focusTime": 2127,
+      "validationErrors": []
+    },
+    "nickname_1": {
+      "focusTime": 551,
+      "validationErrors": []
+    },
+    "dob_1": {
+      "focusTime": 7737,
+      "validationErrors": []
+    },
+    "gender_1": {
+      "focusTime": 1694,
+      "validationErrors": []
+    },
+    "phone_1": {
+      "focusTime": 5592,
+      "validationErrors": []
+    },
+    "email_1": {
+      "focusTime": 4326,
+      "validationErrors": []
+    },
+    "street_1": {
+      "focusTime": 8846,
+      "validationErrors": []
+    },
+    "housenumber_1": {
+      "focusTime": 606,
+      "validationErrors": []
+    },
+    "city_1": {
+      "focusTime": 5645,
+      "validationErrors": []
+    },
+    "zipcode_1": {
+      "focusTime": 3594,
+      "validationErrors": []
+    },
+    "state_1": {
+      "focusTime": 8176,
+      "validationErrors": []
+    },
+    "country_1": {
+      "focusTime": 5326,
+      "validationErrors": []
+    },
+    "username_1": {
+      "focusTime": 9135,
+      "validationErrors": [
+        [
+          "tooShort"
+        ]
+      ]
+    },
+    "password_1": {
+      "focusTime": 10998,
+      "validationErrors": [
+        [
+          "patternMismatch"
+        ]
+      ]
+    },
+    "newsletter_1": {
+      "focusTime": 1246,
+      "validationErrors": []
+    },
+    "preferred_language_1": {
+      "focusTime": 23208,
+      "validationErrors": []
+    },
+    "topics_1": {
+      "focusTime": 49735,
+      "validationErrors": []
+    },
+    "iban_1": {
+      "focusTime": 20061,
+      "validationErrors": [
+        [
+          "patternMismatch"
+        ],
+        [
+          "patternMismatch"
+        ]
+      ],
+      "expected": {
+        "expectedValue": "AT230400985516071442",
+        "matchesValue": true
+      }
+    },
+    "master_card_number_1": {
+      "focusTime": 15551,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "5273849166389210",
+        "matchesValue": true
+      }
+    },
+    "mc_expiry_date_1": {
+      "focusTime": 3159,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "12/28",
+        "matchesValue": true
+      }
+    },
+    "mc_cvv_1": {
+      "focusTime": 2384,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "738",
+        "matchesValue": true
+      }
+    },
+    "contact_name_1": {
+      "focusTime": 6724,
+      "validationErrors": []
+    },
+    "contact_phone_1": {
+      "focusTime": 2949,
+      "validationErrors": []
+    },
+    "contact_relation_1": {
+      "focusTime": 5168,
+      "validationErrors": []
+    },
+    "device_name_1": {
+      "focusTime": 39386,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "AX3000",
+        "matchesValue": false
+      }
+    },
+    "mac_address_1": {
+      "focusTime": 35601,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "8E4AC37B92F1",
+        "matchesValue": true
+      }
+    },
+    "serial_no_1": {
+      "focusTime": 23117,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "48372109457628359410",
+        "matchesValue": true
+      }
+    },
+    "license_number_1": {
+      "focusTime": 27000,
+      "validationErrors": [],
+      "expected": {
+        "expectedValue": "A7F3KD92Q1LM48ZNXR5B",
+        "matchesValue": true
+      }
+    }
+  }
+}

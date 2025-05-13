@@ -1,0 +1,60 @@
+{
+  "formType": "feedback",
+  "timestamp": "2025-05-13T09:28:20.006Z",
+  "internalFormId": "73bd0634-f8b5-4edf-bf35-d0f05412f52a",
+  "totalScore": 6,
+  "feedback": {
+    "instant_validation_1": {
+      "answer": "Very helpful (+2)",
+      "score": 2
+    },
+    "instant_validation_comment_1": {
+      "answer": "helped alot, anything else is simply way worse and it works very good. is needed everywhere.",
+      "score": 0
+    },
+    "minimap_1": {
+      "answer": "It made no difference / I didn't notice it (0)",
+      "score": 0
+    },
+    "minimap_comment_1": {
+      "answer": "actually didn´t see it at all",
+      "score": 0
+    },
+    "number_chunking_1": {
+      "answer": "Very helpful (+2)",
+      "score": 2
+    },
+    "number_chunking_comment_1": {
+      "answer": "exactlly how it should be, MUST have",
+      "score": 0
+    },
+    "page_reload_1": {
+      "answer": "No",
+      "score": 0
+    },
+    "value_storage_1": {
+      "answer": "Awesome! (+2)",
+      "score": 2
+    },
+    "value_storage_comment_1": {
+      "answer": "",
+      "score": 0
+    },
+    "validation_errors_1": {
+      "answer": "No",
+      "score": 0
+    },
+    "error_navigation_1": {
+      "answer": "",
+      "score": 0
+    },
+    "error_navigation_comment_1": {
+      "answer": "",
+      "score": 0
+    },
+    "miscellaneous_1": {
+      "answer": "this basic fill out forms with the additional field seperators and autofill initiators are very helpful and need to be implemented in every form from my point of view",
+      "score": 0
+    }
+  }
+}

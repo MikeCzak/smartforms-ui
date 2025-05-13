@@ -1,0 +1,68 @@
+{
+  "formType": "feedback",
+  "timestamp": "2025-05-13T10:04:29.729Z",
+  "internalFormId": "bfd93200-490e-4613-9e6a-408d3feb6e0c",
+  "totalScore": null,
+  "feedback": {
+    "instant_validation_1": {
+      "answer": "Very helpful (+2)",
+      "score": 2
+    },
+    "instant_validation_comment_1": {
+      "answer": "",
+      "score": 0
+    },
+    "minimap_1": {
+      "answer": "It made no difference / I didn't notice it (0)",
+      "score": 0
+    },
+    "minimap_comment_1": {
+      "answer": "I think this could helpful for very long formular, so you can estimate better how long it might takes. Maybe and average time of estimation could be also interesting (like reading time..)",
+      "score": null
+    },
+    "number_chunking_1": {
+      "answer": "It helped a little (+1)",
+      "score": 1
+    },
+    "number_chunking_comment_1": {
+      "answer": "At the beginning I was entering manually the space, then I see it does automatically. Here i think it would be helpful to communicate / visualise that the space is already given (or maybe it was but I did not noticed it)",
+      "score": null
+    },
+    "page_reload_1": {
+      "answer": "No",
+      "score": 0
+    },
+    "value_storage_1": {
+      "answer": "",
+      "score": 0
+    },
+    "value_storage_comment_1": {
+      "answer": "",
+      "score": 0
+    },
+    "validation_errors_1": {
+      "answer": "Yes",
+      "score": 0
+    },
+    "error_navigation_1": {
+      "answer": "It made no difference / I didn't use it (0)",
+      "score": 0
+    },
+    "tab_navigation_1": {
+      "answer": "",
+      "score": 0
+    },
+    "tab_navigation_comment_1": {
+      "answer": "",
+      "score": 0
+    },
+    "error_navigation_comment_1": {
+      "answer": "I like it that it went directly to the invalid field, without the need to scroll up and down",
+      "score": 0
+    },
+    "miscellaneous_1": {
+      "answer": "I think the \"filling up\" formular experience has been pretty smooth. \n\nRegarding the date of the card (and similar fields) I think it would be helpful to have, for example, the \"/\" sign already given.  \n\nAbout the speed: I think sometimes you also have the possibility to directly copy card data, MAC address (with password / identity manager tools), making the process faster. On the other hand it is also true that in other situations you have to copy these data from a physical card / device and you don't know which data you are going to be asked in advance. Maybe a sum up at the beginning of the form with the required data could help? Just some thought here :)",
+      "score": null
+    }
+  }
+}

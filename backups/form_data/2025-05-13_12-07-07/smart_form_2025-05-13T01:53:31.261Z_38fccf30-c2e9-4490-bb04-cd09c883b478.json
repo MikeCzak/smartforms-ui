@@ -1,0 +1,284 @@
+{
+  "formType": "smart_form",
+  "timestamp": "2025-05-13T01:53:31.261Z",
+  "internalFormId": "38fccf30-c2e9-4490-bb04-cd09c883b478",
+  "totalFocusTime": 24348,
+  "submittedData": {
+    "first_name_1": "Michael",
+    "middle_name_1": "Kurt",
+    "last_name_1": "Czak",
+    "nickname_1": "Mike",
+    "dob_1": "2001-01-20",
+    "gender_1": "Male",
+    "phone_1": "+436606512899",
+    "email_1": "mczak87@gmail.com",
+    "street_1": "Adriach-Rabenstein",
+    "housenumber_1": "83",
+    "city_1": "Frohnleiten",
+    "zipcode_1": "8130",
+    "state_1": "Steiermark",
+    "country_1": "Austria",
+    "username_1": "MikeCzak",
+    "password_1": "asdfASDF4%",
+    "newsletter_1": "Yes",
+    "preferred_language_1": "",
+    "topics_1": "Animation,Comedy,Fantasy,Sci-Fi,Blues,Classical,Country,Folk,Hip-Hop,Jazz,Pop,Rock,Astronomy,Genetics,Mathematics,Meteorology,Physics,Athletics,Baseball,Rugby,Golf,Hockey,Skiing,Swimming,AI,AR/VR,Big Data,Blockchain,Cloud Computing,Cybersecurity,Game Development,IoT,Quantum Computing,Web Development",
+    "iban_1": "AT230400985516071442",
+    "master_card_number_1": "5273849166389210",
+    "mc_expiry_date_1": "12/28",
+    "mc_cvv_1": "738",
+    "contact_name_1": "Sonja",
+    "contact_phone_1": "+4369917217555",
+    "contact_relation_1": "Partner",
+    "device_name_1": "AX3000",
+    "mac_address_1": "8e4ac37b92f1",
+    "serial_no_1": "48372109457628359410",
+    "license_number_1": "a7f3kd92q1lm48znxr5b"
+  },
+  "metaData": {
+    "first_name_1": {
+      "focusTime": 24348,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ]
+    },
+    "middle_name_1": {
+      "focusTime": 0,
+      "validationErrors": []
+    },
+    "last_name_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ]
+    },
+    "nickname_1": {
+      "focusTime": 0,
+      "validationErrors": []
+    },
+    "dob_1": {
+      "focusTime": 0,
+      "validationErrors": []
+    },
+    "gender_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ]
+    },
+    "phone_1": {
+      "focusTime": 0,
+      "validationErrors": []
+    },
+    "email_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ]
+    },
+    "street_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ]
+    },
+    "housenumber_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ]
+    },
+    "city_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ]
+    },
+    "zipcode_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ]
+    },
+    "state_1": {
+      "focusTime": 0,
+      "validationErrors": []
+    },
+    "country_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ]
+    },
+    "username_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ]
+    },
+    "password_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ]
+    },
+    "newsletter_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ]
+    },
+    "preferred_language_1": {
+      "focusTime": 0,
+      "validationErrors": []
+    },
+    "topics_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ]
+    },
+    "iban_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ],
+      "expected": {
+        "expectedValue": "AT230400985516071442",
+        "matchesValue": true
+      }
+    },
+    "master_card_number_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ],
+      "expected": {
+        "expectedValue": "5273849166389210",
+        "matchesValue": true
+      }
+    },
+    "mc_expiry_date_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ],
+      "expected": {
+        "expectedValue": "12/28",
+        "matchesValue": true
+      }
+    },
+    "mc_cvv_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ],
+      "expected": {
+        "expectedValue": "738",
+        "matchesValue": true
+      }
+    },
+    "contact_name_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ]
+    },
+    "contact_phone_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ]
+    },
+    "contact_relation_1": {
+      "focusTime": 0,
+      "validationErrors": []
+    },
+    "device_name_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ],
+      "expected": {
+        "expectedValue": "AX3000",
+        "matchesValue": true
+      }
+    },
+    "mac_address_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ],
+      "expected": {
+        "expectedValue": "8E4AC37B92F1",
+        "matchesValue": true
+      }
+    },
+    "serial_no_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ],
+      "expected": {
+        "expectedValue": "48372109457628359410",
+        "matchesValue": true
+      }
+    },
+    "license_number_1": {
+      "focusTime": 0,
+      "validationErrors": [
+        [
+          "valueMissing"
+        ]
+      ],
+      "expected": {
+        "expectedValue": "A7F3KD92Q1LM48ZNXR5B",
+        "matchesValue": true
+      }
+    }
+  }
+}
