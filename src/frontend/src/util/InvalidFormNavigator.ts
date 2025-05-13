@@ -88,7 +88,6 @@ export default class InvalidFormNavigator implements INavigator {
   }
 
   public handleElementFocus(e: FocusEvent): void {
-    e.stopImmediatePropagation();
     this.setCurrent(e.target as IFormElement);
   }
 
