@@ -87,9 +87,11 @@
           "info": "If yes, did you find the fact that all values (except the password) were stored and re-filled upon reload helpful?",
           "required": false,
           "options": [
-            "It kinda worried me (-1)",
+            "Completely useless (-2)",
+            "I don't really see the point (-1)",
             "It made no difference / I didn't notice it (0)",
-            "It was helpful (+1)"
+            "It was helpful (+1)",
+            "Awesome! (+2)"
           ]
         },
         {
