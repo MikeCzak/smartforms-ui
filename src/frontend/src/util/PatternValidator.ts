@@ -58,11 +58,11 @@ export class PatternValidator {
       });
     }
 
-    if (pattern.includes("(?=.*[!@#$%&*])")) {
+    if (pattern.includes("(?=.*[!@_#$%&*])")) {
       recognized++;
       rules.push({
-        description: "At least one special character (!@#$%&*)",
-        validate: input => /[!@#$%&*]/.test(input),
+        description: "At least one special character (!@_#$%&*)",
+        validate: input => /[!@_#$%&*]/.test(input),
       });
     }
 
