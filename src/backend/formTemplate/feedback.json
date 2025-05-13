@@ -130,6 +130,13 @@
             "Very helpful (+2)"]
         },
         {
+          "name": "error_navigation_comment",
+          "type": "textarea",
+          "label": "Comment",
+          "info": "Additional feedback on navigating invalid fields",
+          "required": false
+        },
+        {
           "name": "tab_navigation",
           "type": "choice",
           "choiceType": "single",
@@ -149,13 +156,6 @@
           "label": "Comment",
           "info": "Additional feedback on navigating with TAB",
           "required": false
-        },
-        {
-          "name": "error_navigation_comment",
-          "type": "textarea",
-          "label": "Comment",
-          "info": "Additional feedback on navigating invalid fields",
-          "required": false
         }
       ]
     },
@@ -166,7 +166,7 @@
           "name": "miscellaneous",
           "type": "textarea",
           "label": "Additional Feedback",
-          "info": "Feel free to provide any comments, complaints, compliments, critique or anything else you can think of (starting with 'c').",
+          "info": "Feel free to provide comments, complaints, compliments, critique or anything else you can think of starting with 'c'.",
           "required": false
         }
       ]
