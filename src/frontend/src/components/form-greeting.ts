@@ -82,7 +82,11 @@ export default class FormGreeting extends LitElement {
     return html`
       <md-elevated-card>
         <h2>Welcome to SmartForms UI!</h2>
-        <p style="color: var(--required); font-weight: bold">This prototype focuses on keyboard interaction and is not optimized for mobile - please use a desktop computer or laptop, not a phone!</p>
+        <p style="font-weight: bold">This prototype focuses on keyboard interaction and is not optimized for mobile -
+          please use a <span style="color: var(--required); ">desktop computer or laptop, not a phone</span>!<br>
+          It has been thoroughly tested in <span style="color: var(--required); ">Chrome and Firefox</span>, using any other browser might result in
+          bugs or unintended behavior.
+        </p>
         <p>
           Thank you in advance for participating in this user study (for my bachelor thesis) - your help is very much appreciated! 😊<br>
           You will be presented a form that has been designed for test purposes only, meaning its contents and
