@@ -273,13 +273,13 @@
           "name": "contact_name",
           "type": "text",
           "label": "Contact Name",
-          "required": true
+          "required": false
           },
           {
           "name": "contact_phone",
           "type": "tel",
           "label": "Contact Phone",
-          "required": true,
+          "required": false,
           "constraints": {
             "info": "Can start with optional +, then one non-zero digit, then digits",
             "pattern": "^\\+?[1-9]\\d{1,15}$"
