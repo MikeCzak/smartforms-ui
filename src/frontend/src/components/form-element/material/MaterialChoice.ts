@@ -143,7 +143,7 @@ export default class MaterialChoice extends AbstractChoice {
             }
           `,
           () => html`
-            ${(this.options as string[]).map((option) => html`
+            ${(this.options as string[]).sort((a, b) => a.localeCompare(b)).map((option) => html`
               <md-select-option value=${option}>
                 <div slot="headline">${option}</div>
               </md-select-option>
